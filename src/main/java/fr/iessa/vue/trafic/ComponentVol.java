@@ -89,40 +89,20 @@ public class ComponentVol extends JComponent {
 		coordOrdonne.values().forEach( p ->_cheminParcouru.lineTo(p.x, p.y));
 		
 		addMouseListener(new MouseAdapter() {
-			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				System.out.println("Avion OVERRRRRRRR: " + v.getId());
-				System.out.println("Coord: " + _coordCourante);
-				System.out.println("Coord souris: " + e.getPoint());
-				System.out.println("Coord Component: " + ComponentVol.this.getLocation());
-				System.out.println("Coord Bound: x=" + ComponentVol.this.getBounds().x + " y=" + ComponentVol.this.getBounds().y);
-				System.out.println("Class e.source " + ((JComponent) e.getSource()).getLocation() );
-				System.out.println("Class Componen " + ComponentVol.this.getLocation() + "Adresse " + ComponentVol.this.hashCode());
-				System.out.println("Premier Insrtant" + _vol.getPremierInstant());
-				System.out.println("");
-				setToolTipText("PROUT");
+				setToolTipText(v.getId());
 			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println("Avion CLICCCKKKKK: " + v.getId());
-				System.out.println("Coord: " + _coordCourante);
-				System.out.println("Coord souris: " + e.getPoint());
-				System.out.println("Coord Component: " + ComponentVol.this.getLocation());
-				System.out.println("Coord Bound: x=" + ComponentVol.this.getBounds().x + " y=" + ComponentVol.this.getBounds().y);
-				System.out.println("Premier Insrtant" + _vol.getPremierInstant());
-				System.out.println("");
-				setToolTipText("PROUT");
-			}
-
 		});
 	}
 	
 	public void setX(int xPos){ 
 		_coordCourante.x = xPos;
+		setLocation(_coordCourante.x,_coordCourante.y);
+	}
+	
+	public void setLocation(int x, int y){
 		super.setLocation(_coordCourante.x,_coordCourante.y);
-		super.setBounds(_coordCourante.x, _coordCourante.y, _largeur, _hauteur);
 	}
 
 	public int getX(){
@@ -131,11 +111,9 @@ public class ComponentVol extends JComponent {
 
 	public void setY(int yPos){
 		_coordCourante.y = yPos;
-		super.setLocation(_coordCourante.x,_coordCourante.y);
-		super.setBounds(_coordCourante.x, _coordCourante.y, _largeur, _hauteur);
+		setLocation(_coordCourante.x,_coordCourante.y);
 	}
 	
-
 	public int getY(){
 	    return _coordCourante.y;
 	}
