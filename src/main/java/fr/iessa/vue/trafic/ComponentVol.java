@@ -74,6 +74,7 @@ public class ComponentVol extends JComponent {
 		_largeur = _imageCourante.getWidth();
 		_hauteur = _imageCourante.getHeight(); 
 		
+		setSize(_largeur, _hauteur);
 		setMinimumSize(new Dimension(_largeur,_hauteur));
 		setMaximumSize(new Dimension(_largeur,_hauteur));
 		setPreferredSize(new Dimension(_largeur,_hauteur));
@@ -91,29 +92,27 @@ public class ComponentVol extends JComponent {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				System.out.println("OVEROVER");
-				System.out.println("");
-				System.out.println("Avion clique: " + v.getId());
+				System.out.println("Avion OVERRRRRRRR: " + v.getId());
 				System.out.println("Coord: " + _coordCourante);
 				System.out.println("Coord souris: " + e.getPoint());
 				System.out.println("Coord Component: " + ComponentVol.this.getLocation());
-				System.out.println("Class e.source " + ((JComponent) e.getSource()).getLocation() + "Adresse " + e.getSource().hashCode());
+				System.out.println("Coord Bound: x=" + ComponentVol.this.getBounds().x + " y=" + ComponentVol.this.getBounds().y);
+				System.out.println("Class e.source " + ((JComponent) e.getSource()).getLocation() );
 				System.out.println("Class Componen " + ComponentVol.this.getLocation() + "Adresse " + ComponentVol.this.hashCode());
-				
 				System.out.println("Premier Insrtant" + _vol.getPremierInstant());
+				System.out.println("");
 				setToolTipText("PROUT");
 			}
 			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("");
-				System.out.println("Avion clique: " + v.getId());
+			public void mousePressed(MouseEvent e) {
+				System.out.println("Avion CLICCCKKKKK: " + v.getId());
 				System.out.println("Coord: " + _coordCourante);
 				System.out.println("Coord souris: " + e.getPoint());
 				System.out.println("Coord Component: " + ComponentVol.this.getLocation());
-				
-				
+				System.out.println("Coord Bound: x=" + ComponentVol.this.getBounds().x + " y=" + ComponentVol.this.getBounds().y);
 				System.out.println("Premier Insrtant" + _vol.getPremierInstant());
+				System.out.println("");
 				setToolTipText("PROUT");
 			}
 
@@ -122,12 +121,8 @@ public class ComponentVol extends JComponent {
 	
 	public void setX(int xPos){ 
 		_coordCourante.x = xPos;
-		//setLocation(_coordCourante);
-		System.out.println("");
-		System.out.println("#######   " + _vol.getId() + "#######");
-		System.out.println("SET X _coord: " + _coordCourante);
-		System.out.println("SET X _location: " + getLocation());
-		System.out.println("#######   " + _vol.getId() + "#######");
+		super.setLocation(_coordCourante.x,_coordCourante.y);
+		super.setBounds(_coordCourante.x, _coordCourante.y, _largeur, _hauteur);
 	}
 
 	public int getX(){
@@ -136,12 +131,8 @@ public class ComponentVol extends JComponent {
 
 	public void setY(int yPos){
 		_coordCourante.y = yPos;
-		//setLocation(_coordCourante);
-		System.out.println("");
-		System.out.println("#######   " + _vol.getId() + "#######");
-		System.out.println("SET Y _coord: " + _coordCourante);
-		System.out.println("SET Y _location: " + getLocation());
-		System.out.println("#######   " + _vol.getId() + "#######");
+		super.setLocation(_coordCourante.x,_coordCourante.y);
+		super.setBounds(_coordCourante.x, _coordCourante.y, _largeur, _hauteur);
 	}
 	
 
@@ -152,8 +143,6 @@ public class ComponentVol extends JComponent {
 	public Point getLocation(){
 		return _coordCourante;
 	}
-	
-	
 
 	public int getWidth(){
 		return _largeur;

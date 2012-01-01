@@ -271,10 +271,15 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 	public void mouseReleased(MouseEvent e) {
 		if(_aeroport != null)
 		{			
-			Point2D.Double ecartRelatif = new Point2D.Double(e.getPoint().getX()-_whereMousePressed.getX()
-													 		,e.getPoint().getY()-_whereMousePressed.getY() );
+			double ecartX = e.getPoint().getX()-_whereMousePressed.getX();
+			double ecartY = e.getPoint().getY()-_whereMousePressed.getY();
 			
-			_echelle.setScroll(ecartRelatif, getWidth(), getHeight());
+			if(ecartX!=0.0 || ecartY!=0.0)
+			{
+				Point2D.Double ecartRelatif = new Point2D.Double(ecartX,ecartY);
+			
+				_echelle.setScroll(ecartRelatif, getWidth(), getHeight());
+			}
 		}
 	}
 

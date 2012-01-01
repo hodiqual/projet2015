@@ -17,7 +17,5 @@ public class FrameSecondaire extends JFrame {
 	    this.validate();
 	    this.pack();
 	    this.setVisible(true);
-    	
-    	
 	}
 }
