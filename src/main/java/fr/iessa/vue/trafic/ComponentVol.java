@@ -43,6 +43,7 @@ public class ComponentVol extends JComponent {
 	private Point _coordCourante = new Point();
 	private GeneralPath _cheminParcouru = new GeneralPath();
 	private Shape _cheminParcouruShape;
+	private ClickComponentVolListener _clickListener;
 	
 	public ComponentVol(Vol v, Echelle echelle) { 
 		
@@ -92,6 +93,12 @@ public class ComponentVol extends JComponent {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setToolTipText(v.getId());
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(_clickListener!=null)
+					_clickListener.componentVolClicked(ComponentVol.this);
 			}
 		});
 	}
@@ -226,5 +233,9 @@ public class ComponentVol extends JComponent {
 			g2.draw(_cheminParcouruShape);
 		}
 		g2.setColor(colorToRestore);
+	}
+	
+	public void setClickListener(ClickComponentVolListener l) {
+		_clickListener = l;
 	}
 }

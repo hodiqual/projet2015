@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.trafic.ComponentVol;
+import fr.iessa.vue.trafic.PanelTrafic;
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
@@ -39,10 +40,11 @@ public class PanelDesControles extends SLPanel {
 	 */	
 	private final SLConfig _avecTableauCfg;
 	
-	public PanelDesControles(Controleur controleur, Map<Vol,ComponentVol> volsADessiner, Echelle echelle) {
+	public PanelDesControles(Controleur controleur, PanelTrafic traficPanel, Echelle echelle) {
 		super();
 		setOpaque(false);
-		_tableauDeBord = new PanelTableauDeBord(controleur, volsADessiner);
+		_tableauDeBord = new PanelTableauDeBord(controleur, traficPanel.getVolsADessiner());
+		traficPanel.addObserver(_tableauDeBord);
 		_visualisationEtLecture = new PanelVisualisationEtLecture(controleur, echelle);
 		_visualisationEtLecture.setOpaque(false);
 		_visualisationEtLecture.set_actionBoutonTabDeBord(afficheTableauDeBord);

@@ -86,8 +86,9 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		protected void done() {
 			try {
 				Void object = get();
+				_obs.setChanged();
+				_obs.notifyObservers(_volsADessiner);
 			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally{
 				if(layerUI!=null)
@@ -150,5 +151,17 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 	public Map<Vol, ComponentVol> getVolsADessiner() {
 		return _volsADessiner;
 	}  
+	
+	private class WorkDoneObservable extends Observable{
+		public void setChanged(){
+			super.setChanged();
+		}
+	}
+	
+	private final WorkDoneObservable _obs = new WorkDoneObservable();
+	
+	public void addObserver(Observer o) {
+		_obs.addObserver(o);
+	}
 
 }

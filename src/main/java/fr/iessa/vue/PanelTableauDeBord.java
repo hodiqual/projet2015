@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import javax.swing.JScrollPane;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.metier.trafic.Vol;
+import fr.iessa.vue.trafic.ClickComponentVolListener;
 import fr.iessa.vue.trafic.ComponentVol;
 
 /** Classe Tableau de Bord.
@@ -21,8 +24,10 @@ import fr.iessa.vue.trafic.ComponentVol;
  * @version 1.0 
  */
 
-public class PanelTableauDeBord extends JPanel {
+public class PanelTableauDeBord extends JPanel implements Observer {
 
+	private Controleur _controleur;
+	private JPanel _panelVols = new JPanel();
 	public PanelTableauDeBord(Controleur controleur, Map<Vol, ComponentVol> volsADessiner) {
 		super();
 		
@@ -43,7 +48,6 @@ public class PanelTableauDeBord extends JPanel {
 		// Ajout des différents éléments du Tableau de bord
 		this.add(_titre);
 		this.add(new PanelDensiteTrafic(controleur));
-		JPanel _panelVols = new JPanel();
 		this.add(new PanelFiltres(controleur, new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -62,5 +66,26 @@ public class PanelTableauDeBord extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(_panelVols);
 		add(scrollPane);
 		
+		_controleur = controleur;
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		Map<Vol, ComponentVol> volsADessiner = (Map<Vol, ComponentVol>)arg;
+		
+		for (ComponentVol cv : volsADessiner.values()) {
+			cv.setClickListener( new ClickComponentVolListener() {
+				
+				@Override
+				public void componentVolClicked(ComponentVol cv) {
+					PanelAffichageVol affVol = new PanelAffichageVol(cv, _controleur);
+					
+					_panelVols.add(affVol);
+					_panelVols.revalidate();
+					_panelVols.repaint();
+				}
+			});
+		}		
 	}
 }
