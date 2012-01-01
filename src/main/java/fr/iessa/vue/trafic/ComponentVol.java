@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
@@ -48,10 +49,6 @@ public class ComponentVol extends JComponent {
 	public ComponentVol(Vol v, Echelle echelle) { 
 		
 		setOpaque(true);
-		
-		//setBackground(Color.red);
-		//setBorder(BorderFactory.createTitledBorder("AVION"));
-		//setBounds(0,0,width,height);
 
 		_echelle = echelle;
 		_vol = v;
@@ -154,10 +151,12 @@ public class ComponentVol extends JComponent {
 		
 		if(_highlightColor != null)
 		{
+			final Shape shape = new Rectangle(new Dimension(_largeur, _hauteur));
+			final Stroke stroke = new BasicStroke(8);
 			Color colorToRestore = g2.getColor();
 			g2.setColor(_highlightColor);
-			g2.setStroke(new BasicStroke(8));
-			g2.draw(new Rectangle(new Dimension(_largeur, _hauteur)));
+			g2.setStroke(stroke);
+			g2.draw( shape );
 			g2.setColor(colorToRestore);
 		}
 		
