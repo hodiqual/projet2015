@@ -1,4 +1,4 @@
-package fr.iessa.core;
+package fr.iessa.metier;
 
 public class Avion {
 	
