@@ -10,3 +10,6 @@ before_script:
 script:
    - mvn clean cobertura:cobertura
    - mvn test
+   
+after_sucess:
+   - mvn release:update-versions
