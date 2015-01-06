@@ -2,6 +2,10 @@ language: java
 
 jdk:
    - oraclejdk8
+   
+before_script:
+  - echo 'Europe/Paris' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 script:
    - mvn clean cobertura:cobertura
