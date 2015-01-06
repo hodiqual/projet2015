@@ -1,4 +1,4 @@
-package fr.iessa.modele;
+package fr.iessa.metier;
 
 import static org.junit.Assert.*;
 
@@ -20,8 +20,12 @@ public class AvionTest {
 
 	@Test
 	public void testSetNom() {
-		fail("Not yet implemented");
-		//A faire
+		
+		String nomAvion = "AF1234";
+		
+		Avion monAvion = new Avion("Qqconque");
+		monAvion.setNom(nomAvion);
+		assertEquals(nomAvion, monAvion.getNom());
 	}
 
 }
