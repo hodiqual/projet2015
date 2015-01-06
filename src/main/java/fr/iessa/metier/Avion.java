@@ -3,7 +3,6 @@ package fr.iessa.metier;
 public class Avion {
 	
 	private String _nom;
-	private String _prout;
 	
 	public Avion(String nom)
 	{

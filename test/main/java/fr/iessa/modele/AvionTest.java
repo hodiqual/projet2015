@@ -21,6 +21,7 @@ public class AvionTest {
 	@Test
 	public void testSetNom() {
 		fail("Not yet implemented");
+		//A faire
 	}
 
 }
