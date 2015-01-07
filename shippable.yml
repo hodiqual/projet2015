@@ -1,3 +1,5 @@
+archive: true
+
 language: java
 
 jdk:
