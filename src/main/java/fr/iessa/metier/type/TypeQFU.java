@@ -1,13 +1,14 @@
 package fr.iessa.metier.type;
 
 /**
- * Describe Right or Left QFU
- * @author thomasra
- * 
+ * le QFU désigne l'orientation magnétique de la piste en degré 
+ * par rapport au nord magnétique en tournant dans le sens horaire
+ * @author hodiqual
+ * @see <a href="http://fr.wikipedia.org/wiki/QFU">http://fr.wikipedia.org/wiki/QFU</a>
  */
 public enum TypeQFU {
-	/** Left QFU */
+	/** L QFU */
 	L,
-	/** Right QFU */
+	/** R QFU */
 	R
 }
