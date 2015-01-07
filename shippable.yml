@@ -16,7 +16,3 @@ script:
    
 after_success:
    - cp target/*.jar ./shippable/
-   - git add pom.xml
-   - git status
-   - git commit -m "Deploy 1.$BUILD_NUMBER-SNAPSHOT"
-   - git push origin master
