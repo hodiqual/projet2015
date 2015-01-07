@@ -21,7 +21,7 @@ public class Ligne {
 	/** La categorie d'avions admis sur la ligne */
 	protected Categorie _categorie;
 	
-	/** La direction single ou double */
+	/** La direction sens unique ou double sens*/
 	protected Direction _direction;
 	
 

@@ -44,7 +44,7 @@ public enum Direction {
 	 * Initialise une map clé-valeur constante permettant de retourner une direction
 	 * en fonction de son abreviation.
 	 */
-    private static final Map<String, Direction> _abrevations = new HashMap<>();
+    private static final Map<String, Direction> _abrevations = new HashMap();
     
     // L'initialisation
     static {

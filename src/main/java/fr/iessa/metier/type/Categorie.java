@@ -36,7 +36,7 @@ public enum Categorie {
 	 * Initialise une map clé-valeur constante permettant de retourner une catégorie
 	 * en fonction de son abreviation.
 	 */
-    private static final Map<String, Categorie> _abrevations = new HashMap<>();
+    private static final Map<String, Categorie> _abrevations = new HashMap();
     
     // L'initialisation
     static {
