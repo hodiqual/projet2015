@@ -14,7 +14,7 @@ script:
    - mvn package
    
 after_success:
-   - cp target/*.jar /home/shippable
-   - mvn release:update-versions
+   - cp target/*.jar ./shippable/
+#   - mvn release:update-versions
    - pwd
    - ls -al
