@@ -36,19 +36,19 @@ public enum Categorie {
 	 * Initialise une map clé-valeur constante permettant de retourner une catégorie
 	 * en fonction de son abreviation.
 	 */
-    private static final Map<String, Categorie> _abrevations = new HashMap();
+    private static final Map<String, Categorie> _mapAbrevCategories = new HashMap();
     
     // L'initialisation
     static {
         for (Categorie categorie : values()) { // on parcourt toutes valeurs de direction
-        	_abrevations.put(categorie._abreviation, categorie); //qu'on insere dans la map
+        	_mapAbrevCategories.put(categorie._abreviation, categorie); //qu'on insere dans la map
         }
     }
 	
     /** Récupération d'une catégorie par son abréviation */
 	public static Categorie from(String abreviation)
 	{
-		return _abrevations.get(abreviation);
+		return _mapAbrevCategories.get(abreviation);
 	}
 	
 	

@@ -44,19 +44,19 @@ public enum Direction {
 	 * Initialise une map clé-valeur constante permettant de retourner une direction
 	 * en fonction de son abreviation.
 	 */
-    private static final Map<String, Direction> _abrevations = new HashMap();
+    private static final Map<String, Direction> _mapAbrevDirection = new HashMap();
     
     // L'initialisation
     static {
         for (Direction direction : values()) { // on parcourt toutes valeurs de direction
-        	_abrevations.put(direction._abreviation, direction); //qu'on insere dans la map
+        	_mapAbrevDirection.put(direction._abreviation, direction); //qu'on insere dans la map
         }
     }
 	
     /** Récupération d'une direction par son abréviation */
 	public static Direction from(String abrevation)
 	{
-		return _abrevations.get(abrevation);
+		return _mapAbrevDirection.get(abrevation);
 	}
 	
 
