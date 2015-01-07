@@ -11,9 +11,9 @@ before_script:
 
 script:
    - mvn clean cobertura:cobertura
-   - mvn test
+   - mvn package
    
 after_success:
-   - mvn package
+   - cp target/* /home/shippable
    - pwd
    - ls -al
