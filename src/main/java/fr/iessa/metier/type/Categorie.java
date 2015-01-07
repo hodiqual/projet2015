@@ -1,5 +1,8 @@
 package fr.iessa.metier.type;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Décrit les différentes catégories d'avions vis a vis de leur taille
  * @author hodiqual
@@ -15,17 +18,40 @@ public enum Categorie {
 	/** Avion léger: CESNA*/
 ,	LIGHT("L");
 	
-	/** Abbrévation de la catégories*/
-	private String _categorie;
+	/** Abrévation de la catégories*/
+	private String _abreviation;
 
 	private Categorie(String categorie)
 	{
-		_categorie = categorie;
+		_abreviation = categorie;
 	}
 	
-	@Override
-	public String toString()
+	/** Retourne l'abreviation de la categorie d'un avion */
+	public String getAbreviation()
 	{
-		return _categorie;
+		return _abreviation;
 	}
+	
+	/**
+	 * Initialise une map clé-valeur constante permettant de retourner une catégorie
+	 * en fonction de son abreviation.
+	 */
+    private static final Map<String, Categorie> _abrevations = new HashMap<>();
+    
+    // L'initialisation
+    static {
+        for (Categorie categorie : values()) { // on parcourt toutes valeurs de direction
+        	_abrevations.put(categorie._abreviation, categorie); //qu'on insere dans la map
+        }
+    }
+	
+    /** Récupération d'une catégorie par son abréviation */
+	public static Categorie from(String abreviation)
+	{
+		return _abrevations.get(abreviation);
+	}
+	
+	
+	
+	
 }
