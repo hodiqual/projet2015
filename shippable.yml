@@ -15,6 +15,6 @@ script:
    
 after_success:
    - cp target/*.jar ./shippable/
-#   - mvn release:update-versions
+   - mvn versions:set -DnewVersion=1.$BUILD_NUMBER-SNAPSHOT
    - pwd
    - ls -al
