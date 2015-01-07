@@ -14,6 +14,6 @@ script:
    - mvn test
    
 after_success:
-   - mvn release:update-versions
+   - mvn package
    - pwd
    - ls -al
