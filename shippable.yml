@@ -13,5 +13,7 @@ script:
    - mvn clean cobertura:cobertura
    - mvn test
    
-after_sucess:
+after_success:
    - mvn release:update-versions
+   - pwd
+   - ls -al
