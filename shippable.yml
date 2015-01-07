@@ -9,6 +9,7 @@ before_script:
   - echo 'Europe/Paris' | sudo tee /etc/timezone
   - sudo dpkg-reconfigure --frontend noninteractive tzdata
   - mvn versions:set -DnewVersion=1.$BUILD_NUMBER-SNAPSHOT
+  - source 8
 
 script:
    - mvn clean cobertura:cobertura
