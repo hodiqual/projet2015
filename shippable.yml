@@ -8,6 +8,7 @@ jdk:
 before_script:
   - echo 'Europe/Paris' | sudo tee /etc/timezone
   - sudo dpkg-reconfigure --frontend noninteractive tzdata
+  - mvn versions:set -DnewVersion=1.$BUILD_NUMBER-SNAPSHOT
 
 script:
    - mvn clean cobertura:cobertura
@@ -15,5 +16,5 @@ script:
    
 after_success:
    - cp target/*.jar ./shippable/
-   - mvn versions:set -DnewVersion=1.$BUILD_NUMBER-SNAPSHOT
-   - git status
+   - git add pom.xml
+   - git commit -m "Deploy 1.$BUILD_NUMBER-SNAPSHOT"
