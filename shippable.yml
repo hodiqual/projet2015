@@ -19,3 +19,4 @@ after_success:
    - git add pom.xml
    - git status
    - git commit -m "Deploy 1.$BUILD_NUMBER-SNAPSHOT"
+   - git push origin master
