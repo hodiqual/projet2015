@@ -1,7 +1,6 @@
 package fr.iessa.metier.type;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Hashtable;
 
 /**
  * Décrit les direction possibles sur une ligne.
@@ -44,7 +43,7 @@ public enum Direction {
 	 * Initialise une map clé-valeur constante permettant de retourner une direction
 	 * en fonction de son abreviation.
 	 */
-    private static final Map<String, Direction> _mapAbrevDirection = new HashMap();
+    private static final Hashtable<String, Direction> _mapAbrevDirection = new Hashtable<String, Direction>();
     
     // L'initialisation
     static {
