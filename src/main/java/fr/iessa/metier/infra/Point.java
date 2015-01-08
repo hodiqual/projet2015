@@ -18,5 +18,9 @@ public class Point extends java.awt.Point {
 		_nom = nom;
 		_type = TypePoint.from(type);
 	}
+	
+	public String toString () {
+		return _nom;
+	}
 
 }
