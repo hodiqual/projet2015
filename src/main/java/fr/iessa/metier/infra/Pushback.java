@@ -10,6 +10,7 @@ import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.Direction;
 
 /**
+ * Zone de pushback caracterise par une vitesse de roulage negative.
  * @author hodiqual
  *
  */
