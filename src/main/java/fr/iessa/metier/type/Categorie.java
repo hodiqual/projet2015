@@ -1,7 +1,6 @@
 package fr.iessa.metier.type;
 
 import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * Décrit les différentes catégories d'avions vis a vis de leur taille
