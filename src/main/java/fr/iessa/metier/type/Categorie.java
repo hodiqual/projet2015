@@ -1,6 +1,6 @@
 package fr.iessa.metier.type;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -36,7 +36,7 @@ public enum Categorie {
 	 * Initialise une map clé-valeur constante permettant de retourner une catégorie
 	 * en fonction de son abreviation.
 	 */
-    private static final Map<String, Categorie> _mapAbrevCategories = new HashMap();
+    private static final Hashtable<String, Categorie> _mapAbrevCategories = new Hashtable<String, Categorie>();
     
     // L'initialisation
     static {
