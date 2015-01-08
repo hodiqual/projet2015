@@ -1,0 +1,18 @@
+-------------------------
+Faire un schema de l'Enum:
+  Emploi des Enum:
+
+  - Beaucoup plus maintenable:
+      Comprehension et Changement de définittion
+  - Pattern Flyweight, reference sur une meme instance en voyant le nombre de point
+ ------------------------ 
+  On peut faire un flyweight sur le nom des Taxiway.
+  Et peut-etre meme les points du trafic qui doivent etre souvent semblables
+  Test de faire un grep et le gain memoire pour le rapport
+  
+  Deux solutions graphiques:
+  Faire le redessin de tout a chaque mouvement
+  ou faire le UneImage arriere plan sur laquelle on scroll et y rajoute les avions.
+  Comme un jeu video 
+  Interpolator interessant pour les gros zooms pour éviter les saut de 5 sec 
+---------------------------  
