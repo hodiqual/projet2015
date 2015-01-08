@@ -18,7 +18,7 @@ public class Ligne {
 	
 	/** La ligne brisée construite à partir des coordonnees */
 	protected GeneralPath _lignePointAPoint;
-	
+
 	/** Vitesse de roulage admise en m/s (valeur negative possible)*/
 	protected int _vitesseDeRoulage;
 	
@@ -43,4 +43,35 @@ public class Ligne {
 	private void initialiseLigneBrisee(Queue<Point> listePointsOrdonnee) {
 		listePointsOrdonnee.forEach( (p) -> _lignePointAPoint.lineTo( p.getX(), p.getY() ) );		
 	}
+	
+	// Accessors
+	
+	/**
+	 * @return the _lignePointAPoint
+	 */
+	public GeneralPath get_lignePointAPoint() {
+		return _lignePointAPoint;
+	}
+
+	/**
+	 * @return the _vitesseDeRoulage
+	 */
+	public int get_vitesseDeRoulage() {
+		return _vitesseDeRoulage;
+	}
+
+	/**
+	 * @return the _categorie
+	 */
+	public Categorie get_categorie() {
+		return _categorie;
+	}
+
+	/**
+	 * @return the _direction
+	 */
+	public Direction get_direction() {
+		return _direction;
+	}
+	
 }
