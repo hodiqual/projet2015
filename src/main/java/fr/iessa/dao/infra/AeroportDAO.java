@@ -15,7 +15,7 @@ public class AeroportDAO implements DAO<Aeroport> {
 	@Override
 	public Aeroport charger(String ligneAtraiter) {
 		
-		return new Aeroport();
+		return new Aeroport(ligneAtraiter.trim());
 	}
 
 }
