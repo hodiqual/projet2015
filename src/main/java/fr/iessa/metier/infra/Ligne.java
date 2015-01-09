@@ -41,6 +41,8 @@ public class Ligne {
 
 	/** initialise la  _lignePointAPoint en ligne brisee*/
 	private void initialiseLigneBrisee(Queue<Point> listePointsOrdonnee) {
+		Point initialPoint = listePointsOrdonnee.poll();
+		_lignePointAPoint.moveTo(initialPoint.getX(), initialPoint.getY());
 		listePointsOrdonnee.forEach( (p) -> _lignePointAPoint.lineTo( p.getX(), p.getY() ) );		
 	}
 	

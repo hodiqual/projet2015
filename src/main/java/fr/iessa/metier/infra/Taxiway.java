@@ -27,11 +27,13 @@ public class Taxiway extends Ligne {
 
 	/** initialise la  _lignePointAPoint en courbe de bezier*/
 	private void initialiseLigneBrisee(Queue<Point> listePointsOrdonnee) {
+		Point initialPoint = listePointsOrdonnee.poll();
+		_lignePointAPoint.moveTo(initialPoint.getX(), initialPoint.getY());
 		listePointsOrdonnee.forEach( (p) -> _lignePointAPoint.lineTo( p.getX(), p.getY() ) );
 		/*TODO gerer les lignes if(!listePointsOrdonnee.isEmpty())
 		{
 			Point premierPoint = listePointsOrdonnee.poll();
-			_lignePointAPoint.lineTo( premierPoint.getX(), premierPoint.getY() );
+			_lignePointAPoint.moveTo( premierPoint.getX(), premierPoint.getY() );
 		}
 		
 		while(!listePointsOrdonnee.isEmpty())

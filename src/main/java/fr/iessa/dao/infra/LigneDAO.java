@@ -62,8 +62,7 @@ public class LigneDAO implements DAO<Ligne> {
 		scan.useDelimiter(" |,|;|\n");
 		while(scan.hasNext())
 		{
-			System.out.println(scan.next());
-			//result.add( new Point(scan.nextInt(), scan.nextInt() ) );
+			result.add( new Point(scan.nextInt(), scan.nextInt() ) );
 		}
 		return result;
 	}
