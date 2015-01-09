@@ -2,13 +2,8 @@ package fr.iessa.dao.infra;
 
 import static org.junit.Assert.*;
 
-import java.awt.Point;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
-import java.util.Scanner;
 
-import org.hamcrest.core.Is;
-import org.junit.Before;
 import org.junit.Test;
 
 import fr.iessa.metier.infra.Ligne;
