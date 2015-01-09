@@ -52,6 +52,9 @@ public class Controleur {
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
 
 				//Creer l'image background une fois pour toute.
+				
+				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de référence.
+			    LibereMemoire.free();
 				return null;
 			}
 
@@ -94,6 +97,10 @@ public class Controleur {
 				//TODO Chargement fichier trafic 
 				Trafic trafic = null;
 				publish(ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE);
+
+				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de référence.
+			    LibereMemoire.free();
+			    
 				return trafic;
 			}
 
