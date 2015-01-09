@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UIManager.*;
 
+import fr.iessa.controleur.Controleur;
+import fr.iessa.vue.BoardPanel;
+
 public class Application {
 
 	public static void main(String[] args) {
@@ -25,8 +28,10 @@ public class Application {
 		
 		JFrame frame = new JFrame("A REFAIRE");
 	    //frame.setMinimumSize(new Dimension(800, 600));
-	    frame.add(new JButton("PROUT"));
-	    frame.add(new JButton("PROUT"));
+	    //frame.add(new JButton("PROUT"));
+	    //frame.setMinimumSize(new Dimension(800, 600));
+	    //frame.add(new JButton("PROUT"));
+		frame.getContentPane().add(new BoardPanel(new Controleur()));
 	    frame.validate();
 	    frame.setVisible(true);
 	}
