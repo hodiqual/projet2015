@@ -1,4 +1,8 @@
 --------------------------
+--------------------------
+BIEN DEFILER LES IMAGES EN PENSE BETES DE SAVOIR QUOI PARLER
+--------------------------
+--------------------------
 Specifier qu'au niveau allocation des taches:
    Alexis travaille le meme temps mais en fait plus pendant ce laps de temps que les autres
    normal par le niveau.
@@ -22,4 +26,12 @@ Faire un schema de l'Enum:
   ou faire le UneImage arriere plan sur laquelle on scroll et y rajoute les avions.
   Comme un jeu video 
   Interpolator interessant pour les gros zooms pour éviter les saut de 5 sec 
----------------------------  
+--------------------------- 
+Process de l'environnement de travail:
+
+    CodeFunctionality et NewTestCode -> TestExisting -> (ok) -> Commit local -> Puis Recode Functionalite
+                                     <- 
+                                     
+    Assez Pull - Merge - Junit Test - Push - CI  
+----------------------------
+
