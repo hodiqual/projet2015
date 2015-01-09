@@ -22,5 +22,4 @@ public class Point extends java.awt.Point {
 	public String toString () {
 		return _nom;
 	}
-
 }

@@ -25,7 +25,8 @@ public class InfrastructureDAO {
 		, @SuppressWarnings("unchecked")
 		PUSHBACK	(new PushbackDAO(LIGNE._dao))
 		, RUNWAY	(new RunwayDAO())
-		, TAXIWAY	(new TaxiwayDAO(LIGNE._dao))
+		, @SuppressWarnings("unchecked")
+		TAXIWAY	(new TaxiwayDAO(LIGNE._dao))
 		;
 		
 		private DAO _dao;
@@ -58,13 +59,25 @@ public class InfrastructureDAO {
 				String ligne = scan.next();
 				
 				Lookup typeLigne = findLookup(ligne);
-						
-						
-				Scanner scanByLine = new Scanner(ligne);
-				scanByLine.useDelimiter(";|\n");
 				
-			
-				scanByLine.close();
+				switch (typeLigne) {
+				case POINT:
+					result.add( ((PointDAO)typeLigne.get()).charger(ligne));
+					break;
+				case LIGNE:
+					result.add( ((LigneDAO)typeLigne.get()).charger(ligne));
+					break;
+				case TAXIWAY:
+					result.add( ((TaxiwayDAO)typeLigne.get()).charger(ligne));
+					break;
+				case PUSHBACK:
+					result.add( ((PushbackDAO)typeLigne.get()).charger(ligne));
+					break;
+				case RUNWAY:
+					result.add( ((RunwayDAO)typeLigne.get()).charger(ligne));
+					break;
+				}
+				
 			}		
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

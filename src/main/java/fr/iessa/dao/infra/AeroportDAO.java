@@ -13,8 +13,7 @@ import fr.iessa.metier.infra.Aeroport;
 public class AeroportDAO implements DAO<Aeroport> {
 
 	@Override
-	public Aeroport charger(String ligneAtraiter) {
-		
+	public Aeroport charger(String ligneAtraiter) {		
 		return new Aeroport(ligneAtraiter.trim());
 	}
 

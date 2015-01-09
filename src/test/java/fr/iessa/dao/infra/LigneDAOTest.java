@@ -6,6 +6,7 @@ import java.awt.geom.PathIterator;
 
 import org.junit.Test;
 
+import fr.iessa.dao.infra.InfrastructureDAO.Lookup;
 import fr.iessa.metier.infra.Ligne;
 import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.Direction;
@@ -13,7 +14,7 @@ import fr.iessa.metier.type.Direction;
 public class LigneDAOTest {
 
 	//l'objet a tester
-	private LigneDAO _ligneDAO  = new LigneDAO();
+	private LigneDAO _ligneDAO  = (LigneDAO) Lookup.LIGNE.get();
 
 	@Test
 	public void testChargerLigne1()

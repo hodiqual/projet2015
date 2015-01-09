@@ -50,6 +50,15 @@ public class Aeroport {
 	public void add(Runway r){
 		_runways.add(r);
 	}
+
+	@Override
+	public String toString() {
+		return "Aeroport [_nom=" + _nom + ", _points=" + _points.size() + ", _lignes="
+				+ _lignes.size() + ", _taxiway=" + _taxiway.size() + ", _pushbacks="
+				+ _pushbacks.size() + ", _runways=" + _runways.size() + "]";
+	}
+	
+	
 	
 
 }

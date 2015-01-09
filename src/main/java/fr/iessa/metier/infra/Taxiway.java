@@ -24,7 +24,11 @@ public class Taxiway extends Ligne {
 		super(vitesseDeRoulage, categorie, direction, listePointsOrdonnee);
 		_nom = nom;
 	}
-
+	
+	public String get_nom() {
+		return _nom;
+	}
+	
 	/** initialise la  _lignePointAPoint en courbe de bezier*/
 	private void initialiseLigneBrisee(Queue<Point> listePointsOrdonnee) {
 		Point initialPoint = listePointsOrdonnee.poll();
