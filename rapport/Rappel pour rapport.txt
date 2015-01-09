@@ -6,7 +6,16 @@ BIEN DEFILER LES IMAGES EN PENSE BETES DE SAVOIR QUOI PARLER
 Specifier qu'au niveau allocation des taches:
    Alexis travaille le meme temps mais en fait plus pendant ce laps de temps que les autres
    normal par le niveau.
-   A confronter dans le ScrumBoard
+   A confronter dans le ScrumBoard -> Je consomme plus de point car je prends les
+   UC les plus dur mais un meme temps de travail 
+   
+   Sauf au début pour la mise en place du projet: Serveur de gestion de version, 
+   Arboresence Maven, Junit, Code Coverage, CI server.
+   
+   Ancienne entreprise, une personne dédiée à cela, là j'ai aprris sur Maven, CI server
+   
+   A améliorer: environnement de travail via ZFS, Nommage des versions, 
+   Repo de gestion de version d'executable.
    
    Plus travaille d'initiation aux scrum, CI, JUnit, Thread
 -------------------------
