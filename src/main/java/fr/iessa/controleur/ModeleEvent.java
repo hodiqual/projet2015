@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package fr.iessa.controleur;
+
+/**
+ * @author hodiqual
+ *
+ */
+public enum ModeleEvent {
+	
+	CHARGEMENT_CARTE_FICHIER_DONE
+,	CHARGEMENT_CARTE_FICHIER_ERREUR
+,	CHARGEMENT_CARTE_GRAPHIQUE_DONE
+
+,	CHARGEMENT_TRAFIC_FICHIER_DONE
+,	CHARGEMENT_TRAFIC_FICHIER_ERREUR
+;
+}
