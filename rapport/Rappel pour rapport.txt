@@ -1,3 +1,10 @@
+--------------------------
+Specifier qu'au niveau allocation des taches:
+   Alexis travaille le meme temps mais en fait plus pendant ce laps de temps que les autres
+   normal par le niveau.
+   A confronter dans le ScrumBoard
+   
+   Plus travaille d'initiation aux scrum, CI, JUnit, Thread
 -------------------------
 Faire un schema de l'Enum:
   Emploi des Enum:
