@@ -48,16 +48,21 @@ public class TestMemoireEtRapiditeParDAO {
 		String ficname = "lfpg.txt";
 		//Java 7 try-with-ressource -> Scanner implements Closeable -> AUTOCLOSE  gere aussi le cas null
 		Aeroport aeroport = InfrastructureDAO.charger(ficname);
+	    System.out.println(aeroport);
 	    // Get the Java runtime
 	    Runtime runtime = Runtime.getRuntime();
-	    // Run the garbage collector
-	    //runtime.gc();
 	    // Calculate the used memory
 	    long memory = runtime.totalMemory() - runtime.freeMemory();
+	    System.out.println("Used memory Avant Garbage is bytes: " + memory);
+	    System.out.println("Avant Garbage Avant Garbage Used memory is megabytes: "
+		        + bytesToMegabytes(memory));
+	    // Run the garbage collector
+	    runtime.gc();
+	    // Calculate the used memory
+	    memory = runtime.totalMemory() - runtime.freeMemory();
 	    System.out.println("Used memory is bytes: " + memory);
 	    System.out.println("Used memory is megabytes: "
 	        + bytesToMegabytes(memory));
-	    System.out.println(aeroport);
 	}
 
 }
