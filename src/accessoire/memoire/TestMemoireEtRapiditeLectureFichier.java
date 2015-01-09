@@ -42,7 +42,7 @@ public class TestMemoireEtRapiditeLectureFichier {
 	}
 	
 	public static void main(String[] args) {
-		String ficname = "trafic.txt";
+		String ficname = "lfpg.txt";
 		ArrayList<String> list = new ArrayList<String>();
 		//Java 7 try-with-ressource -> Scanner implements Closeable -> AUTOCLOSE  gere aussi le cas null
 		charger(ficname, list);	

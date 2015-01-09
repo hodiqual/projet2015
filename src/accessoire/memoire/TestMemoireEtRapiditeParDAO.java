@@ -51,6 +51,8 @@ public class TestMemoireEtRapiditeParDAO {
 	    System.out.println(aeroport);
 	    // Get the Java runtime
 	    Runtime runtime = Runtime.getRuntime();
+	    // Run the garbage collector
+	    runtime.gc();
 	    // Calculate the used memory
 	    long memory = runtime.totalMemory() - runtime.freeMemory();
 	    System.out.println("Used memory Avant Garbage is bytes: " + memory);
