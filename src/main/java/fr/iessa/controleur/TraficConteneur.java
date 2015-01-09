@@ -19,14 +19,14 @@ public class TraficConteneur {
 	/**
 	 * @return the _trafic
 	 */
-	public synchronized Trafic get_trafic() {
+	public synchronized Trafic getTrafic() {
 		return _trafic;
 	}
 
 	/**
 	 * @param _trafic the _trafic to set
 	 */
-	public synchronized void set_trafic(Trafic _trafic) {
+	public synchronized void setTrafic(Trafic _trafic) {
 		this._trafic = _trafic;
 	}
 	

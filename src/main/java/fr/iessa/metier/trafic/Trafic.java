@@ -4,7 +4,7 @@
 package fr.iessa.metier.trafic;
 
 /**
- * @author sb00by
+ * @author hodiqual
  *
  */
 public class Trafic {
