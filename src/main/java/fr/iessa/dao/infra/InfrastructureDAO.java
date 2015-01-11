@@ -11,22 +11,25 @@ import fr.iessa.dao.core.DAO;
 import fr.iessa.metier.infra.Aeroport;
 
 /**
+ * Charge l'infrastructure d'une plateforme aerienne a partir d'un fichier
+ * formatté ligne par ligne décrivant ses points, lignes, pushbacks, runway,
+ * taxiway.
  * @author hodiqual
  *
  */
 public class InfrastructureDAO {
 	
-	
+	/** Singleton des instances des chargeurs. */ 
 	public enum Lookup
 	{
 		  AEROPORT	(new AeroportDAO())
-		, LIGNE		(new LigneDAO())
 		, POINT		(new PointDAO())
+		, LIGNE		(new LigneDAO())
 		, @SuppressWarnings("unchecked")
-		PUSHBACK	(new PushbackDAO(LIGNE._dao))
+		  PUSHBACK	(new PushbackDAO(LIGNE._dao))
+		, @SuppressWarnings("unchecked")
+		  TAXIWAY	(new TaxiwayDAO(LIGNE._dao))
 		, RUNWAY	(new RunwayDAO())
-		, @SuppressWarnings("unchecked")
-		TAXIWAY	(new TaxiwayDAO(LIGNE._dao))
 		;
 		
 		private DAO _dao;
@@ -43,10 +46,16 @@ public class InfrastructureDAO {
 		
 	}
 	
+	/**
+	 * 
+	 * @param ficname fichier formaté contenant la description de la plateforme.
+	 * @return l'infracstructure Aeroport contenant tous ces points,
+	 *         lignes, pushbacks, taxiways, et runways.
+	 */
 	public static Aeroport charger(String ficname)
 	{
 		Aeroport result = null;
-		//Java 7 try-with-ressource -> Scanner implements Closeable -> AUTOCLOSE  gere aussi le cas null
+		
 		try(Scanner scan = new Scanner(new FileReader(ficname));) {
 			//scan ligne par ligne
 			scan.useDelimiter("\n");
@@ -58,8 +67,10 @@ public class InfrastructureDAO {
 			{
 				String ligne = scan.next();
 				
+				//on trouve le type de ligne
 				Lookup typeLigne = findLookup(ligne);
 				
+				//puis on charge la ligne en fonction de son type
 				switch (typeLigne) {
 				case POINT:
 					result.add( ((PointDAO)typeLigne.get()).charger(ligne));
@@ -87,6 +98,7 @@ public class InfrastructureDAO {
 		return result;
 	}
 
+	/** @return  le type d'infrastructure de la plateforme décrite par la ligne du fichier. */
 	public static Lookup findLookup(String ligne) {
 		
 		if(ligne.startsWith("P"))
