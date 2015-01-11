@@ -104,7 +104,8 @@ public class Controleur {
 				return trafic;
 			}
 
-			//process & pusblish pour la gestion des resultats intermediaires,
+			//process & pusblish pour la gestion des resultats intermediaires, PROGRESS fire le TRAVAIL EN COURS 
+			// pour que la vue affiche une animation en rond travail en cours avec un tool tips
 
 			public void done(){
 				try {
@@ -113,6 +114,10 @@ public class Controleur {
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _modele));
+					
+					//TODO Lancer en arriere plan la detection des collisions. pour faire un ReadyToUse.
+					//Attribut qui ecoute le modele chargement trafic fichier done pour lancer la detection 
+					//des collisions dans un swingworker
 				} catch (ExecutionException | InterruptedException e) {
 					//Cas ou le doInBackground a lancé une exception ou a ete interrompu
 					e.printStackTrace();
