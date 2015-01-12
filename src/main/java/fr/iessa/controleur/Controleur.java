@@ -21,14 +21,14 @@ import fr.iessa.metier.trafic.Trafic;
  */
 public class Controleur {
 	
-	/** Contiendra le trafic lorsqu'il sera chargé dans l'application. */
+	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
 	private TraficConteneur _modele = new TraficConteneur();
 	
 	/** Permet de notifier la vue en garantissant que cela soit dans l'Event Dispatch Thread*/
 	private SwingPropertyChangeSupport _swingObservable;
 	
 	public Controleur() {
-		// Les observers seront notifiés seulement dans l'Event Dispatch Thread
+		// Les observers seront notifies seulement dans l'Event Dispatch Thread
 		_swingObservable = new SwingPropertyChangeSupport(_modele, true);
 	}
 	
@@ -53,7 +53,7 @@ public class Controleur {
 
 				//Creer l'image background une fois pour toute.
 				
-				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de référence.
+				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 				return null;
 			}
@@ -98,7 +98,7 @@ public class Controleur {
 				Trafic trafic = null;
 				publish(ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE);
 
-				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de référence.
+				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
 				return trafic;

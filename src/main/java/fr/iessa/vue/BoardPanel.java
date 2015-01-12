@@ -16,7 +16,7 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 /**
- * Gère graphiquement le chargement de la plateforme,
+ * Gere graphiquement le chargement de la plateforme,
  * le chargement du trafic
  * l'affichage de l'image de la plateforme et de son trafic
  * la navigation zoom et scroll sur l'affichage
@@ -57,7 +57,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
 	/**
 	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-	 * Methode appelée lorque le controleur observe un changement d'etat du modele.
+	 * Methode appelee lorque le controleur observe un changement d'etat du modele.
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

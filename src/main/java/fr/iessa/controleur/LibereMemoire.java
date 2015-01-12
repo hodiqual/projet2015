@@ -5,8 +5,8 @@ package fr.iessa.controleur;
 
 /**
  * Permet de forcer le lancement du garbage collector
- * dans le cas ou beaucoup d'instances ont été créés
- * et qui n'ont plus de référence.
+ * dans le cas ou beaucoup d'instances ont ete crees
+ * et qui n'ont plus de reference.
  * @author hodiqual
  *
  */

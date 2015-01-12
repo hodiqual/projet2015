@@ -12,7 +12,7 @@ import fr.iessa.metier.infra.Aeroport;
 
 /**
  * Charge l'infrastructure d'une plateforme aerienne a partir d'un fichier
- * formatté ligne par ligne décrivant ses points, lignes, pushbacks, runway,
+ * formatte ligne par ligne decrivant ses points, lignes, pushbacks, runway,
  * taxiway.
  * @author hodiqual
  *
@@ -48,7 +48,7 @@ public class InfrastructureDAO {
 	
 	/**
 	 * 
-	 * @param ficname fichier formaté contenant la description de la plateforme.
+	 * @param ficname fichier formate contenant la description de la plateforme.
 	 * @return l'infracstructure Aeroport contenant tous ces points,
 	 *         lignes, pushbacks, taxiways, et runways.
 	 */
@@ -98,7 +98,7 @@ public class InfrastructureDAO {
 		return result;
 	}
 
-	/** @return  le type d'infrastructure de la plateforme décrite par la ligne du fichier. */
+	/** @return  le type d'infrastructure de la plateforme decrite par la ligne du fichier. */
 	public static Lookup findLookup(String ligne) {
 		
 		if(ligne.startsWith("P"))

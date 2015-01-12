@@ -6,7 +6,7 @@ package fr.iessa.controleur;
 import fr.iessa.metier.trafic.Trafic;
 
 /**
- * Contient le trafic afin que la référence soit la meme
+ * Contient le trafic afin que la reference soit la meme
  * pour le controleur et la vue.
  * 
  * @author hodiqual
