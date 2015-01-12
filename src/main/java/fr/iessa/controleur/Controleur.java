@@ -52,6 +52,8 @@ public class Controleur {
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
 
 				//Creer l'image background une fois pour toute.
+				// http://research.jacquet.xyz/teaching/java/dessin/
+				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
 				
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
