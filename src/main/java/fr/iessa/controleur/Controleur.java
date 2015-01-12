@@ -104,7 +104,7 @@ public class Controleur {
 				return trafic;
 			}
 
-			//process & pusblish pour la gestion des resultats intermediaires, PROGRESS fire le TRAVAIL EN COURS 
+			//process & publish pour la gestion des resultats intermediaires, PROGRESS fire le TRAVAIL EN COURS 
 			// pour que la vue affiche une animation en rond travail en cours avec un tool tips
 
 			public void done(){
