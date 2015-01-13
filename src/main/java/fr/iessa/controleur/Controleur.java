@@ -3,6 +3,7 @@
  */
 package fr.iessa.controleur;
 
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.ExecutionException;
@@ -46,15 +47,19 @@ public class Controleur {
 		}		
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
-		SwingWorker<ImageIcon, ModeleEvent> sw = new SwingWorker<ImageIcon, ModeleEvent>(){
-			protected ImageIcon doInBackground() throws Exception {
+		SwingWorker<BufferedImage, ModeleEvent> sw = new SwingWorker<BufferedImage, ModeleEvent>(){
+			protected BufferedImage doInBackground() throws Exception {
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
-
-				//Creer l'image background une fois pour toute.
 				
+				//Creer l'image background une fois pour toute.
+				//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
+				BufferedImage carte = new BufferedImage(0, 0, 0);
+				//aeroport
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
+			    //Et aussi graphics.dispose pour toute la memoire qui n'a plus de reference
+			    //http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html#dispose()
 				return null;
 			}
 
@@ -62,7 +67,7 @@ public class Controleur {
 
 			public void done(){
 				try {
-					ImageIcon imageBackground = get();
+					BufferedImage imageBackground = get();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_GRAPHIQUE_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, imageBackground));

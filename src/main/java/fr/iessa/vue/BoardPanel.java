@@ -64,6 +64,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 		
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
 		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
+			//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 			System.out.println("Je suis content");
 			break;
 

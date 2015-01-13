@@ -12,7 +12,7 @@ import java.util.List;
  *
  */
 public class Aeroport {
-	
+
 	private String _nom;
 	
 	private List<Point> _points = new ArrayList<Point>(100);
@@ -57,6 +57,49 @@ public class Aeroport {
 				+ _lignes.size() + ", _taxiway=" + _taxiway.size() + ", _pushbacks="
 				+ _pushbacks.size() + ", _runways=" + _runways.size() + "]";
 	}
+	
+	/**
+	 * @return the _nom
+	 */
+	public String get_nom() {
+		return _nom;
+	}
+
+	/**
+	 * @return the _points
+	 */
+	public List<Point> get_points() {
+		return _points;
+	}
+
+	/**
+	 * @return the _lignes
+	 */
+	public List<Ligne> get_lignes() {
+		return _lignes;
+	}
+
+	/**
+	 * @return the _taxiway
+	 */
+	public List<Taxiway> get_taxiway() {
+		return _taxiway;
+	}
+
+	/**
+	 * @return the _pushbacks
+	 */
+	public List<Pushback> get_pushbacks() {
+		return _pushbacks;
+	}
+
+	/**
+	 * @return the _runways
+	 */
+	public List<Runway> get_runways() {
+		return _runways;
+	}
+
 	
 	
 	
