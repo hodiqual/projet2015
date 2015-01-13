@@ -43,7 +43,7 @@ public class Controleur {
 	
 	public void chargerCarte(String ficname) {
 		//Controle de ficname
-		if(ficname == null || ficname.equals(""))
+		if(ficname == null || ficname.equals("") )//fichierexistant)
 		{
 			ModeleEvent evtfin = ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR;	
 			_swingObservable.firePropertyChange(evtfin.toString(), null, "Le nom du fichier n'est pas renseigne");	
@@ -61,10 +61,10 @@ public class Controleur {
 				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
 				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 				BufferedImage carte = new BufferedImage(400, 300, BufferedImage.TYPE_INT_RGB);
-		         
-		        // récupère un objet Graphics pour pouvoir dessiner sur l'image
-		        // nous récupérons en fait un objet Graphics2D, qui offre bien plus
-		        // de fonctionnalités qu'un simple objet Graphics
+		        //carte.setAccelerationPriority(arg0);
+		        // rÔøΩcupÔøΩre un objet Graphics pour pouvoir dessiner sur l'image
+		        // nous rÔøΩcupÔøΩrons en fait un objet Graphics2D, qui offre bien plus
+		        // de fonctionnalitÔøΩs qu'un simple objet Graphics
 		        Graphics2D g = (Graphics2D)carte.getGraphics();
 		        
 		        // active le lissage des formes
