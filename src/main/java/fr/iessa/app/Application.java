@@ -33,6 +33,8 @@ public class Application {
 	    //frame.add(new JButton("PROUT"));
 		frame.getContentPane().add(new BoardPanel(new Controleur()));
 	    frame.validate();
+	    frame.setPreferredSize((new Dimension(300, 120)));
+	    frame.pack();
 	    frame.setVisible(true);
 	}
 

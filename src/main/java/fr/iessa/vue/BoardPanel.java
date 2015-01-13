@@ -41,6 +41,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         setLayout(new GridLayout(1,1));
 		_controleur = controleur;
 		
+		//Acceleres le paint du component:
+		setOpaque(true);
+		
 		//Pour une animation fluide il vaut mieux etre en double buffer.
 		setDoubleBuffered(true);
 		
@@ -68,7 +71,11 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
 		
+		
+		System.out.println("Lancement chargement");
 		_controleur.chargerCarte("lfpg.txt");
+		
+
 	}
 
 	/**
