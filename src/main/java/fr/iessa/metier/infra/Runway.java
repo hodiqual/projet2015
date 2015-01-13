@@ -81,7 +81,7 @@ public class Runway {
 	/**
 	 * @return the _extremite
 	 */
-	public Point[] get_extremite() {
+	public java.awt.Point[] get_extremite() {
 		return _extremite;
 	}
 	
