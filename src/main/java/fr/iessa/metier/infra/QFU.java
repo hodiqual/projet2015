@@ -16,19 +16,21 @@ public class QFU {
 	/** Le type de QFU (gauche ou droite) */
 	TypeQFU _type;
 
+	
+// Constructor
+public QFU(String degre, TypeQFU type) {
+	_degre = degre;
+	_type = type;
+	}
 
+// Accessors 
+	
+/**
+* @return the complete QFU
+*/
 public String toString()
 {
 	return _degre + _type;
 }
-
-public void setDegre(String _degre) {
-	this._degre = _degre;
-}
-
-public void setType(TypeQFU _type) {
-	this._type = _type;
-}
-
 
 }

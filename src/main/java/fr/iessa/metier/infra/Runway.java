@@ -3,6 +3,8 @@
  */
 package fr.iessa.metier.infra;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -32,31 +34,31 @@ public class Runway {
 	private String[] _listepoints;
 	
 	
-	// Accessors
-	
+
 	
 	public Runway(String nom, String qfu1, String qfu2,
-			java.awt.Point[] extremite, String[] points) {
+			java.awt.Point[] extremite, ArrayList<String> pointsList) {
 
 		_nom=nom;
-		_qfuR.setType(TypeQFU.R);
-		_qfuL.setType(TypeQFU.L);
+		
 		if (qfu1.substring(2,3) == "R")
 		{
-		_qfuR.setDegre(qfu1.substring(0,2));
-		_qfuL.setDegre(qfu2.substring(0,2));
-		
+		_qfuR = new QFU(qfu1.substring(0,2),TypeQFU.R);
+		_qfuL = new QFU(qfu2.substring(0,2),TypeQFU.L);	
 		}
 		else
 		{
-		_qfuL.setDegre(qfu1.substring(0,2));
-		_qfuR.setDegre(qfu2.substring(0,2));
+		_qfuL = new QFU(qfu1.substring(0,2),TypeQFU.L);			
+		_qfuR = new QFU(qfu2.substring(0,2),TypeQFU.R);
 		}
 		
 		_extremite=extremite;
-		_listepoints=points;
+		_listepoints =(String[]) pointsList.toArray(new String[pointsList.size()]);
 	}
 
+	
+	// Accessors
+	
 	/**
 	 * @return the _nom
 	 */
@@ -81,8 +83,24 @@ public class Runway {
 	/**
 	 * @return the _extremite
 	 */
-	public java.awt.Point[] get_extremite() {
-		return _extremite;
+	public Point get_extremite(int i) {
+		
+		return _extremite[i].getLocation();
 	}
 	
+	/**
+	 * @return the x coordinate of _extremite
+	 */
+	public double get_extremite_x(int i) {
+		
+		return _extremite[i].getX();
+	}
+	
+	/**
+	 * @return the y coordinate of _extremite
+	 */
+	public double get_extremite_y(int i) {
+		
+		return _extremite[i].getY();
+	}
 }

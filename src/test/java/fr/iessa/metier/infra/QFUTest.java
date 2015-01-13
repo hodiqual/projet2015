@@ -20,9 +20,7 @@ public class QFUTest {
 	 */
 	@Test
 	public void testToString() {
-		QFU qfutest = new QFU();
-		qfutest.setDegre("09");
-		qfutest.setType(TypeQFU.R);
+		QFU qfutest = new QFU("09", TypeQFU.R);
 		assertEquals("09R", qfutest.toString());
 		
 	}

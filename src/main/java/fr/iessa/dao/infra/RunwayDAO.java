@@ -4,6 +4,7 @@
 package fr.iessa.dao.infra;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -33,25 +34,24 @@ public class RunwayDAO implements DAO<Runway> {
 		
 		int i=0;
 		String nom, qfu1,qfu2;
-		java.awt.Point[] extremite = null;
-		String[] points = null;
+		java.awt.Point[] extremite = new java.awt.Point[2];
+		ArrayList<String> pointsList = new ArrayList<String>();
 		Scanner scan = new Scanner(ligneAtraiter);
-		scan.useDelimiter(" |;|\n");
+		scan.useDelimiter(" |;|\n|,");
 		scan.next(); //skip R
 		nom = scan.next();
 		qfu1 = scan.next();
-		qfu2 = scan.next();
-		scan.useDelimiter(";|\n");
+		qfu2 = scan.next();		
 		extremite[0] = new Point(scan.nextInt(), scan.nextInt());
 		extremite[1] = new Point(scan.nextInt(), scan.nextInt());
 		
 		while(scan.hasNext())
 		{
-			points[i] = scan.next();
+			pointsList.add(i, scan.next());
 			i++;
 		}
 		
-		Runway r =  new Runway(nom, qfu1, qfu2,	extremite, points);
+		Runway r =  new Runway(nom, qfu1, qfu2,	extremite, pointsList);
 		scan.close();
 		return r;
 	}
