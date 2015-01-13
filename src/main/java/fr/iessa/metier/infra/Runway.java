@@ -41,7 +41,7 @@ public class Runway {
 
 		_nom=nom;
 		
-		if (qfu1.substring(2,3) == "R")
+		if (qfu1.substring(2,3).equals("R"))
 		{
 		_qfuR = new QFU(qfu1.substring(0,2),TypeQFU.R);
 		_qfuL = new QFU(qfu2.substring(0,2),TypeQFU.L);	
@@ -102,5 +102,17 @@ public class Runway {
 	public double get_extremite_y(int i) {
 		
 		return _extremite[i].getY();
+	}
+	/**
+	 * @return the array of _listepoints
+	 */
+	public String[] get_listepoints() {
+		return _listepoints;
+	}
+	/**
+	 * @return a case of _listepoints
+	 */
+	public String get_listepoints(int i) {
+		return _listepoints[i];
 	}
 }
