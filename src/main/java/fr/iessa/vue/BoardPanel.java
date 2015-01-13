@@ -3,9 +3,13 @@
  */
 package fr.iessa.vue;
 
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -29,6 +33,8 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
 	Controleur _controleur;
 	
+	BufferedImage _carteEnFond = null;
+	
 	public BoardPanel(Controleur controleur) {
 		super();
 
@@ -38,7 +44,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 		//Pour une animation fluide il vaut mieux etre en double buffer.
 		setDoubleBuffered(true);
 		
-		JButton but = new JButton("Charge Moi");
+		/*JButton but = new JButton("Charge Moi");
 		but.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -47,12 +53,22 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 			}
 		} );
 		
-		add(but);
+		add(but);*/
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+		    public void componentResized(ComponentEvent e) {
+		        // TODO sauvegarder le centre de l'image pour faire une translation apres
+				// comme dans google maps
+		    }
+		});
 		
 		setVisible(true);
 		
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
+		
+		_controleur.chargerCarte("lfpg.txt");
 	}
 
 	/**
@@ -66,11 +82,24 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
 			//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 			System.out.println("Je suis content");
+			_carteEnFond = (BufferedImage) evt.getNewValue();
+			repaint();
 			break;
 
 		default:
 			break;
 		}
 	}
+	
+	//Faire le scroll de la map (pas le zoom) avec la librairie pour faire l'animation
+	
+	@Override
+    public void paintComponent(Graphics g) {
+		//Effacer le contenu pour les animations.
+		super.paintComponent(g);
+		
+		if(_carteEnFond != null)
+			g.drawImage(_carteEnFond, 0, 0, null);
+    }
 
 }
