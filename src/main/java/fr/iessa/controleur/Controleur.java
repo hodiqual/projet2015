@@ -3,6 +3,11 @@
  */
 package fr.iessa.controleur;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.ExecutionException;
@@ -46,25 +51,51 @@ public class Controleur {
 		}		
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
-		SwingWorker<ImageIcon, ModeleEvent> sw = new SwingWorker<ImageIcon, ModeleEvent>(){
-			protected ImageIcon doInBackground() throws Exception {
+		SwingWorker<BufferedImage, ModeleEvent> sw = new SwingWorker<BufferedImage, ModeleEvent>(){
+			protected BufferedImage doInBackground() throws Exception {
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
-
+				
 				//Creer l'image background une fois pour toute.
 				// http://research.jacquet.xyz/teaching/java/dessin/
 				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
-				
+				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
+				BufferedImage carte = new BufferedImage(400, 300, BufferedImage.TYPE_INT_RGB);
+		         
+		        // récupère un objet Graphics pour pouvoir dessiner sur l'image
+		        // nous récupérons en fait un objet Graphics2D, qui offre bien plus
+		        // de fonctionnalités qu'un simple objet Graphics
+		        Graphics2D g = (Graphics2D)carte.getGraphics();
+		        
+		        // active le lissage des formes
+		        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                 RenderingHints.VALUE_ANTIALIAS_ON);
+		        
+		        // dessine des formes
+		        g.setColor(Color.RED);
+		        g.fillRect(10, 10, 200, 100);
+		         
+		        g.setColor(Color.GREEN);
+		        g.fillOval(100, 100, 60, 80);
+		         
+		        g.setFont(new Font("sans-serif", Font.ITALIC, 20));
+		        g.setColor(Color.YELLOW);
+		        g.drawString("Test de BufferedImage.", 150, 250);
+				//aeroport
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
-				return null;
+			    //Et aussi graphics.dispose pour toute la memoire qui n'a plus de reference
+			    //http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html#dispose()
+			    g.dispose();
+			    
+				return carte;
 			}
 
 			//process & pusblish pour la gestion des resultats intermediaires
 
 			public void done(){
 				try {
-					ImageIcon imageBackground = get();
+					BufferedImage imageBackground = get();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_GRAPHIQUE_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, imageBackground));
