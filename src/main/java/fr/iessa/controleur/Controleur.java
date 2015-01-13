@@ -4,9 +4,13 @@
 package fr.iessa.controleur;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +22,8 @@ import javax.swing.event.SwingPropertyChangeSupport;
 
 import fr.iessa.dao.infra.InfrastructureDAO;
 import fr.iessa.metier.infra.Aeroport;
+import fr.iessa.metier.infra.Ligne;
+import fr.iessa.metier.infra.Point;
 import fr.iessa.metier.trafic.Trafic;
 
 /**
@@ -55,32 +61,124 @@ public class Controleur {
 			protected BufferedImage doInBackground() throws Exception {
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
-				
+	
+		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		        int width = (int) screenSize.getWidth();
+		        int height = (int) screenSize.getHeight();
+		        width = 4*width;
+		        height = 4*height;
+		        
 				//Creer l'image background une fois pour toute.
 				// http://research.jacquet.xyz/teaching/java/dessin/
 				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
 				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-				BufferedImage carte = new BufferedImage(400, 300, BufferedImage.TYPE_INT_RGB);
+				BufferedImage carte = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		        //carte.setAccelerationPriority(arg0);
 		        // r�cup�re un objet Graphics pour pouvoir dessiner sur l'image
 		        // nous r�cup�rons en fait un objet Graphics2D, qui offre bien plus
 		        // de fonctionnalit�s qu'un simple objet Graphics
 		        Graphics2D g = (Graphics2D)carte.getGraphics();
-		        
 		        // active le lissage des formes
 		        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		                 RenderingHints.VALUE_ANTIALIAS_ON);
+		        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+		                 RenderingHints.VALUE_RENDER_QUALITY);
 		        
-		        // dessine des formes
-		        g.setColor(Color.RED);
-		        g.fillRect(10, 10, 200, 100);
-		         
-		        g.setColor(Color.GREEN);
-		        g.fillOval(100, 100, 60, 80);
-		         
-		        g.setFont(new Font("sans-serif", Font.ITALIC, 20));
-		        g.setColor(Color.YELLOW);
-		        g.drawString("Test de BufferedImage.", 150, 250);
+		        double minReelX, maxReelX, minReelY, maxReelY;
+		        
+		        Point ptInit = aeroport.get_points().get(0);
+		        minReelX = maxReelX = ptInit.getX();
+		        minReelY = maxReelY = ptInit.getY();
+		        
+		        for (Ligne ligne : aeroport.get_taxiway()) {
+					GeneralPath path = ligne.get_lignePointAPoint();
+					double l_minReelX = path.getBounds().getMinX();
+					double l_maxReelX = path.getBounds().getMaxX();
+					double l_minReelY = path.getBounds().getMinY();
+					double l_maxReelY = path.getBounds().getMaxY();
+					
+					minReelX = (minReelX < l_minReelX) ? minReelX : l_minReelX;
+					minReelY = (minReelY < l_minReelY) ? minReelY : l_minReelY;
+					
+					maxReelX = (maxReelX > l_maxReelX) ? maxReelX : l_maxReelX;
+					maxReelY = (maxReelY > l_maxReelY) ? maxReelY : l_maxReelY;			
+				}
+		        
+		        for (Ligne ligne : aeroport.get_pushbacks()) {
+					GeneralPath path = ligne.get_lignePointAPoint();
+					double l_minReelX = path.getBounds().getMinX();
+					double l_maxReelX = path.getBounds().getMaxX();
+					double l_minReelY = path.getBounds().getMinY();
+					double l_maxReelY = path.getBounds().getMaxY();
+					
+					minReelX = (minReelX < l_minReelX) ? minReelX : l_minReelX;
+					minReelY = (minReelY < l_minReelY) ? minReelY : l_minReelY;
+					
+					maxReelX = (maxReelX > l_maxReelX) ? maxReelX : l_maxReelX;
+					maxReelY = (maxReelY > l_maxReelY) ? maxReelY : l_maxReelY;			
+				}
+		        
+		        for (Ligne ligne : aeroport.get_lignes()) {
+					GeneralPath path = ligne.get_lignePointAPoint();
+					double l_minReelX = path.getBounds().getMinX();
+					double l_maxReelX = path.getBounds().getMaxX();
+					double l_minReelY = path.getBounds().getMinY();
+					double l_maxReelY = path.getBounds().getMaxY();
+					
+					minReelX = (minReelX < l_minReelX) ? minReelX : l_minReelX;
+					minReelY = (minReelY < l_minReelY) ? minReelY : l_minReelY;
+					
+					maxReelX = (maxReelX > l_maxReelX) ? maxReelX : l_maxReelX;
+					maxReelY = (maxReelY > l_maxReelY) ? maxReelY : l_maxReelY;			
+				}
+		        
+		        
+		        double xScale = width  / (maxReelX-minReelX);
+		        double yScale = height / (maxReelY-minReelY);
+		        System.out.println("xScale: " + xScale);
+		        System.out.println("yScale: " + yScale);
+		        AffineTransform saveXform = g.getTransform();
+		        AffineTransform toCenterAt = new AffineTransform();
+		        
+		            toCenterAt.translate(-xScale*minReelX, yScale*maxReelY);
+		            toCenterAt.scale(xScale, -yScale);
+		     
+		            g.transform(toCenterAt);
+		            System.out.println(toCenterAt);
+		            System.out.println(toCenterAt.createInverse());
+		     
+		            
+		            g.setColor(Color.YELLOW);
+			        for (Ligne ligne : aeroport.get_lignes()) {
+						g.draw(ligne.get_lignePointAPoint());		
+					}
+		     
+			        g.setColor(Color.GREEN);
+			        for (Ligne ligne : aeroport.get_taxiway()) {
+						g.draw(ligne.get_lignePointAPoint());		
+					}
+		     
+
+			        g.setColor(Color.RED);
+			        for (Ligne ligne : aeroport.get_pushbacks()) {
+						g.draw(ligne.get_lignePointAPoint());		
+					}
+		            
+		            // Sets the rendering method.
+		            // dessine des formes
+			        /*g.setColor(Color.RED);
+			        g.fillRect(-10, -10, 200, 100);
+			         
+			        g.setColor(Color.GREEN);
+			        g.fillOval(100, 100, 60, 80);
+			         
+			        g.setFont(new Font("sans-serif", Font.ITALIC, 20));
+			        g.setColor(Color.YELLOW);
+			        g.drawString("Test de BufferedImage.", 150, 250);*/
+		            
+		            //retrieve the initial transform
+		            g.setTransform(saveXform);
+		            
 				//aeroport
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
