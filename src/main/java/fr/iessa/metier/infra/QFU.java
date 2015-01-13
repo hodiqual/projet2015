@@ -17,6 +17,12 @@ public class QFU {
 	TypeQFU _type;
 
 	
+// Constructor
+public QFU(String degre, TypeQFU type) {
+	_degre = degre;
+	_type = type;
+	}
+
 // Accessors 
 	
 /**
@@ -26,21 +32,5 @@ public String toString()
 {
 	return _degre + _type;
 }
-
-
-// Mutators
-/**
- * @set the _degre
- */
-public void setDegre(String _degre) {
-	this._degre = _degre;
-}
-/**
- * @set the _type
- */
-public void setType(TypeQFU _type) {
-	this._type = _type;
-}
-
 
 }
