@@ -33,14 +33,12 @@ public enum TypePoint {
     }
 	
 	/** Constructeur */
-	private TypePoint (String n)
-	{
+	private TypePoint (String n) {
 		_ident = n;
 	}
 	
     /** Fonction qui renvoie un TypePoint en fonction de son identifiant. */
-	public static TypePoint from(String n)
-	{
+	public static TypePoint from(String n) {
 		return _types.get(n);
 	}
 	

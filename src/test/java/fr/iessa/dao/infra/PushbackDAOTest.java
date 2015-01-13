@@ -14,7 +14,7 @@ import fr.iessa.metier.type.Direction;
 
 public class PushbackDAOTest {
 
-	//l'objet ˆ tester
+	//l'objet a tester
 	private PushbackDAO _pushbackDAO  = (PushbackDAO) Lookup.PUSHBACK.get();
 
 	@Test

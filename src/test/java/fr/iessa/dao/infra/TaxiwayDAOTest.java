@@ -13,7 +13,7 @@ import fr.iessa.metier.type.Direction;
 
 public class TaxiwayDAOTest {
 
-	//l'objet ˆ tester
+	//l'objet a tester
 	private TaxiwayDAO _taxiwayDAO  = (TaxiwayDAO) Lookup.TAXIWAY.get();
 
 	@Test
