@@ -33,9 +33,8 @@ public class Runway {
 	private String[] _listepoints;
 	
 	
-	// Accessors
-	
-	
+
+	/** Contructeur */
 	public Runway(String nom, String qfu1, String qfu2,
 			java.awt.Point[] extremite, String[] points) {
 
@@ -58,6 +57,9 @@ public class Runway {
 		_listepoints=points;
 	}
 
+	
+	// Accessors
+	
 	/**
 	 * @return the _nom
 	 */
@@ -87,10 +89,17 @@ public class Runway {
 		return _extremite[i].getLocation();
 	}
 	
+	/**
+	 * @return the x coordinate of _extremite
+	 */
 	public double get_extremite_x(int i) {
 		
 		return _extremite[i].getX();
 	}
+	
+	/**
+	 * @return the y coordinate of _extremite
+	 */
 	public double get_extremite_y(int i) {
 		
 		return _extremite[i].getY();
