@@ -3,6 +3,7 @@
  */
 package fr.iessa.metier.infra;
 
+import java.awt.Point;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -81,8 +82,17 @@ public class Runway {
 	/**
 	 * @return the _extremite
 	 */
-	public java.awt.Point[] get_extremite() {
-		return _extremite;
+	public Point get_extremite(int i) {
+		
+		return _extremite[i].getLocation();
 	}
 	
+	public double get_extremite_x(int i) {
+		
+		return _extremite[i].getX();
+	}
+	public double get_extremite_y(int i) {
+		
+		return _extremite[i].getY();
+	}
 }
