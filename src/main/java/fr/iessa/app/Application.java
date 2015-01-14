@@ -3,12 +3,17 @@ package fr.iessa.app;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLayer;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.*;
 
 import fr.iessa.controleur.Controleur;
-import fr.iessa.vue.BoardPanel;
+import fr.iessa.vue.ChargeEnCoursLayerUI;
+import fr.iessa.vue.InfrastructurePanel;
+import fr.iessa.vue.MainLayeredPanel;
 
 public class Application {
 
@@ -17,7 +22,7 @@ public class Application {
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
+		            //UIManager.setLookAndFeel(info.getClassName());
 		            break;
 		        }
 		    }
@@ -26,16 +31,27 @@ public class Application {
 			System.out.println("AEROPORT");
 		}
 		
-		JFrame frame = new JFrame("A REFAIRE");
-	    //frame.setMinimumSize(new Dimension(800, 600));
-	    //frame.add(new JButton("PROUT"));
-	    //frame.setMinimumSize(new Dimension(800, 600));
-	    //frame.add(new JButton("PROUT"));
-		frame.getContentPane().add(new BoardPanel(new Controleur()));
-	    frame.validate();
-	    frame.setPreferredSize((new Dimension(300, 120)));
-	    frame.pack();
-	    frame.setVisible(true);
+        //Creer et fait apparaitre l'application dans le thread EDT
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+        		JFrame frame = new JFrame("800x600 800x600 800x600");
+        	    frame.setPreferredSize((new Dimension(800, 600)));
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                //Create and set up the content pane.
+                final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
+                InfrastructurePanel contentPanePrincipal = new InfrastructurePanel(new Controleur());
+                contentPanePrincipal.setChargeEnCoursLayerUI(layerUI);
+                contentPanePrincipal.addMouseListener((InfrastructurePanel)contentPanePrincipal);
+                JLayer<JPanel> jlayer = new JLayer<JPanel>(contentPanePrincipal, layerUI);
+                contentPanePrincipal.setOpaque(true); //content panes doivent etre opaque
+                frame.getContentPane().add(jlayer);
+
+        	    frame.validate();
+        	    frame.pack();
+        	    frame.setVisible(true);
+            }
+        });
 	}
 
 }

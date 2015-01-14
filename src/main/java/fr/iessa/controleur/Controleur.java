@@ -58,9 +58,10 @@ public class Controleur {
 		}		
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
-		SwingWorker<BufferedImage[], ModeleEvent> sw = new SwingWorker<BufferedImage[], ModeleEvent>(){
-			protected BufferedImage[] doInBackground() throws Exception {
-				
+		SwingWorker<BufferedImage, ModeleEvent> sw = new SwingWorker<BufferedImage, ModeleEvent>(){
+			protected BufferedImage doInBackground() throws Exception {
+
+			    System.out.println("Debut doInBack");
 				// 1. Charger fichier infrastructure
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
@@ -73,13 +74,9 @@ public class Controleur {
 		        int heightS = (int) screenSize.getHeight();
 		        
 		        InfrastructureDrawer drawer = new InfrastructureDrawer();
-		        
-		        BufferedImage[] cartes = new BufferedImage[1];
-		        for (int i = 0; i < cartes.length; i++) {
-					
-				
-		        double largeurImage = 1.5*(i+1)*widthS;
-		        double hauteurImage = 1.5*(i+1)*heightS;
+
+		        double largeurImage = 1.5*widthS;
+		        double hauteurImage = 1.5*heightS;
 		        
 		        LibereMemoire.controleMemoire();
 				//Creer l'image background une fois pour toute.
@@ -106,22 +103,22 @@ public class Controleur {
 			    //http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html#dispose()
 			    g.dispose();
 			    LibereMemoire.controleMemoire();
-			    
-			    cartes[i] = carte;
-		        }
-				return cartes;
+			    System.out.println("Fin doInBack");
+				return carte;
 			}
 
 			//process & pusblish pour la gestion des resultats intermediaires
 
 			public void done(){
 				try {
-					BufferedImage[] imageBackground = get();
+
+				    System.out.println("debut DONE");
+					BufferedImage imageBackground = get();
 					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_GRAPHIQUE_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, imageBackground));
-
+					System.out.println("fin DONE");
 
 				} catch (ExecutionException | InterruptedException e) {
 					//Cas ou le doInBackground a lancé une exception ou a ete interrompu

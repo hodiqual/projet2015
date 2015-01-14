@@ -17,12 +17,10 @@ import javax.swing.UIManager.*;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.dao.infra.InfrastructureDAO;
 import fr.iessa.metier.infra.Aeroport;
-import fr.iessa.vue.BoardPanel;
+import fr.iessa.vue.InfrastructurePanel;
 import fr.iessa.vue.infra.InfrastructureDrawer;
 
-public class Application extends JPanel{
-	
-	
+public class TestDessinCarte extends JPanel{
 
 	public static void main(String[] args) {
 		
@@ -38,21 +36,48 @@ public class Application extends JPanel{
 			System.out.println("AEROPORT");
 		}
 		
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int largeurEcran = (int) screenSize.getWidth();
+        int hauteurEcran = (int) screenSize.getHeight();
+        
 		JFrame frame = new JFrame("A REFAIRE");
-		frame.getContentPane().add(new Application());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(new TestDessinCarte());
 	    frame.validate();
-	    frame.setPreferredSize((new Dimension(300, 120)));
+	    frame.setPreferredSize((new Dimension(largeurEcran, hauteurEcran)));
 	    frame.pack();
 	    frame.setVisible(true);
 	}
 	
 	private int _largeurEcran, _hauteurEcran;
+	private BufferedImage _image;
 	
-	Application()
+	TestDessinCarte()
 	{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         _largeurEcran = (int) screenSize.getWidth();
-        _hauteurEcran = (int) screenSize.getHeight();		
+        _hauteurEcran = (int) screenSize.getHeight();
+        chargeEtDessineAeroport();
+	}
+	
+	void chargeEtDessineAeroport()
+	{
+		 Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
+	        
+	     InfrastructureDrawer dessinateur = new InfrastructureDrawer();
+	         
+	     _image = new BufferedImage(_largeurEcran, _hauteurEcran, BufferedImage.TYPE_INT_RGB);
+	     Graphics2D g2 = (Graphics2D) _image.getGraphics();
+
+			
+	        // active le lissage des formes
+	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	                 RenderingHints.VALUE_ANTIALIAS_ON);
+	        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+	                 RenderingHints.VALUE_RENDER_QUALITY);
+	        
+	     dessinateur.dessineAeroport(aeroport, g2, _largeurEcran, _hauteurEcran);	
 	}
 	
 	@Override
@@ -67,17 +92,7 @@ public class Application extends JPanel{
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,
                  RenderingHints.VALUE_RENDER_QUALITY);
         
-        Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
-        
-        
-        InfrastructureDrawer dessinateur = new InfrastructureDrawer();
-         
-        BufferedImage image = new BufferedImage(_largeurEcran, _hauteurEcran, BufferedImage.TYPE_INT_RGB);
-        
-        dessinateur.dessineAeroport(aeroport, g2, _largeurEcran, _hauteurEcran);
-		
-
-		g2.drawImage(image, null, null);
+		g2.drawImage(_image, 0, 0, null);
 			
 		}
 }
