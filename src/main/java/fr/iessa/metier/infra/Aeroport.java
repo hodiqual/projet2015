@@ -5,7 +5,9 @@ package fr.iessa.metier.infra;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hodiqual
@@ -15,7 +17,7 @@ public class Aeroport {
 
 	private String _nom;
 	
-	private List<Point> _points = new ArrayList<Point>(100);
+	private Map<String, Point> _points = new Hashtable<String, Point>(100);
 	
 	private List<Ligne> _lignes = new ArrayList<Ligne>(100);
 	
@@ -32,7 +34,7 @@ public class Aeroport {
 	}
 	
 	public void add(Point p){
-		_points.add(p);
+		_points.put(p.get_nom(), p);
 	}
 	
 	public void add(Ligne l){
@@ -68,7 +70,7 @@ public class Aeroport {
 	/**
 	 * @return the _points
 	 */
-	public List<Point> get_points() {
+	public Map<String, Point> get_points() {
 		return _points;
 	}
 

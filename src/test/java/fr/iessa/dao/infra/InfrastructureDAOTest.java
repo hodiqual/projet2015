@@ -5,14 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import fr.iessa.dao.infra.InfrastructureDAO.Lookup;
+import fr.iessa.metier.infra.Aeroport;
 
 public class InfrastructureDAOTest {
-
-	/*
-	@Test
-	public void testCharger() {
-		fail("Not yet implemented"); // TODO
-	}*/
 
 	@Test
 	public void testReconnaireUneLigneDeTypePoint() 
@@ -52,6 +47,30 @@ public class InfrastructureDAOTest {
 		String ligneDecrivantUneLigne = "R 09R-27L 09R 27L -2545,1201;1639,1555 K1;K2;K3;K6;K7;Y1;Y10;Y11;Y12;Y13;Y2;Y3;Y4;Y5;Y6;Y7;Y8";
 		Lookup actual = InfrastructureDAO.findLookup(ligneDecrivantUneLigne);
 		assertSame(Lookup.RUNWAY, actual);
+	}
+	
+	@Test
+	public void testCharger()
+	{
+		 Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
+		 assertEquals("LFPG", aeroport.get_nom());
+		 
+		 assertEquals(1184 , aeroport.get_lignes().size(), 0);
+		 aeroport.get_lignes().forEach( l -> assertNotNull(l));
+		 
+		 assertEquals(1040 , aeroport.get_pushbacks().size(), 0);
+		 aeroport.get_pushbacks().forEach( l -> assertNotNull(l));
+		 
+		 assertEquals(2828 , aeroport.get_taxiway().size(), 0);
+		 aeroport.get_taxiway().forEach( l -> assertNotNull(l));
+		 
+		 assertEquals(4 , aeroport.get_runways().size(), 0);
+		 aeroport.get_runways().forEach( l -> assertNotNull(l));
+		 
+		 assertEquals(585 , aeroport.get_points().size(), 0);
+		 aeroport.get_points().forEach( (s,p) -> { assertNotNull(s); assertNotNull(p); 
+				 									assertEquals(s,p.get_nom()); } );
+		 
 	}
 
 }
