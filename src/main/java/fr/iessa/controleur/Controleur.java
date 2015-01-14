@@ -25,6 +25,7 @@ import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.infra.Ligne;
 import fr.iessa.metier.infra.Point;
 import fr.iessa.metier.trafic.Trafic;
+import fr.iessa.vue.infra.InfrastructureDrawer;
 
 /**
  * @author hodiqual
@@ -59,77 +60,33 @@ public class Controleur {
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
 		SwingWorker<BufferedImage[], ModeleEvent> sw = new SwingWorker<BufferedImage[], ModeleEvent>(){
 			protected BufferedImage[] doInBackground() throws Exception {
+				
+				// 1. Charger fichier infrastructure
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 	
-			    double minReelX, maxReelX, minReelY, maxReelY;
-		        
-		        Point ptInit = aeroport.get_points().get(0);
-		        minReelX = maxReelX = ptInit.getX();
-		        minReelY = maxReelY = ptInit.getY();
-		        
-		        for (Ligne ligne : aeroport.get_taxiway()) {
-					GeneralPath path = ligne.get_lignePointAPoint();
-					double l_minReelX = path.getBounds().getMinX();
-					double l_maxReelX = path.getBounds().getMaxX();
-					double l_minReelY = path.getBounds().getMinY();
-					double l_maxReelY = path.getBounds().getMaxY();
-					
-					minReelX = (minReelX < l_minReelX) ? minReelX : l_minReelX;
-					minReelY = (minReelY < l_minReelY) ? minReelY : l_minReelY;
-					
-					maxReelX = (maxReelX > l_maxReelX) ? maxReelX : l_maxReelX;
-					maxReelY = (maxReelY > l_maxReelY) ? maxReelY : l_maxReelY;			
-				}
-		        
-		        for (Ligne ligne : aeroport.get_pushbacks()) {
-					GeneralPath path = ligne.get_lignePointAPoint();
-					double l_minReelX = path.getBounds().getMinX();
-					double l_maxReelX = path.getBounds().getMaxX();
-					double l_minReelY = path.getBounds().getMinY();
-					double l_maxReelY = path.getBounds().getMaxY();
-					
-					minReelX = (minReelX < l_minReelX) ? minReelX : l_minReelX;
-					minReelY = (minReelY < l_minReelY) ? minReelY : l_minReelY;
-					
-					maxReelX = (maxReelX > l_maxReelX) ? maxReelX : l_maxReelX;
-					maxReelY = (maxReelY > l_maxReelY) ? maxReelY : l_maxReelY;			
-				}
-		        
-		        for (Ligne ligne : aeroport.get_lignes()) {
-					GeneralPath path = ligne.get_lignePointAPoint();
-					double l_minReelX = path.getBounds().getMinX();
-					double l_maxReelX = path.getBounds().getMaxX();
-					double l_minReelY = path.getBounds().getMinY();
-					double l_maxReelY = path.getBounds().getMaxY();
-					
-					minReelX = (minReelX < l_minReelX) ? minReelX : l_minReelX;
-					minReelY = (minReelY < l_minReelY) ? minReelY : l_minReelY;
-					
-					maxReelX = (maxReelX > l_maxReelX) ? maxReelX : l_maxReelX;
-					maxReelY = (maxReelY > l_maxReelY) ? maxReelY : l_maxReelY;			
-				}
-		        
 		        
 		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		        int widthS = (int) screenSize.getWidth();
 		        int heightS = (int) screenSize.getHeight();
 		        
-		        BufferedImage[] cartes = new BufferedImage[5];
+		        InfrastructureDrawer drawer = new InfrastructureDrawer();
+		        
+		        BufferedImage[] cartes = new BufferedImage[1];
 		        for (int i = 0; i < cartes.length; i++) {
 					
 				
-		        	double width = (5-i+0.5)*widthS;
-		        	double height = (5-i+0.5)*heightS;
+		        double largeurImage = 1.5*(i+1)*widthS;
+		        double hauteurImage = 1.5*(i+1)*heightS;
 		        
 		        LibereMemoire.controleMemoire();
 				//Creer l'image background une fois pour toute.
 				// http://research.jacquet.xyz/teaching/java/dessin/
 				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
 				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-				BufferedImage carte = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB);
+				BufferedImage carte = new BufferedImage((int)largeurImage, (int)hauteurImage, BufferedImage.TYPE_INT_RGB);
 				LibereMemoire.controleMemoire();
 		        //carte.setAccelerationPriority(arg0);
 		        // r�cup�re un objet Graphics pour pouvoir dessiner sur l'image
@@ -142,43 +99,9 @@ public class Controleur {
 		        g.setRenderingHint(RenderingHints.KEY_RENDERING,
 		                 RenderingHints.VALUE_RENDER_QUALITY);
 		        
+		        drawer.dessineAeroport(aeroport, g, largeurImage, hauteurImage);
 		        
-		        
-		        double xScale = width  / (maxReelX-minReelX);
-		        double yScale = height / (maxReelY-minReelY);
-		        System.out.println("xScale: " + xScale);
-		        System.out.println("yScale: " + yScale);
-		        AffineTransform saveXform = g.getTransform();
-		        AffineTransform toCenterAt = new AffineTransform();
-		        
-		            toCenterAt.translate(-xScale*minReelX, yScale*maxReelY);
-		            toCenterAt.scale(xScale, -yScale);
-		     
-		            g.transform(toCenterAt);
-		            //System.out.println(toCenterAt.createInverse());
-		            LibereMemoire.controleMemoire();
-		         // dessine des formes
-		            g.setColor(Color.YELLOW);
-			        for (Ligne ligne : aeroport.get_lignes()) {
-						g.draw(ligne.get_lignePointAPoint());		
-					}
-			        LibereMemoire.controleMemoire();
-			        g.setColor(Color.GREEN);
-			        for (Ligne ligne : aeroport.get_taxiway()) {
-						g.draw(ligne.get_lignePointAPoint());		
-					}
-		     
-			        LibereMemoire.controleMemoire();
-			        g.setColor(Color.RED);
-			        for (Ligne ligne : aeroport.get_pushbacks()) {
-						g.draw(ligne.get_lignePointAPoint());		
-					}
-			        LibereMemoire.controleMemoire();
-
-		            
-		            //retrieve the initial transform
-		            g.setTransform(saveXform);
-		       
+		        		       
 			    //Et aussi graphics.dispose pour toute la memoire qui n'a plus de reference
 			    //http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html#dispose()
 			    g.dispose();
