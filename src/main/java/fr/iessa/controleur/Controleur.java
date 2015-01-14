@@ -57,34 +57,14 @@ public class Controleur {
 		}		
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
-		SwingWorker<BufferedImage, ModeleEvent> sw = new SwingWorker<BufferedImage, ModeleEvent>(){
-			protected BufferedImage doInBackground() throws Exception {
+		SwingWorker<BufferedImage[], ModeleEvent> sw = new SwingWorker<BufferedImage[], ModeleEvent>(){
+			protected BufferedImage[] doInBackground() throws Exception {
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
+				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
+			    LibereMemoire.free();
 	
-		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		        int width = (int) screenSize.getWidth();
-		        int height = (int) screenSize.getHeight();
-		        width = 4*width;
-		        height = 4*height;
-		        
-				//Creer l'image background une fois pour toute.
-				// http://research.jacquet.xyz/teaching/java/dessin/
-				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
-				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-				BufferedImage carte = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		        //carte.setAccelerationPriority(arg0);
-		        // r�cup�re un objet Graphics pour pouvoir dessiner sur l'image
-		        // nous r�cup�rons en fait un objet Graphics2D, qui offre bien plus
-		        // de fonctionnalit�s qu'un simple objet Graphics
-		        Graphics2D g = (Graphics2D)carte.getGraphics();
-		        // active le lissage des formes
-		        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		                 RenderingHints.VALUE_ANTIALIAS_ON);
-		        g.setRenderingHint(RenderingHints.KEY_RENDERING,
-		                 RenderingHints.VALUE_RENDER_QUALITY);
-		        
-		        double minReelX, maxReelX, minReelY, maxReelY;
+			    double minReelX, maxReelX, minReelY, maxReelY;
 		        
 		        Point ptInit = aeroport.get_points().get(0);
 		        minReelX = maxReelX = ptInit.getX();
@@ -133,6 +113,37 @@ public class Controleur {
 				}
 		        
 		        
+		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		        int widthS = (int) screenSize.getWidth();
+		        int heightS = (int) screenSize.getHeight();
+		        
+		        BufferedImage[] cartes = new BufferedImage[5];
+		        for (int i = 0; i < cartes.length; i++) {
+					
+				
+		        	double width = (5-i+0.5)*widthS;
+		        	double height = (5-i+0.5)*heightS;
+		        
+		        LibereMemoire.controleMemoire();
+				//Creer l'image background une fois pour toute.
+				// http://research.jacquet.xyz/teaching/java/dessin/
+				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
+				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
+				BufferedImage carte = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB);
+				LibereMemoire.controleMemoire();
+		        //carte.setAccelerationPriority(arg0);
+		        // r�cup�re un objet Graphics pour pouvoir dessiner sur l'image
+		        // nous r�cup�rons en fait un objet Graphics2D, qui offre bien plus
+		        // de fonctionnalit�s qu'un simple objet Graphics
+		        Graphics2D g = (Graphics2D)carte.getGraphics();
+		        // active le lissage des formes
+		        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                 RenderingHints.VALUE_ANTIALIAS_ON);
+		        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+		                 RenderingHints.VALUE_RENDER_QUALITY);
+		        
+		        
+		        
 		        double xScale = width  / (maxReelX-minReelX);
 		        double yScale = height / (maxReelY-minReelY);
 		        System.out.println("xScale: " + xScale);
@@ -144,56 +155,46 @@ public class Controleur {
 		            toCenterAt.scale(xScale, -yScale);
 		     
 		            g.transform(toCenterAt);
-		            System.out.println(toCenterAt);
-		            System.out.println(toCenterAt.createInverse());
-		     
-		            
+		            //System.out.println(toCenterAt.createInverse());
+		            LibereMemoire.controleMemoire();
+		         // dessine des formes
 		            g.setColor(Color.YELLOW);
 			        for (Ligne ligne : aeroport.get_lignes()) {
 						g.draw(ligne.get_lignePointAPoint());		
 					}
-		     
+			        LibereMemoire.controleMemoire();
 			        g.setColor(Color.GREEN);
 			        for (Ligne ligne : aeroport.get_taxiway()) {
 						g.draw(ligne.get_lignePointAPoint());		
 					}
 		     
-
+			        LibereMemoire.controleMemoire();
 			        g.setColor(Color.RED);
 			        for (Ligne ligne : aeroport.get_pushbacks()) {
 						g.draw(ligne.get_lignePointAPoint());		
 					}
-		            
-		            // Sets the rendering method.
-		            // dessine des formes
-			        /*g.setColor(Color.RED);
-			        g.fillRect(-10, -10, 200, 100);
-			         
-			        g.setColor(Color.GREEN);
-			        g.fillOval(100, 100, 60, 80);
-			         
-			        g.setFont(new Font("sans-serif", Font.ITALIC, 20));
-			        g.setColor(Color.YELLOW);
-			        g.drawString("Test de BufferedImage.", 150, 250);*/
+			        LibereMemoire.controleMemoire();
+
 		            
 		            //retrieve the initial transform
 		            g.setTransform(saveXform);
-		            
-				//aeroport
-				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
-			    LibereMemoire.free();
+		       
 			    //Et aussi graphics.dispose pour toute la memoire qui n'a plus de reference
 			    //http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html#dispose()
 			    g.dispose();
+			    LibereMemoire.controleMemoire();
 			    
-				return carte;
+			    cartes[i] = carte;
+		        }
+				return cartes;
 			}
 
 			//process & pusblish pour la gestion des resultats intermediaires
 
 			public void done(){
 				try {
-					BufferedImage imageBackground = get();
+					BufferedImage[] imageBackground = get();
+					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_GRAPHIQUE_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, imageBackground));

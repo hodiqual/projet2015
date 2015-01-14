@@ -17,4 +17,25 @@ public final class LibereMemoire {
 	    // Run the garbage collector
 	    runtime.gc();
 	}
+	
+	  private static final long MEGABYTE = 1024L * 1024L;
+
+	  public static long bytesToMegabytes(long bytes) {
+	    return bytes / MEGABYTE;
+	  }
+	  
+	  public static void controleMemoire(){
+
+		    // Get the Java runtime
+		    Runtime runtime = Runtime.getRuntime();
+		    
+		    // Calculate the used memory
+		    long memory = runtime.totalMemory() - runtime.freeMemory();
+		 // Calculate the used memory
+		    memory = runtime.totalMemory() - runtime.freeMemory();
+		    System.out.println("Used memory is bytes: " + memory);
+		    System.out.println("Used memory is megabytes: "
+		        + bytesToMegabytes(memory));
+	  }
+	  
 }

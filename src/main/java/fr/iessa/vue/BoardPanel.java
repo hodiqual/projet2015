@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 
 /**
@@ -41,10 +42,12 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
 	Controleur _controleur;
 	
-	BufferedImage _carteEnFond = null;
+	BufferedImage[] _carteEnFond = null;
 	
-	/** Permet d'avoir la translation à faire après un drag de la souris */
+	/** Permet d'avoir la translation a faire apres un drag de la souris */
 	Point2D.Double _dxdyscroll = new Point2D.Double();
+
+	private int _index;
 	
 	public BoardPanel(Controleur controleur) {
 		super();
@@ -75,9 +78,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				_dxdyscroll.x += e.getPoint().getX()-_whereMousePressed.getX();
-				_dxdyscroll.y += e.getPoint().getY()-_whereMousePressed.getY();
-
+				_dxdyscroll.x -= e.getPoint().getX()-_whereMousePressed.getX();
+				_dxdyscroll.y -= e.getPoint().getY()-_whereMousePressed.getY();
+				
 				System.out.println( "mouseReleased: " + _dxdyscroll);
 				
 				repaint();
@@ -90,6 +93,17 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 				_whereMousePressed.x = e.getPoint().getX();
 				_whereMousePressed.y = e.getPoint().getY();
 				System.out.println( "mousePressed: " + _whereMousePressed); 
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+				_index++;
+				if(_carteEnFond != null)
+					_index%=_carteEnFond.length;
+				
+				repaint();
 			}
 			
 		});
@@ -125,7 +139,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
 			//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 			System.out.println("Je suis content");
-			_carteEnFond = (BufferedImage) evt.getNewValue();
+			_carteEnFond = (BufferedImage[]) evt.getNewValue();
 			repaint();
 			break;
 
@@ -156,15 +170,28 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 	        int height = (int) screenSize.getHeight();
 	        
 			AffineTransform at = new AffineTransform();
-			at.translate(-_carteEnFond.getWidth()/2, -_carteEnFond.getHeight()/2);
+			at.scale(0.5, 0.5);
 			
 			AffineTransform mouseScroll = new AffineTransform();
 			
 			mouseScroll.translate(_dxdyscroll.getX(), _dxdyscroll.getY());
 			//g2.transform(at);
 			System.out.println(mouseScroll);
-			g2.transform(mouseScroll);
-			g2.drawImage(_carteEnFond, 0, 0, null);
+			//g2.transform(mouseScroll);
+
+
+			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
+			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
+
+			_dxdyscroll.x = Double.min(_dxdyscroll.x, _carteEnFond[0].getWidth()-getWidth());
+			_dxdyscroll.y = Double.min(_dxdyscroll.y, _carteEnFond[0].getHeight()-getHeight());
+			
+			//clip ou BufferedImage..getSubimage(x, y, width, height)
+			//g2.drawImage(_carteEnFond[_index].getSubimage((int)(_dxdyscroll.getX()),(int)(_dxdyscroll.getY()), getWidth(), getHeight()), at, null);
+			g2.drawImage(_carteEnFond[0],
+					0, 0, (int)getWidth(), (int)getHeight(), 
+					(int)_dxdyscroll.x, (int)_dxdyscroll.y, (int)(getWidth() * (_index+1)), (int)(getHeight() * (_index+1)), null);
+
 			System.out.println("DESSIN FIN!!!!");
 		}
     }
