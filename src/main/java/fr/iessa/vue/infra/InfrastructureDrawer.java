@@ -21,11 +21,11 @@ public class InfrastructureDrawer {
 	
 	private Aeroport _aeroport = null;
 	
-	private double _minReelX, _maxReelX, _minReelY, _maxReelY;
+	public double _minReelX, _maxReelX, _minReelY, _maxReelY;
 	
 	private int _largeurImage, _hauteurImage;
 	
-	private AffineTransform _transfoAffine;
+	public AffineTransform _transfoAffine;
 	
 	public void dessineAeroport(Aeroport aeroport, Graphics2D g2, double largeurImage, double hauteurImage )
 	{
@@ -73,7 +73,6 @@ public class InfrastructureDrawer {
 		double xScale = largeurImage / (_maxReelX-_minReelX);
         double yScale = hauteurImage / (_maxReelY-_minReelY);
         
-
         _transfoAffine = new AffineTransform();
         
         _transfoAffine.translate(-xScale*_minReelX, yScale*_maxReelY);
@@ -81,9 +80,9 @@ public class InfrastructureDrawer {
 		
 	}
 
-	private void trouverLimitesReels(List<? extends Ligne> get_lignes) {
+	private void trouverLimitesReels(List<? extends Ligne> lignes) {
        
-		for (Ligne ligne : _aeroport.get_lignes()) {
+		for (Ligne ligne : lignes) {
 			GeneralPath path = ligne.get_lignePointAPoint();
 			double l_minReelX = path.getBounds().getMinX();
 			double l_maxReelX = path.getBounds().getMaxX();

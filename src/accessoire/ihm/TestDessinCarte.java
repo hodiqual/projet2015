@@ -40,6 +40,7 @@ public class TestDessinCarte extends JPanel{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int largeurEcran = (int) screenSize.getWidth();
         int hauteurEcran = (int) screenSize.getHeight();
+        System.out.println("Largeur " + largeurEcran + " Hauteur " + hauteurEcran);
         
 		JFrame frame = new JFrame("A REFAIRE");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
