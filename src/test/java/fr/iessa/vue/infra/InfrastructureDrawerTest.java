@@ -27,9 +27,9 @@ public class InfrastructureDrawerTest {
 	public void testDessineAeroport() {
 		Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
 		
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int widthS = (int) screenSize.getWidth();
-        int heightS = (int) screenSize.getHeight();
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int widthS = 1280;
+        int heightS = 1024;
 		BufferedImage image = new BufferedImage(widthS, heightS, BufferedImage.TYPE_INT_RGB);
 		
 
