@@ -71,6 +71,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
+		addMouseListener(this);
 	}
 
 	/**

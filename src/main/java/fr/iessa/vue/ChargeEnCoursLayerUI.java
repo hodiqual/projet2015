@@ -21,7 +21,7 @@ import javax.swing.Timer;
 import javax.swing.plaf.LayerUI;
 
 /**
- * @author hodiqual
+ * @author internet
  *
  */
 public class ChargeEnCoursLayerUI extends LayerUI<JPanel> implements

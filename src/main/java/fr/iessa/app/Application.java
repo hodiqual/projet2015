@@ -45,7 +45,8 @@ public class Application {
                 contentPanePrincipal.addMouseListener((InfrastructurePanel)contentPanePrincipal);
                 JLayer<JPanel> jlayer = new JLayer<JPanel>(contentPanePrincipal, layerUI);
                 contentPanePrincipal.setOpaque(true); //content panes doivent etre opaque
-                frame.getContentPane().add(jlayer);
+                //frame.getContentPane().add(jlayer);
+                frame.getContentPane().add(new MainLayeredPanel());
 
         	    frame.validate();
         	    frame.pack();
