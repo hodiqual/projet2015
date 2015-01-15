@@ -39,13 +39,6 @@ public class Application {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
                 //Create and set up the content pane.
-                final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
-                InfrastructurePanel contentPanePrincipal = new InfrastructurePanel(new Controleur());
-                contentPanePrincipal.setChargeEnCoursLayerUI(layerUI);
-                contentPanePrincipal.addMouseListener((InfrastructurePanel)contentPanePrincipal);
-                JLayer<JPanel> jlayer = new JLayer<JPanel>(contentPanePrincipal, layerUI);
-                contentPanePrincipal.setOpaque(true); //content panes doivent etre opaque
-                //frame.getContentPane().add(jlayer);
                 frame.getContentPane().add(new MainLayeredPanel());
 
         	    frame.validate();

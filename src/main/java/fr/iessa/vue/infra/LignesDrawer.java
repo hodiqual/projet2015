@@ -22,13 +22,12 @@ public class LignesDrawer {
         for (Ligne ligne : aeroport.get_lignes()) {
 			g2.draw(ligne.get_lignePointAPoint());		
 		}
-        LibereMemoire.controleMemoire();
+
         g2.setColor(Color.GREEN);
         for (Ligne ligne : aeroport.get_taxiway()) {
 			g2.draw(ligne.get_lignePointAPoint());		
 		}
  
-        LibereMemoire.controleMemoire();
         g2.setColor(Color.RED);
         for (Ligne ligne : aeroport.get_pushbacks()) {
 			g2.draw(ligne.get_lignePointAPoint());		

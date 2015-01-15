@@ -82,19 +82,21 @@ public class InfrastructureDrawer {
 	}
 
 	private void trouverLimitesReels(List<? extends Ligne> get_lignes) {
-        for (Ligne ligne : _aeroport.get_lignes()) {
+       
+		for (Ligne ligne : _aeroport.get_lignes()) {
 			GeneralPath path = ligne.get_lignePointAPoint();
 			double l_minReelX = path.getBounds().getMinX();
 			double l_maxReelX = path.getBounds().getMaxX();
 			double l_minReelY = path.getBounds().getMinY();
 			double l_maxReelY = path.getBounds().getMaxY();
 			
-			_minReelX = (_minReelX < l_minReelX) ? _minReelX : l_minReelX;
-			_minReelY = (_minReelY < l_minReelY) ? _minReelY : l_minReelY;
-			
-			_maxReelX = (_maxReelX > l_maxReelX) ? _maxReelX : l_maxReelX;
-			_maxReelY = (_maxReelY > l_maxReelY) ? _maxReelY : l_maxReelY;			
+			_minReelX = Double.min(_minReelX, l_minReelX);
+			_minReelY = Double.min(_minReelY, l_minReelY);
+			_maxReelX = Double.max(_maxReelX, l_maxReelX);
+			_maxReelY = Double.max(_maxReelY, l_maxReelY);	
 		}
 	}
+	
+	
 
 }

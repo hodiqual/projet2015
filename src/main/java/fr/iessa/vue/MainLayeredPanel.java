@@ -88,7 +88,7 @@ public class MainLayeredPanel extends JPanel {
 		_gestionPlans.add(trafic,0);
 		trafic.add(button);
 
-		trafic.addMouseListener(new MouseAdapter() {
+		/*trafic.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -100,7 +100,7 @@ public class MainLayeredPanel extends JPanel {
 				System.out.println("TRAFIC PANEL PANEL");
 				
 			}
-		});
+		});*/
 		button.addMouseListener(new MouseAdapter() {
 			
 			@Override
