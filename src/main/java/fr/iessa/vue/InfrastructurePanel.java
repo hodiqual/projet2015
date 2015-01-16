@@ -53,6 +53,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 	/** Indique si un charge lourde est en cours*/
 	private ChargeEnCoursLayerUI _layerUI;
+
+	private int _zoomLevel;
 	
 	public InfrastructurePanel(Controleur controleur) {
         setLayout(new GridLayout(1,1));
@@ -74,9 +76,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
-		addMouseListener(this);
-		
-		
+		addMouseListener(this);		
 	}
 
 	/**
@@ -140,6 +140,12 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			if(_layerUI!=null)
 				_layerUI.start();
 		}
+		else
+		{
+			_zoomLevel++;
+			_zoomLevel%=6;
+		}
+			
 	}
 
 	@Override
