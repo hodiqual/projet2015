@@ -3,6 +3,7 @@
  */
 package fr.iessa.vue;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JToolTip;
 import javax.swing.OverlayLayout;
 
 import fr.iessa.controleur.Controleur;
@@ -77,61 +79,101 @@ public class MainLayeredPanel extends JPanel {
 		
 		_gestionPlans.add(jlayer, -3000);
 		
-		JButton button = new JButton("PROUT");
-	    button.setAlignmentX(0.0f);
-	    button.setAlignmentY(0.0f);
-		button.setPreferredSize(new Dimension(40, 40));
-		button.setMaximumSize(new Dimension(40, 40));
-		//button.setBounds(60, 80, 300, 400);
+		//Gestion du trafic
+		//Via Un JLayer peut desactiver la sensibilite au MouseWheel et ainsi passer ca directement au InfraPanel
+		TraficPanel myPanel = new  TraficPanel();
+		myPanel.setAlignmentX(0.0f);
+		myPanel.setAlignmentY(0.0f);
+		_gestionPlans.add(new TraficPanel(),0);
+		
 		JPanel trafic = new JPanel();
+		trafic.setAlignmentX(0.0f);
+		trafic.setAlignmentY(0.0f);
+		trafic.setMinimumSize(new Dimension(800, 600));
+		trafic.setPreferredSize(new Dimension(800, 600));
+		trafic.setDoubleBuffered(true);
+		//trafic.setLayout(new OverlayLayout(trafic));
+		trafic.setLayout(new GridLayout(1, 1));
 		trafic.setOpaque(false);
-		_gestionPlans.add(trafic,0);
-		trafic.add(button);
-
-		/*trafic.addMouseListener(new MouseAdapter() {
+		trafic.setBorder(BorderFactory.createLineBorder(Color.RED));
+		//_gestionPlans.add(trafic,0);
+		
+		JButton avion1 = new JButton("avion1");
+		//avion1.setAlignmentX(0.0f);
+		//avion1.setAlignmentY(0.0f);
+		//avion1.setBounds(0, 200, 800, 600);
+		avion1.setPreferredSize(new Dimension(40, 40));
+		avion1.setMaximumSize(new Dimension(40, 40));
+		avion1.setLocation(0,200);
+		JToolTip toolTip = avion1.createToolTip();
+		toolTip.setToolTipText("PROUT");
+		trafic.add(avion1);
+		//_gestionPlans.add(avion1,0);
+		avion1.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				int newX = button.getLocation().x + 10;
-				int newY = button.getLocation().y + 10;
+				int newX = avion1.getLocation().x + 10;
+				int newY = avion1.getLocation().y - 10;
 
-				button.setLocation(newX, newY);
-				System.out.println("TRAFIC PANEL PANEL");
-				
-			}
-		});*/
-		button.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				int newX = button.getLocation().x + 10;
-				int newY = button.getLocation().y + 10;
-
-				button.setLocation(newX, newY);
-				System.out.println("MOUSE MOUSE MOUSE");
+				avion1.setLocation(newX, newY);
+				System.out.println("avion1");
 				
 			}
 		});
-		//button.setBounds(10, 10, 20, 20);
-		//InfrastructurePanel prout = new InfrastructurePanel(_controleur);
-		//prout.setBounds(320, 30, 300, 400);
+		
+		JButton avion2 = new JButton("avion2");
+		avion2.setBounds(200, 0, 40, 40);
+		avion2.setPreferredSize(new Dimension(40, 40));
+		avion2.setMaximumSize(new Dimension(40, 40));
+		avion2.setLocation(200,0);
+		trafic.add(avion2);
+		//_gestionPlans.add(avion2,0);
+		avion2.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int newX = avion2.getLocation().x - 10;
+				int newY = avion2.getLocation().y + 10;
+
+				avion2.setLocation(newX, newY);
+				System.out.println("avion2");
+				
+			}
+		});
+		
+		JButton avion3 = new JButton("avion3");
+		avion2.setBounds(100, 100, 40, 40);
+		/*avion3.setPreferredSize(new Dimension(40, 40));
+		avion3.setMaximumSize(new Dimension(40, 40));
+		avion3.setLocation(100,100);*/
+		trafic.add(avion3);
+		//_gestionPlans.add(avion3,0);
+		avion3.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int newX = avion3.getLocation().x + 10;
+				int newY = avion3.getLocation().y + 10;
+
+				avion3.setLocation(newX, newY);
+				System.out.println("avion3");
+				
+			}
+		});
 		
 		/*
 		 * IL Y A AUSSI POUR DISPATCHER LES EVENTS
 		 * http://stackoverflow.com/questions/21500162/jlayeredpane-how-to-check-if-component-has-another-drawn-under-it
 		 */
 		
-		//addMouseListener(_infrastructurePanel);
-		//Gestion du trafic
-
 		//Gestion du panel de controle
 		
 		//Rajout du composant de gestion des plans a ce JPanel
-		add(_gestionPlans);
-		//add(_infrastructurePanel);
-		
+		add(_gestionPlans);	
 	}
 	
 	

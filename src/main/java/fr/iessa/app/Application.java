@@ -2,17 +2,10 @@ package fr.iessa.app;
 
 import java.awt.Dimension;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLayer;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.*;
 
-import fr.iessa.controleur.Controleur;
-import fr.iessa.vue.ChargeEnCoursLayerUI;
-import fr.iessa.vue.InfrastructurePanel;
 import fr.iessa.vue.MainLayeredPanel;
 
 public class Application {

@@ -75,8 +75,8 @@ public class Controleur {
 		        
 		        InfrastructureDrawer drawer = new InfrastructureDrawer();
 
-		        double largeurImage = 1.5*widthS;
-		        double hauteurImage = 1.5*heightS;
+		        double largeurImage = 1*widthS;
+		        double hauteurImage = 1*heightS;
 		        
 		        LibereMemoire.controleMemoire();
 				//Creer l'image background une fois pour toute.

@@ -12,6 +12,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,6 +25,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JToolTip;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.LibereMemoire;
@@ -72,6 +75,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
 		addMouseListener(this);
+		
+		
 	}
 
 	/**
@@ -113,31 +118,16 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
                  RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,
                  RenderingHints.VALUE_RENDER_QUALITY);
-		
-        System.out.println("PAINT !!!!");
 		if(_carteEnFond != null)
 		{	
-			System.out.println("DESSIN DEBUT!!!!");
-	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	        int width = (int) screenSize.getWidth();
-	        int height = (int) screenSize.getHeight();
-			
-			AffineTransform mouseScroll = new AffineTransform();
-			
-			mouseScroll.translate(_dxdyscroll.getX(), _dxdyscroll.getY());
-			//g2.transform(at);
-			System.out.println(mouseScroll);
-			//g2.transform(mouseScroll);
+			//Cadrage et position avec clip ou getSubimage
+			//Avec Clip
+			g2.setClip(0,0, getWidth(), getHeight());
+			g2.drawImage(_carteEnFond, -(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()), null);
+			//ou
+			//BufferedImage..getSubimage(x, y, width, height)
+			//g2.drawImage(_carteEnFond.getSubimage((int)(_dxdyscroll.getX()),(int)(_dxdyscroll.getY()), getWidth(), getHeight()), null, null);
 
-			
-			//clip ou BufferedImage..getSubimage(x, y, width, height)
-			g2.drawImage(_carteEnFond.getSubimage((int)(_dxdyscroll.getX()),(int)(_dxdyscroll.getY()), getWidth(), getHeight()), null, null);
-			/*g2.drawImage(_carteEnFond[0],
-					0, 0, (int)getWidth(), (int)getHeight(), 
-					(int)_dxdyscroll.x, (int)_dxdyscroll.y, (int)(getWidth() * (_index+1)), (int)(getHeight() * (_index+1)), null);*/
-			//g2.drawImage(_carteEnFond[_index],0,0
-			//g2.drawImage(_carteEnFond, mouseScroll, null);
-			System.out.println("DESSIN FIN!!!!");
 		}
     }
 
@@ -167,8 +157,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
 		_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
 
-		//_dxdyscroll.x = Double.min(_dxdyscroll.x, _carteEnFond[0].getWidth()-getWidth());
-		//_dxdyscroll.y = Double.min(_dxdyscroll.y, _carteEnFond[0].getHeight()-getHeight());
+		_dxdyscroll.x = Double.min(_dxdyscroll.x, _carteEnFond.getWidth()-getWidth());
+		_dxdyscroll.y = Double.min(_dxdyscroll.y, _carteEnFond.getHeight()-getHeight());
 	
 		System.out.println( "mouseReleased: " + _dxdyscroll);
 	
