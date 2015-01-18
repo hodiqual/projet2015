@@ -3,6 +3,7 @@
  */
 package fr.iessa.vue;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +18,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -30,6 +33,8 @@ import javax.swing.JToolTip;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
+import fr.iessa.metier.infra.Aeroport;
+import fr.iessa.vue.infra.InfrastructureDrawer;
 
 /**
  * Gere graphiquement le chargement de la plateforme,
@@ -39,13 +44,21 @@ import fr.iessa.controleur.ModeleEvent;
  * @author hodiqual
  * 
  */
-public class InfrastructurePanel extends JPanel implements PropertyChangeListener, MouseListener {
+public class InfrastructurePanel extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener {
 
 	private static final long serialVersionUID = 25499665468682529L;
 
 	Controleur _controleur;
 	
+	InfrastructureDrawer _drawer = new InfrastructureDrawer();
+	AffineTransform _mouseScroll = new AffineTransform();
+	
+	Aeroport _aeroport;
+	
 	BufferedImage _carteEnFond = null;
+	
+	int _largeurImage;
+	int _hauteurImage;
 	
 	/** Permet d'avoir la translation a faire apres un drag de la souris */
 	Point2D.Double _whereMousePressed = new Point2D.Double();
@@ -54,10 +67,12 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 	/** Indique si un charge lourde est en cours*/
 	private ChargeEnCoursLayerUI _layerUI;
 
-	private int _zoomLevel;
+	private int _zoomLevel = 1;
 	
 	public InfrastructurePanel(Controleur controleur) {
         setLayout(new GridLayout(1,1));
+        setBackground(Color.white);
+        
 		_controleur = controleur;
 		
 		//Acceleres le paint du component:
@@ -76,7 +91,12 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
-		addMouseListener(this);		
+		addMouseListener(this);	
+		addMouseWheelListener(this);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    _largeurImage = (int) screenSize.getWidth();
+	    _hauteurImage = (int) screenSize.getHeight();
 	}
 
 	/**
@@ -90,7 +110,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
 			//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 			System.out.println("Je suis content Vue");
-			_carteEnFond = (BufferedImage) evt.getNewValue();
+			_aeroport = (Aeroport) evt.getNewValue();
 
 			if(_layerUI!=null)
 				_layerUI.stop();
@@ -118,36 +138,30 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
                  RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,
                  RenderingHints.VALUE_RENDER_QUALITY);
-		if(_carteEnFond != null)
-		{	
+        
+       
+		if(_aeroport != null)
+		{				 
+		    
 			//Cadrage et position avec clip ou getSubimage
 			//Avec Clip
 			g2.setClip(0,0, getWidth(), getHeight());
-			g2.drawImage(_carteEnFond, -(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()), null);
-			//ou
-			//BufferedImage..getSubimage(x, y, width, height)
-			//g2.drawImage(_carteEnFond.getSubimage((int)(_dxdyscroll.getX()),(int)(_dxdyscroll.getY()), getWidth(), getHeight()), null, null);
-
+			_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
+			System.out.println("ZOOOOOOM : " + _zoomLevel);
+			LibereMemoire.controleMemoire();
 		}
     }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println( "mouseClicked: " + this); 
-		if(_carteEnFond == null)
-		{
-			_controleur.chargerCarte("lfpg.txt");
-			if(_layerUI!=null)
-				_layerUI.start();
-		}
-		else
-		{
-			_zoomLevel++;
-			_zoomLevel%=6;
+			if(_aeroport == null)
+			{
+				_controleur.chargerCarte("lfpg.txt");
+				if(_layerUI!=null)
+					_layerUI.start();
+			}
 		}
 			
-	}
-
 	@Override
 	public void mousePressed(MouseEvent e) {
 		_whereMousePressed.x = e.getPoint().getX();
@@ -163,13 +177,13 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
 		_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
 
-		_dxdyscroll.x = Double.min(_dxdyscroll.x, _carteEnFond.getWidth()-getWidth());
-		_dxdyscroll.y = Double.min(_dxdyscroll.y, _carteEnFond.getHeight()-getHeight());
-	
-		System.out.println( "mouseReleased: " + _dxdyscroll);
-	
-		repaint();
+		_dxdyscroll.x = Double.min(_dxdyscroll.x, _largeurImage-getWidth());
+		_dxdyscroll.y = Double.min(_dxdyscroll.y, _hauteurImage-getHeight());
 		
+		_mouseScroll = new AffineTransform();
+		_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
+
+		repaint();
 	}
 
 	@Override
@@ -186,6 +200,59 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 	public void setChargeEnCoursLayerUI(ChargeEnCoursLayerUI layerUI) {
 		this._layerUI = layerUI;
+		
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+
+		if(_aeroport != null)
+		{
+			if(e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
+			{	
+				int rotation = e.getWheelRotation();
+				if(rotation>0) // -> zoom
+				{
+					if(_zoomLevel < 10)
+						_zoomLevel++;
+				}
+				else // -> de-zoom
+				{
+					if(_zoomLevel > 1)
+						_zoomLevel--;
+				}
+			}
+
+			
+	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	        int widthS = (int) screenSize.getWidth();
+	        int heightS = (int) screenSize.getHeight();
+	        double oldLargeurImage = _largeurImage;
+	        double oldHauteurImage = _hauteurImage;
+	        
+	        _largeurImage = _zoomLevel*widthS;
+	        _hauteurImage = _zoomLevel*heightS; 
+	        
+	        double scaleX = _largeurImage/oldLargeurImage;
+	        double scaleY = _hauteurImage/oldHauteurImage;
+	        
+	        _dxdyscroll.x *= scaleX;
+	        _dxdyscroll.y *= scaleY;
+	        
+			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
+			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
+
+			_dxdyscroll.x = Double.min(_dxdyscroll.x, _largeurImage-getWidth());
+			_dxdyscroll.y = Double.min(_dxdyscroll.y, _hauteurImage-getHeight());
+			
+			_mouseScroll = new AffineTransform();
+			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
+			
+	        
+	        repaint();
+			
+		}
+			
 		
 	}
 

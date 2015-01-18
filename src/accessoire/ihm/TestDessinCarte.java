@@ -78,7 +78,7 @@ public class TestDessinCarte extends JPanel{
 	        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 	                 RenderingHints.VALUE_RENDER_QUALITY);
 	        
-	     dessinateur.dessineAeroport(aeroport, g2, _largeurEcran, _hauteurEcran);	
+	     dessinateur.dessineAeroport(aeroport, g2, _largeurEcran, _hauteurEcran, new AffineTransform());	
 	}
 	
 	@Override

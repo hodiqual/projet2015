@@ -22,7 +22,7 @@ public class LignesDrawer {
 	{
 		
 		Stroke oldStyle = g2.getStroke();
-        g2.setColor(Color.GRAY);
+        g2.setColor(Color.LIGHT_GRAY);
         g2.setStroke(new BasicStroke(8.0f, BasicStroke.CAP_SQUARE,
                 BasicStroke.JOIN_ROUND));
         for (Ligne ligne : aeroport.get_taxiway()) {

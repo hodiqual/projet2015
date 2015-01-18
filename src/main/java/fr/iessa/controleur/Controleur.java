@@ -58,8 +58,8 @@ public class Controleur {
 		}		
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
-		SwingWorker<BufferedImage, ModeleEvent> sw = new SwingWorker<BufferedImage, ModeleEvent>(){
-			protected BufferedImage doInBackground() throws Exception {
+		SwingWorker<Aeroport, ModeleEvent> sw = new SwingWorker<Aeroport, ModeleEvent>(){
+			protected Aeroport doInBackground() throws Exception {
 
 			    System.out.println("Debut doInBack");
 				// 1. Charger fichier infrastructure
@@ -67,44 +67,9 @@ public class Controleur {
 				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
-	
-		        
-		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		        int widthS = (int) screenSize.getWidth();
-		        int heightS = (int) screenSize.getHeight();
-		        
-		        InfrastructureDrawer drawer = new InfrastructureDrawer();
-
-		        double largeurImage = 1*widthS;
-		        double hauteurImage = 1*heightS;
-		        
-		        LibereMemoire.controleMemoire();
-				//Creer l'image background une fois pour toute.
-				// http://research.jacquet.xyz/teaching/java/dessin/
-				// http://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html
-				// http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-				BufferedImage carte = new BufferedImage((int)largeurImage, (int)hauteurImage, BufferedImage.TYPE_INT_RGB);
-				LibereMemoire.controleMemoire();
-		        //carte.setAccelerationPriority(arg0);
-		        // r�cup�re un objet Graphics pour pouvoir dessiner sur l'image
-		        // nous r�cup�rons en fait un objet Graphics2D, qui offre bien plus
-		        // de fonctionnalit�s qu'un simple objet Graphics
-		        Graphics2D g = (Graphics2D)carte.getGraphics();
-		        // active le lissage des formes
-		        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		                 RenderingHints.VALUE_ANTIALIAS_ON);
-		        g.setRenderingHint(RenderingHints.KEY_RENDERING,
-		                 RenderingHints.VALUE_RENDER_QUALITY);
-		        
-		        drawer.dessineAeroport(aeroport, g, largeurImage, hauteurImage);
-		        
-		        		       
-			    //Et aussi graphics.dispose pour toute la memoire qui n'a plus de reference
-			    //http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html#dispose()
-			    g.dispose();
-			    LibereMemoire.controleMemoire();
+			    
 			    System.out.println("Fin doInBack");
-				return carte;
+				return aeroport;
 			}
 
 			//process & pusblish pour la gestion des resultats intermediaires
@@ -113,11 +78,11 @@ public class Controleur {
 				try {
 
 				    System.out.println("debut DONE");
-					BufferedImage imageBackground = get();
+				    Aeroport aeroport = get();
 					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_GRAPHIQUE_DONE;	
-					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, imageBackground));
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, aeroport));
 					System.out.println("fin DONE");
 
 				} catch (ExecutionException | InterruptedException e) {

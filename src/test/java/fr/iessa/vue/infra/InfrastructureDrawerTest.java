@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class InfrastructureDrawerTest {
 		
 
 		InfrastructureDrawer drawer = new InfrastructureDrawer();
-		drawer.dessineAeroport(aeroport, image.createGraphics(), widthS, heightS);
+		drawer.dessineAeroport(aeroport, image.createGraphics(), widthS, heightS, new AffineTransform());
 		
 		assertEquals(-3879, drawer._minReelX,0);
 		assertEquals(4571, drawer._maxReelX,0);

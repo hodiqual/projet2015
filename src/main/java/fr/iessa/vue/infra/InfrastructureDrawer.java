@@ -27,7 +27,7 @@ public class InfrastructureDrawer {
 	
 	public AffineTransform _transfoAffine;
 	
-	public void dessineAeroport(Aeroport aeroport, Graphics2D g2, double largeurImage, double hauteurImage )
+	public void dessineAeroport(Aeroport aeroport, Graphics2D g2, double largeurImage, double hauteurImage, AffineTransform mouseScroll )
 	{
 		// 1. Calcul ou recalcul de la transformation affine si necessaire
 		if( aeroport != _aeroport || largeurImage != _largeurImage || hauteurImage != _hauteurImage)
@@ -39,6 +39,7 @@ public class InfrastructureDrawer {
 		AffineTransform transformToRestore = g2.getTransform();
 		
 		// 3. Appliquer la transformation
+		g2.transform(mouseScroll);
 		g2.transform(_transfoAffine);
 		
 		// 4. Faire les dessins
