@@ -203,6 +203,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		
 	}
 
+	/** TODO Rajouter image  */
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 
@@ -236,8 +237,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 	        double scaleX = _largeurImage/oldLargeurImage;
 	        double scaleY = _hauteurImage/oldHauteurImage;
 	        
-	        _dxdyscroll.x *= scaleX;
-	        _dxdyscroll.y *= scaleY;
+	        _dxdyscroll.x = e.getX()*(scaleX-1) + scaleX*_dxdyscroll.x;
+	        _dxdyscroll.y = e.getY()*(scaleY-1) + scaleY*_dxdyscroll.y;
 	        
 			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
 			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
