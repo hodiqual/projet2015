@@ -25,17 +25,17 @@ public class PointsDrawer {
         	switch (point.get_type()) {
 			case STAND :
 				g2.setColor(Color.YELLOW);
-				g2.drawRect((int)point.getX(), (int)point.getY(), 10, 10);
+				g2.fillOval((int)point.getX(), (int)point.getY(), 10, 10);
 				break;
 			
 			case DEICING :
 				g2.setColor(Color.BLUE);
-				g2.drawRect((int)point.getX(), (int)point.getY(), 10, 10);
+				g2.fillOval((int)point.getX(), (int)point.getY(), 10, 10);
 				break;
 				
 			case RUNWAY_POINT :
 				g2.setColor(Color.RED);
-				g2.drawRect((int)point.getX(), (int)point.getY(), 10, 10);
+				g2.fillOval((int)point.getX(), (int)point.getY(), 10, 10);
 				break;
 
 			default:
