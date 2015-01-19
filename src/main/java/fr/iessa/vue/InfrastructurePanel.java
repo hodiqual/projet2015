@@ -211,7 +211,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			if(e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
 			{	
 				int rotation = e.getWheelRotation();
-				if(rotation>0) // -> zoom
+				if(rotation<0) // -> zoom
 				{
 					if(_zoomLevel < 10)
 						_zoomLevel++;
@@ -230,8 +230,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 	        double oldLargeurImage = _largeurImage;
 	        double oldHauteurImage = _hauteurImage;
 	        
-	        _largeurImage = _zoomLevel*widthS;
-	        _hauteurImage = _zoomLevel*heightS; 
+	        _largeurImage = (int)_zoomLevel*widthS;
+	        _hauteurImage = (int)_zoomLevel*heightS; 
 	        
 	        double scaleX = _largeurImage/oldLargeurImage;
 	        double scaleY = _hauteurImage/oldHauteurImage;
