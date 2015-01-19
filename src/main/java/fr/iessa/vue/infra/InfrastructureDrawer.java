@@ -19,6 +19,8 @@ public class InfrastructureDrawer {
 	
 	private static LignesDrawer lignesDrawer = new LignesDrawer();
 	
+	private static PointsDrawer pointsDrawer = new PointsDrawer();
+	
 	private Aeroport _aeroport = null;
 	
 	public double _minReelX, _maxReelX, _minReelY, _maxReelY;
@@ -44,6 +46,7 @@ public class InfrastructureDrawer {
 		
 		// 4. Faire les dessins
 		lignesDrawer.dessine(aeroport, g2);
+		pointsDrawer.dessine(aeroport, g2);
 		
 		// 5. restaure la transformation initialle.
 		g2.setTransform(transformToRestore);
