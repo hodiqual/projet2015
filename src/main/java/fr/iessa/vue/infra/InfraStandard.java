@@ -32,4 +32,14 @@ public enum InfraStandard {
 		_couleur = couleur;
 	}
 	
+	public Color couleur()
+	{
+		return _couleur;
+	}
+	
+	public float largeur()
+	{
+		return _largeur;
+	}
+	
 }
