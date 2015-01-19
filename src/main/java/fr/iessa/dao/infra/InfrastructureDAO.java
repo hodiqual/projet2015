@@ -95,6 +95,8 @@ public class InfrastructureDAO {
 			e.printStackTrace();
 		}
 		
+		result.initialiseRunway();
+		
 		return result;
 	}
 

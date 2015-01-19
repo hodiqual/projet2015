@@ -102,6 +102,10 @@ public class Aeroport {
 		return _runways;
 	}
 
+	public void initialiseRunway() {
+		_runways.forEach( r -> r.initialisePath(_points));		
+	}
+
 	
 	
 	

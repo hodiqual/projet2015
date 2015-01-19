@@ -6,6 +6,7 @@ package fr.iessa.metier.infra;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import fr.iessa.metier.type.TypeQFU;
@@ -114,5 +115,10 @@ public class Runway {
 	 */
 	public String get_listepoints(int i) {
 		return _listepoints[i];
+	}
+
+
+	public void initialisePath(Map<String, fr.iessa.metier.infra.Point> _points) {
+		// TODO Auto-generated method stub
 	}
 }
