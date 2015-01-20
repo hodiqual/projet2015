@@ -8,13 +8,9 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import fr.iessa.metier.infra.Point;
 
