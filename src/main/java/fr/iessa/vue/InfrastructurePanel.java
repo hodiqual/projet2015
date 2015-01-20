@@ -147,8 +147,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			//Avec Clip
 			g2.setClip(0,0, getWidth(), getHeight());
 			_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
-			System.out.println("ZOOOOOOM : " + _zoomLevel);
-			LibereMemoire.controleMemoire();
+			//System.out.println("ZOOOOOOM : " + _zoomLevel);
+			//LibereMemoire.controleMemoire();
 		}
     }
 
