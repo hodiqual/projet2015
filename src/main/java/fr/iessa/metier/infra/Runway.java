@@ -4,10 +4,14 @@
 package fr.iessa.metier.infra;
 
 import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+
+import com.sun.javafx.geom.Path2D;
 
 import fr.iessa.metier.type.TypeQFU;
 
@@ -33,6 +37,9 @@ public class Runway {
 	
 	/** La liste des points qui composent la piste */
 	private String[] _listepoints;
+	
+	/** La piste construite à partir des points */
+	private GeneralPath _runwayPointAPoint;
 	
 	
 
@@ -118,7 +125,21 @@ public class Runway {
 	}
 
 
-	public void initialisePath(Map<String, fr.iessa.metier.infra.Point> _points) {
-		// TODO Auto-generated method stub
+	public void initialisePath(Map<String, fr.iessa.metier.infra.Point> mapPoints) {
+		_runwayPointAPoint = new GeneralPath(Path2D.WIND_NON_ZERO,_listepoints.length);
+
+       	for (int i=0;i<_listepoints.length;i++){
+       		Point point = mapPoints.get(_listepoints[i]);
+       		if(i==0)
+       			_runwayPointAPoint.moveTo(point.getX(), point.getY());
+       		else
+       			_runwayPointAPoint.lineTo(point.getX(), point.getY());
+			}			
+	}
+
+
+
+	public Shape get_runwayPointAPoint() {
+		return _runwayPointAPoint;
 	}
 }
