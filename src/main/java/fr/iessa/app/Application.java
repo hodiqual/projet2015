@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UIManager.*;
 
-import fr.iessa.vue.MainLayeredPanel;
+import fr.iessa.vue.PanelPrincipalMultiCouches;
 
 public class Application {
 
@@ -15,7 +15,7 @@ public class Application {
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
-		            //UIManager.setLookAndFeel(info.getClassName());
+		            UIManager.setLookAndFeel(info.getClassName());
 		            break;
 		        }
 		    }
@@ -32,7 +32,7 @@ public class Application {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
                 //Create and set up the content pane.
-                frame.getContentPane().add(new MainLayeredPanel());
+                frame.getContentPane().add(new PanelPrincipalMultiCouches());
 
         	    frame.validate();
         	    frame.pack();

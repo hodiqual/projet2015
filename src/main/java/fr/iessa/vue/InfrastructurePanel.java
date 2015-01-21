@@ -251,7 +251,6 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			
 	        
 	        repaint();
-			
 		}
 			
 		
