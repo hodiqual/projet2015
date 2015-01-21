@@ -53,8 +53,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		public boolean isOptimizedDrawingEnabled() {
 	        return true;
 	      }
-		}
-		;
+		};
 		
 		OverlayLayout layout = new OverlayLayout(_gestionPlans);
 		_gestionPlans.setLayout(layout);
@@ -75,11 +74,10 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_gestionPlans.add(jlayer, -3000);
 		
 		//Gestion du trafic
-		TraficPanel myPanel = new  TraficPanel();
-		myPanel.setAlignmentX(0.0f);
-		myPanel.setAlignmentY(0.0f);
-		_gestionPlans.add(new TraficPanel(),0);
-		
+		TraficPanel traficPanel = new  TraficPanel();
+		traficPanel.setAlignmentX(0.0f);
+		traficPanel.setAlignmentY(0.0f);
+		_gestionPlans.add(traficPanel,0);
 		
 		/*
 		 * IL Y A AUSSI POUR DISPATCHER LES EVENTS

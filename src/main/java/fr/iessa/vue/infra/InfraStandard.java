@@ -10,8 +10,8 @@ import java.awt.Color;
  *
  */
 public enum InfraStandard {
-	TAXIWAY(Color.LIGHT_GRAY, 8.0f)
-,   TAXIWAY_MARQUE_SOL(Color.YELLOW, 8.0f)
+	TAXIWAY(Color.DARK_GRAY, 20f)
+,   TAXIWAY_MARQUE_SOL(Color.YELLOW, 0.3f)
 ,	RUNWAY(Color.GRAY, 8.0f)
 ,	RUNWAY_MARQUE_SOL(Color.GRAY, 8.0f)
 ,	STAND(Color.GRAY, 8.0f)
