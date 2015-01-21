@@ -3,13 +3,16 @@
  */
 package fr.iessa.vue.infra;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.util.List;
+import java.util.Map;
 
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.infra.Ligne;
+import fr.iessa.metier.infra.Point;
 
 /**
  * @author hodiqual
@@ -75,6 +78,7 @@ public class InfrastructureDrawer {
 	        trouverLimitesReels(aeroport.get_lignes());
 	        trouverLimitesReels(aeroport.get_taxiway());
 	        trouverLimitesReels(aeroport.get_pushbacks());
+	        trouverLimitesReels(aeroport.get_points());
 		}
 		
 		double xScale = largeurImage / (_maxReelX-_minReelX);
@@ -101,8 +105,24 @@ public class InfrastructureDrawer {
 			_maxReelX = Double.max(_maxReelX, l_maxReelX);
 			_maxReelY = Double.max(_maxReelY, l_maxReelY);	
 		}
+		
+		
+		
 	}
 	
-	
+	private void trouverLimitesReels(Map<String, Point> _points) {
+		for (Map.Entry<String, Point> entry : _points.entrySet()) {
+			Point point = entry.getValue();
+			
+			double p_ReelX = point.getX();
+			double p_ReelY = point.getY();
+			
+			_minReelX = Double.min(_minReelX, p_ReelX);
+			_minReelY = Double.min(_minReelY, p_ReelY);
+			_maxReelX = Double.max(_maxReelX, p_ReelX);
+			_maxReelY = Double.max(_maxReelY, p_ReelY);
+       
+		}
+	}
 
 }
