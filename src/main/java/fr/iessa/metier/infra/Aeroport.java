@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author hodiqual
- *
+ * Classe metier qui definit la plateforme aeroportuaire 
  */
 public class Aeroport {
 
