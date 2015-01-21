@@ -20,8 +20,9 @@ public class LignesDrawer {
 	
 	public void dessine(Aeroport aeroport, Graphics2D g2 )
 	{
-		
+		//1. Sauvegarde du stroke courant
 		Stroke oldStyle = g2.getStroke();
+		
         g2.setColor(Color.LIGHT_GRAY);
         g2.setStroke(new BasicStroke(8.0f, BasicStroke.CAP_SQUARE,
                 BasicStroke.JOIN_ROUND));
@@ -43,6 +44,7 @@ public class LignesDrawer {
 			g2.draw(ligne.get_lignePointAPoint());		
 		}
         
+        //Reset du stroke avec le stroke initial.
         g2.setStroke(oldStyle);
 	}
 

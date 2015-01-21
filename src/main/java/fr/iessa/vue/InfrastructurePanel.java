@@ -26,12 +26,9 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JToolTip;
 
 import fr.iessa.controleur.Controleur;
-import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.vue.infra.InfrastructureDrawer;
@@ -223,7 +220,6 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 						_zoomLevel--;
 				}
 			}
-
 			
 	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	        int widthS = (int) screenSize.getWidth();

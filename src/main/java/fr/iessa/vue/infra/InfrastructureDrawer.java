@@ -51,7 +51,7 @@ public class InfrastructureDrawer {
 		runwaysDrawer.dessine(aeroport, g2);
 		pointsDrawer.dessine(aeroport, g2);
 		
-		// 5. restaure la transformation initialle.
+		// 5. restaure la transformation initiale.
 		g2.setTransform(transformToRestore);
 	}
 
