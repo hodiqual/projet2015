@@ -5,8 +5,6 @@ package fr.iessa.vue.infra;
 
 import static org.junit.Assert.*;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
