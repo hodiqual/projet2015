@@ -23,27 +23,90 @@ public class LignesDrawer {
 		//1. Sauvegarde du stroke courant
 		Stroke oldStyle = g2.getStroke();
 		
-        g2.setColor(Color.LIGHT_GRAY);
-        g2.setStroke(new BasicStroke(8.0f, BasicStroke.CAP_SQUARE,
+		//2. Dessine l'alsphate des taxiways
+        g2.setColor(InfraStd.TAXIWAY.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.TAXIWAY.largeur(), BasicStroke.CAP_SQUARE,
                 BasicStroke.JOIN_ROUND));
         for (Ligne ligne : aeroport.get_taxiway()) {
-			g2.draw(ligne.get_lignePointAPoint());		
+			g2.draw(ligne.get_lignePointAPoint());
 		}
-        
-        g2.setColor(Color.YELLOW);
-        g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_SQUARE,
+		
+		//3. Dessine l'alsphate des lignes
+        g2.setColor(InfraStd.LIGNES.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.LIGNES.largeur(), BasicStroke.CAP_SQUARE,
                 BasicStroke.JOIN_ROUND));
         for (Ligne ligne : aeroport.get_lignes()) {
-			g2.draw(ligne.get_lignePointAPoint());		
+			g2.draw(ligne.get_lignePointAPoint());
 		}
-
-        g2.setColor(Color.RED);
-        g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_SQUARE,
+		
+		//4. Dessine l'alsphate des pushbacks
+        g2.setColor(InfraStd.PUSHBACK.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.PUSHBACK.largeur(), BasicStroke.CAP_SQUARE,
                 BasicStroke.JOIN_ROUND));
         for (Ligne ligne : aeroport.get_pushbacks()) {
-			g2.draw(ligne.get_lignePointAPoint());		
+			g2.draw(ligne.get_lignePointAPoint());
 		}
         
+        //5. Reset du stroke avec le stroke initial.
+        g2.setStroke(oldStyle);
+	}
+	
+	public void dessineMarquageAuSol(Aeroport aeroport, Graphics2D g2)
+	{	
+		//1. Sauvegarde du stroke courant
+		Stroke oldStyle = g2.getStroke();
+		
+		//2. Dessine les marquages au sol des taxiways
+			//2.1 la bordure de la ligne centrale taxiway
+        g2.setColor(InfraStd.TAXIWAY_MARQUE_SOL_BORDURE.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.TAXIWAY_MARQUE_SOL_BORDURE.largeur(), BasicStroke.CAP_SQUARE,
+                BasicStroke.JOIN_ROUND));
+        for (Ligne taxiway : aeroport.get_taxiway()) {			
+			g2.draw(taxiway.get_lignePointAPoint());	
+		}
+        	
+			//2.2 la ligne centrale taxiway
+        g2.setColor(InfraStd.TAXIWAY_MARQUE_SOL.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.TAXIWAY_MARQUE_SOL.largeur(), BasicStroke.CAP_SQUARE,
+                BasicStroke.JOIN_ROUND));
+        for (Ligne taxiway : aeroport.get_taxiway()) {			
+			g2.draw(taxiway.get_lignePointAPoint());	
+		}
+        
+        //3. Dessine les marquages au sol des lignes
+			//3.1 la bordure de la ligne centrale des lignes
+        g2.setColor(InfraStd.LIGNES_MARQUE_SOL_BORDURE.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.LIGNES_MARQUE_SOL_BORDURE.largeur(), BasicStroke.CAP_SQUARE,
+                BasicStroke.JOIN_ROUND));
+        for (Ligne ligne : aeroport.get_lignes()) {		
+			g2.draw(ligne.get_lignePointAPoint());		
+		}
+			//3.2 la ligne centrale des lignes
+        g2.setColor(InfraStd.LIGNES_MARQUE_SOL.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.LIGNES_MARQUE_SOL.largeur(), BasicStroke.CAP_SQUARE,
+                BasicStroke.JOIN_ROUND));
+        for (Ligne ligne : aeroport.get_lignes()) {		
+			g2.draw(ligne.get_lignePointAPoint());		
+		}  
+                
+        final float motifPointille[] = {10.0f};
+        
+        //4. Dessine les marquages au sol des pushbacks
+			//4.1 la bordure de la ligne centrale des lignes
+        g2.setColor(InfraStd.PUSHBACK_MARQUE_SOL_BORDURE.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.PUSHBACK_MARQUE_SOL_BORDURE.largeur(), BasicStroke.CAP_SQUARE,
+                BasicStroke.JOIN_ROUND, 1.0f, motifPointille, 0f));
+        for (Ligne ligne : aeroport.get_pushbacks()) {		
+			g2.draw(ligne.get_lignePointAPoint());		
+		}
+			//4.2 la ligne centrale des pushbacks
+        g2.setColor(InfraStd.PUSHBACK_MARQUE_SOL.couleur());
+        g2.setStroke(new BasicStroke(InfraStd.PUSHBACK_MARQUE_SOL.largeur(), BasicStroke.CAP_SQUARE,
+        		BasicStroke.JOIN_ROUND, 1.0f, motifPointille, 0f));
+        for (Ligne ligne : aeroport.get_pushbacks()) {		
+			g2.draw(ligne.get_lignePointAPoint());		
+		}
+              
         //Reset du stroke avec le stroke initial.
         g2.setStroke(oldStyle);
 	}

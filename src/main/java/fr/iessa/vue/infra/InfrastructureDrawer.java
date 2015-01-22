@@ -52,6 +52,8 @@ public class InfrastructureDrawer {
 		// 4. Faire les dessins
 		lignesDrawer.dessine(aeroport, g2);
 		runwaysDrawer.dessine(aeroport, g2);
+
+		lignesDrawer.dessineMarquageAuSol(aeroport, g2);
 		pointsDrawer.dessine(aeroport, g2);
 		
 		// 5. restaure la transformation initiale.

@@ -9,16 +9,27 @@ import java.awt.Color;
  * @author hodiqual
  *
  */
-public enum InfraStandard {
-	TAXIWAY(Color.DARK_GRAY, 20f)
-,   TAXIWAY_MARQUE_SOL(Color.YELLOW, 0.3f)
+public enum InfraStd {
+	TAXIWAY(Color.GRAY, 30f)
+,   TAXIWAY_MARQUE_SOL(new Color(244,196,48), 0.5f)
+,   TAXIWAY_MARQUE_SOL_BORDURE(Color.BLACK, 1f)
+
+,	LIGNES(Color.LIGHT_GRAY, 60f)
+,   LIGNES_MARQUE_SOL(new Color(244,196,48), 0.5f)
+,   LIGNES_MARQUE_SOL_BORDURE(Color.BLACK, 1f)
+
+,	PUSHBACK(Color.LIGHT_GRAY, 60f)
+,   PUSHBACK_MARQUE_SOL(new Color(244,196,48), 0.5f)
+,   PUSHBACK_MARQUE_SOL_BORDURE(Color.BLACK, 1f)
+
 ,	RUNWAY(Color.GRAY, 8.0f)
 ,	RUNWAY_MARQUE_SOL(Color.GRAY, 8.0f)
+
 ,	STAND(Color.GRAY, 8.0f)
 ,	DEICING(Color.GRAY, 8.0f);
 
 	
-	private InfraStandard(Color couleur, float largeur){
+	private InfraStd(Color couleur, float largeur){
 		_largeur = largeur;
 		_couleur = couleur;
 	}

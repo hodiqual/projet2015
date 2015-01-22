@@ -211,7 +211,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 				int rotation = e.getWheelRotation();
 				if(rotation<0) // -> zoom
 				{
-					if(_zoomLevel < 10)
+					if(_zoomLevel < 20)
 						_zoomLevel++;
 				}
 				else // -> de-zoom
