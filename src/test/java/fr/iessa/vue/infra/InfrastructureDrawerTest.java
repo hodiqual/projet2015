@@ -42,8 +42,8 @@ public class InfrastructureDrawerTest {
 		assertEquals(-2219, drawer._minReelY,0);
 		assertEquals(1880, drawer._maxReelY,0);
 		
-		double[] expectedTransAffine = { 0.151479289940828,               0.0, 0.0,
-										-0.249817028543547, 587.5881656804734, 469.6560136618688 };
+		double[] expectedTransAffine = { 0.14797687861271677,               0.0, 0.0,
+										-0.2381949290532682, 588.8, 471.62595952547105 };
 		double[] actualTransAffine = new double[6];
 		drawer._transfoAffine.getMatrix(actualTransAffine);
 		assertArrayEquals(expectedTransAffine, actualTransAffine, 0.000001);
