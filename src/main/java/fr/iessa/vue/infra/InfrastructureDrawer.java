@@ -30,6 +30,9 @@ public class InfrastructureDrawer {
 	
 	public double _minReelX, _maxReelX, _minReelY, _maxReelY;
 	
+	/** Permet de faire des marges autour de l'aeroport, exprimee en metre*/
+	private final double _margeReel = 100.0D;
+	
 	private int _largeurImage, _hauteurImage;
 	
 	public AffineTransform _transfoAffine;
@@ -83,12 +86,17 @@ public class InfrastructureDrawer {
 	        trouverLimitesReels(aeroport.get_points());
 		}
 		
-		double xScale = largeurImage / (_maxReelX-_minReelX);
-        double yScale = hauteurImage / (_maxReelY-_minReelY);
+		double maxReelXmarge = _maxReelX + _margeReel;
+		double minReelXmarge = _minReelX - _margeReel;
+		double maxReelYmarge = _maxReelY + _margeReel;
+		double minReelYmarge = _minReelY - _margeReel;
+		
+		double xScale = largeurImage / (maxReelXmarge-minReelXmarge);
+        double yScale = hauteurImage / (maxReelYmarge-minReelYmarge);
         
         _transfoAffine = new AffineTransform();
         
-        _transfoAffine.translate(-xScale*_minReelX, yScale*_maxReelY);
+        _transfoAffine.translate(-xScale*(minReelXmarge), yScale*(maxReelYmarge));
         _transfoAffine.scale(xScale, -yScale);
 		
 	}
