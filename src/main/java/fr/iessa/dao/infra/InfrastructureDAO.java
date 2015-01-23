@@ -87,15 +87,15 @@ public class InfrastructureDAO {
 				case RUNWAY:
 					result.add( ((RunwayDAO)typeLigne.get()).charger(ligne));
 					break;
-				}
-				
-			}		
+				}				
+			}
+			
+			result.initialiseRunway();
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		result.initialiseRunway();
 		
 		return result;
 	}
