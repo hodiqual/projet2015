@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
+/**
+ * 
+ * @author thomasra
+ *
+ */
 public class Instant {
 	
 	private final int _secondes;

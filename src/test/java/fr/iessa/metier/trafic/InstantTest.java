@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import fr.iessa.metier.trafic.Instant.InstantFabrique;
 
+/**
+ * 
+ * @author thomasra
+ *
+ */
 public class InstantTest {
 
 	@Test
@@ -17,7 +22,8 @@ public class InstantTest {
 		
 		Instant deuxiemeDemande = InstantFabrique.get(secondes);
 		
-		assertSame("les deux demandes doivent retourner la meme instance d'Instant", premiereDemande, deuxiemeDemande);
+		assertSame("les deux demandes doivent retourner la meme instance d'Instant", 
+						premiereDemande, deuxiemeDemande);
 	}
 
 }
