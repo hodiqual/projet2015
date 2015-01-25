@@ -137,7 +137,15 @@ public class Runway {
 			}			
 	}
 
+	public double getAngle(double i) {
+	    double angle = -Math.atan2(_extremite[1].getY() - _extremite[0].getY(), _extremite[1].getX() - _extremite[0].getX());
+	    angle +=i;
+	    if(angle < 0){
+	        angle += 2*Math.PI;
+	    }
 
+	    return angle;
+	}
 
 	public Shape get_runwayPointAPoint() {
 		return _runwayPointAPoint;
