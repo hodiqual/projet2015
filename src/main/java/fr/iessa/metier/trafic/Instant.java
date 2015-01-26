@@ -1,16 +1,20 @@
 package fr.iessa.metier.trafic;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * 
  * @author thomasra
  *
  */
-public class Instant {
+public class Instant implements Comparable<Instant>{
 	
 	private final int _secondes;
 	
@@ -21,10 +25,15 @@ public class Instant {
 		_secondes = secondes;
 		_date = new Date();
 	}
+
+	@Override
+	public int compareTo(Instant o) {
+		return this._secondes - o._secondes;
+	}
 	
 	public static class InstantFabrique {
 		
-		private static Map<Integer, Instant> _instantsSingleton = new Hashtable<>();
+		private static TreeMap<Integer, Instant> _instantsSingleton = new TreeMap<>();
 		
 		public static Instant get(int secondes) {
 			
@@ -39,6 +48,18 @@ public class Instant {
 			return uniqueInstant;
 		}
 		
+		public static Set<Entry<Integer, Instant>> getAll() {
+			return _instantsSingleton.entrySet();
+		}
+		
+		public static Collection<Instant> getInstants() {
+			return _instantsSingleton.values();
+		}
+		
+	}
+
+	public int getSeconds() {
+		return _secondes;
 	}
 
 }
