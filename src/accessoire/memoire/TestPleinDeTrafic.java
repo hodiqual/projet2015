@@ -80,15 +80,16 @@ public class TestPleinDeTrafic {
 					.collect( Collectors.toSet() );
 		
 		long start = System.nanoTime();
-		/*
+		
 		  ConcurrentMap<Instant, Set<Vol>> volsParInstant = InstantFabrique.getInstants().parallelStream()
 																						.collect( Collectors.toConcurrentMap( Function.identity()
 																															 , valueMapper ) );
 		 TreeMap<Instant, Set<Vol>> treeMap = new TreeMap(volsParInstant);
-		*/
-		TreeMap<Instant, Set<Vol>> treeMapTest = InstantFabrique.getInstants().stream()
+		 
+
+		/*TreeMap<Instant, Set<Vol>> treeMapTest = InstantFabrique.getInstants().stream()
 												.collect( Collectors.toMap( Function.identity()
-																, valueMapper, (o,n) -> n, TreeMap::new ) );
+																, valueMapper, (o,n) -> n, TreeMap::new ) );*/
 		
 		final double realTime = System.nanoTime()-start; 
 		final int cores = Runtime.getRuntime().availableProcessors(); 
