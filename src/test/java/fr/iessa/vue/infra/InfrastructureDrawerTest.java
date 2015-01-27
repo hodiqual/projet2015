@@ -27,9 +27,6 @@ public class InfrastructureDrawerTest {
 	 */
 	@Test
 	public void testDessineAeroport() {
-		
-		Tween.registerAccessor(TraficDao.class, null);
-		SLAnimator.start();
 		Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
 		
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
