@@ -58,15 +58,13 @@
       <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>aurelienribon</groupId>
+      <artifactId>tweenengine</artifactId>
+      <version>6.3.3</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/libs/tween-engine-api.jar</systemPath>
+    </dependency>
   </dependencies>
   
-  <dependencies>
-  <dependency>
-    <groupId>aurelienribon</groupId>
-    <artifactId>tweenengine</artifactId>
-    <version>6.3.3</version>
-    <scope>system</scope>
-    <systemPath>${basedir}/libs/tween-engine-api.jar</systemPath>
-  </dependency>
-</dependencies>
 </project>
