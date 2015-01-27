@@ -79,6 +79,12 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		traficPanel.setAlignmentY(0.0f);
 		_gestionPlans.add(traficPanel,0);
 		
+		//Gestion des controles Rejeu et Tableau de Bord
+		PanelDesControles controles = new PanelDesControles();
+		controles.setAlignmentX(0.0f);
+		controles.setAlignmentY(0.0f);
+		_gestionPlans.add(controles,1);
+		
 		/*
 		 * IL Y A AUSSI POUR DISPATCHER LES EVENTS
 		 * http://stackoverflow.com/questions/21500162/jlayeredpane-how-to-check-if-component-has-another-drawn-under-it

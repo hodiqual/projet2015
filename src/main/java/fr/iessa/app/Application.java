@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UIManager.*;
 
+import aurelienribon.slidinglayout.SLAnimator;
 import fr.iessa.vue.PanelPrincipalMultiCouches;
 
 public class Application {
@@ -23,6 +24,9 @@ public class Application {
 		    //TODO Log4j -- Nimbus pas possible
 			System.out.println("AEROPORT");
 		}
+		
+	
+		SLAnimator.start();
 		
         //Creer et fait apparaitre l'application dans le thread EDT
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
