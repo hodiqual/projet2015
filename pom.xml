@@ -60,6 +60,13 @@
     </dependency>
     <dependency>
       <groupId>aurelienribon</groupId>
+      <artifactId>slidinglayout</artifactId>
+      <version>6.3.3</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/libs/slidinglayout.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>aurelienribon</groupId>
       <artifactId>tweenengine</artifactId>
       <version>6.3.3</version>
       <scope>system</scope>
