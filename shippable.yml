@@ -14,6 +14,7 @@ before_script:
   - pwd
   - mvn install:install-file -Dfile=tween-engine-api.jar -DgroupId=aurelienribon -DartifactId=tweenengine -Dversion=6.3.3 -Dpackaging=jar
   - mvn install:install-file -Dfile=slidinglayout.jar -DgroupId=aurelienribon -DartifactId=tweenengine -Dversion=6.3.3 -Dpackaging=jar
+  - cd -
 
 script:
    - mvn clean cobertura:cobertura
