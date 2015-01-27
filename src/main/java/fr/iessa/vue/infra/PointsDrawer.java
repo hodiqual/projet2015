@@ -34,8 +34,8 @@ public class PointsDrawer {
 				break;
 				
 			case RUNWAY_POINT :
-				g2.setColor(Color.RED);
-				g2.fillRect((int)point.getX(), (int)point.getY(), 10, 10);
+		//		g2.setColor(Color.RED);
+		//		g2.fillRect((int)point.getX(), (int)point.getY(), 10, 10);
 				break;
 
 			default:
