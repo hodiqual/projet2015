@@ -11,10 +11,6 @@ before_script:
   - mvn versions:set -DnewVersion=1.$BUILD_NUMBER-SNAPSHOT
   - "export DISPLAY=:99.0"
   - "/etc/init.d/xvfb start"
-  - cd libs
-  - mvn install:install-file -Dfile=tween-engine-api.jar -DgroupId=aurelienribon -DartifactId=tweenengine -Dversion=6.3.3 -Dpackaging=jar
-  - mvn install:install-file -Dfile=slidinglayout.jar -DgroupId=aurelienribon -DartifactId=tweenengine -Dversion=6.3.3 -Dpackaging=jar
-  - cd -
 
 script:
    - mvn clean cobertura:cobertura
