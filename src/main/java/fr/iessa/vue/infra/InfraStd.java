@@ -22,11 +22,11 @@ public enum InfraStd {
 ,   PUSHBACK_MARQUE_SOL(new Color(244,196,48), 0.5f)
 ,   PUSHBACK_MARQUE_SOL_BORDURE(Color.BLACK, 1f)
 
-,	RUNWAY(Color.GRAY, 8.0f)
-,	RUNWAY_MARQUE_SOL(Color.GRAY, 8.0f)
+,	RUNWAY(Color.DARK_GRAY, 45.0f)
 
 ,	STAND(Color.GRAY, 8.0f)
 ,	DEICING(Color.GRAY, 8.0f);
+
 
 	
 	private InfraStd(Color couleur, float largeur){

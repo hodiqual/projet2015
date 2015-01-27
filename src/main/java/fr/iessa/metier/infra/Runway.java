@@ -136,7 +136,9 @@ public class Runway {
        			_runwayPointAPoint.lineTo(point.getX(), point.getY());
 			}			
 	}
-
+	/**
+	 * @return the angle of the runway in radians
+	 */
 	public double getAngle(double i) {
 	    double angle = -Math.atan2(_extremite[1].getY() - _extremite[0].getY(), _extremite[1].getX() - _extremite[0].getX());
 	    angle +=i;
@@ -146,7 +148,9 @@ public class Runway {
 
 	    return angle;
 	}
-
+	/**
+	 * @return the path of the Runway in GeneralPath (Shape)
+	 */
 	public Shape get_runwayPointAPoint() {
 		return _runwayPointAPoint;
 	}
