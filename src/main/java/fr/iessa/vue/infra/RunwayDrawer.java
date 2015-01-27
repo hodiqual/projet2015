@@ -39,8 +39,8 @@ public class RunwayDrawer {
         for (Runway runway : aeroport.get_runways()) {
         	
         	// Dessine la piste
-        	g2.setColor(Color.DARK_GRAY);
-        	g2.setStroke(new BasicStroke(45.0f, BasicStroke.CAP_SQUARE,
+        	g2.setColor(InfraStd.RUNWAY.couleur());
+        	g2.setStroke(new BasicStroke(InfraStd.RUNWAY.largeur(), BasicStroke.CAP_SQUARE,
                 BasicStroke.CAP_SQUARE));
 			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0), (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1));
         	g2.draw(runway.get_runwayPointAPoint());
@@ -57,25 +57,18 @@ public class RunwayDrawer {
 			g2.setStroke(new BasicStroke(1.7f, BasicStroke.CAP_BUTT,
 			        BasicStroke.JOIN_MITER, 2f, dashbordure, 0.0f));
 
-			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)-20, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)-20);
-			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+20, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+20);
+			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)-(int)(InfraStd.RUNWAY.largeur())/2+2, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)-(int)(InfraStd.RUNWAY.largeur())/2+2);
+			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+(int)(InfraStd.RUNWAY.largeur())/2-2, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+(int)(InfraStd.RUNWAY.largeur())/2-2);
 	
 			// Dessine les bandes en seuil de piste
 			float dash2[] = { 2f};
 			g2.setStroke(new BasicStroke(20f, BasicStroke.CAP_BUTT,
 			        BasicStroke.JOIN_MITER, 2f, dash2, 0.0f));
-			g2.drawLine((int)runway.get_extremite_x(0)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(0)-18, (int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+18);
-			g2.drawLine((int)runway.get_extremite_x(1)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(1)-18, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+18);
+			g2.drawLine((int)runway.get_extremite_x(0)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(0)-(int)(InfraStd.RUNWAY.largeur())/2+4, (int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+(int)(InfraStd.RUNWAY.largeur())/2-4);
+			g2.drawLine((int)runway.get_extremite_x(1)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(1)-(int)(InfraStd.RUNWAY.largeur())/2+4, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+(int)(InfraStd.RUNWAY.largeur())/2-4);
 
-			// Dessine les autres bandes
-			
-
-						g2.drawLine((int)runway.get_extremite_x(0)+150, (int)runway.get_extremite_y(0)-14, (int)runway.get_extremite_x(0)+150, (int)runway.get_extremite_y(0)-4);
-						g2.drawLine((int)runway.get_extremite_x(0)+150, (int)runway.get_extremite_y(0)+14, (int)runway.get_extremite_x(0)+150, (int)runway.get_extremite_y(0)+4);
-						g2.drawLine((int)runway.get_extremite_x(1)+150, (int)runway.get_extremite_y(1)-14, (int)runway.get_extremite_x(1)+150, (int)runway.get_extremite_y(1)-4);
-						g2.drawLine((int)runway.get_extremite_x(1)+150, (int)runway.get_extremite_y(1)+14, (int)runway.get_extremite_x(1)+150, (int)runway.get_extremite_y(1)+4);
-
-			
+		int value = (int)Math.round(runway.getAngle(-Math.PI/2));
+		System.out.println(value);
 			// Dessine le QFU
 			Font font = new Font("Helvetica", Font.PLAIN, 28);
 			AffineTransform flip = AffineTransform.getScaleInstance(-1, 1);
