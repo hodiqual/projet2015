@@ -61,14 +61,11 @@ public class Controleur {
 		SwingWorker<Aeroport, ModeleEvent> sw = new SwingWorker<Aeroport, ModeleEvent>(){
 			protected Aeroport doInBackground() throws Exception {
 
-			    System.out.println("Debut doInBack");
 				// 1. Charger fichier infrastructure
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
-				publish(ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE);
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
-			    System.out.println("Fin doInBack");
 				return aeroport;
 			}
 
@@ -77,13 +74,11 @@ public class Controleur {
 			public void done(){
 				try {
 
-				    System.out.println("debut DONE");
 				    Aeroport aeroport = get();
 					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
-					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_GRAPHIQUE_DONE;	
+					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, aeroport));
-					System.out.println("fin DONE");
 
 				} catch (ExecutionException | InterruptedException e) {
 					//Cas ou le doInBackground a lancé une exception ou a ete interrompu

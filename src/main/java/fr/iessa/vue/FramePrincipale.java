@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
@@ -101,7 +102,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             		nomFichierTrafic = fichierTrafic.getName();
         	}
             
-            _controleur.chargerCarte(nomFichierTrafic);
+            _controleur.chargerTrafic(nomFichierTrafic);
             	
     	}
     }
@@ -114,14 +115,27 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     
     /** Redéfinition des fonctions de l'interface PropertyChangeListener */
     public void propertyChange(PropertyChangeEvent evt) {
-		
+    	
+    	
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
-		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
+			case CHARGEMENT_CARTE_FICHIER_DONE:
 			_menuChargerTrafic.setEnabled(true);
-			break;
+				break;
+			
+			case CHARGEMENT_TRAFIC_FICHIER_DONE:
+				
+				break;
+				
+			case CHARGEMENT_CARTE_FICHIER_ERREUR:
+				JOptionPane.showMessageDialog(null, "Chargement echoue : " + evt.getNewValue(), "" , JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case CHARGEMENT_TRAFIC_FICHIER_ERREUR:
+				JOptionPane.showMessageDialog(null, "Chargement echoue : " + evt.getNewValue(), "" , JOptionPane.ERROR_MESSAGE);
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 		
 	}
