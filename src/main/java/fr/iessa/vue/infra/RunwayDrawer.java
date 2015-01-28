@@ -67,8 +67,7 @@ public class RunwayDrawer {
 			g2.drawLine((int)runway.get_extremite_x(0)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(0)-(int)(InfraStd.RUNWAY.largeur())/2+4, (int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+(int)(InfraStd.RUNWAY.largeur())/2-4);
 			g2.drawLine((int)runway.get_extremite_x(1)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(1)-(int)(InfraStd.RUNWAY.largeur())/2+4, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+(int)(InfraStd.RUNWAY.largeur())/2-4);
 
-		int value = (int)Math.round(runway.getAngle(-Math.PI/2));
-		System.out.println(value);
+
 			// Dessine le QFU
 			Font font = new Font("Helvetica", Font.PLAIN, 28);
 			AffineTransform flip = AffineTransform.getScaleInstance(-1, 1);
