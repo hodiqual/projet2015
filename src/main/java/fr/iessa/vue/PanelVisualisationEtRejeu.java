@@ -16,7 +16,7 @@ public class PanelVisualisationEtRejeu extends SLPanel {
 	/**
 	 * Contient la vue du controle de rejeu
 	 */
-	private PanelRejeu _rejeu;
+	private PanelLecture _rejeu;
 	
 	/**
 	 * Panel transparent
@@ -32,7 +32,7 @@ public class PanelVisualisationEtRejeu extends SLPanel {
 	public  PanelVisualisationEtRejeu(){
 		super();
 		
-		_rejeu = new PanelRejeu();
+		_rejeu = new PanelLecture();
 		_visualisation = new JPanel();
 		_visualisation.setOpaque(false);
 		
