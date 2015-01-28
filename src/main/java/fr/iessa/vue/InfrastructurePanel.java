@@ -23,6 +23,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -113,39 +114,64 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		}
 	}
 	
+	 // image creation
+	 private VolatileImage image;
+
+	 // rendering to the image
+		private void reCreer() {
+			if(_aeroport != null)
+			{	
+				Graphics2D g2 = image.createGraphics();
+		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                 RenderingHints.VALUE_ANTIALIAS_ON);
+		        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+		                 RenderingHints.VALUE_RENDER_QUALITY);
+				g2.setClip(0,0, getWidth(), getHeight());
+				_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
+				g2.dispose();
+			}
+		}
+	
 	@Override
     public void paintComponent(Graphics g) {
 		//Effacer le contenu pour les animations.
 		super.paintComponent(g);
-		
 		Graphics2D g2 = (Graphics2D) g.create();
-		
-		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-		
-        // active le lissage des formes
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                 RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-                 RenderingHints.VALUE_RENDER_QUALITY);
-        
-       
-		if(_aeroport != null)
-		{				 
-			//Cadrage et position avec clip ou getSubimage
-			//Avec Clip
-			g2.setClip(0,0, getWidth(), getHeight());
-			_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
-			//System.out.println("ZOOOOOOM : " + _zoomLevel);
-			//LibereMemoire.controleMemoire();
-		}
-    }
-	
+                RenderingHints.VALUE_ANTIALIAS_ON);
+       g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
 
+
+		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
+		if(_aeroport != null)
+		{		
+		   if (image==null) // création de l'image
+		      image = createVolatileImage(getWidth(), getHeight());
+		   
+		      do {
+		         int code = image.validate(getGraphicsConfiguration());
+		         switch(code) {
+		            case VolatileImage.IMAGE_INCOMPATIBLE:
+		                        image = createVolatileImage(getWidth(), getHeight());
+		            case VolatileImage.IMAGE_RESTORED:
+		                        reCreer(); // redessiner l'image
+		         }
+		         if (image.validate(getGraphicsConfiguration())==VolatileImage.IMAGE_OK){
+		 			  g2.setClip(0,0, getWidth(), getHeight());
+		              g2.drawImage(image, 0, 0, this);
+		         }
+		      
+		      } while (image.contentsLost());
+		}
+		
+		//image.
+
+    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		//Rien a faire		
 	}
 			
 	@Override
@@ -168,6 +194,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		_mouseScroll = new AffineTransform();
 		_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
 
+		image = null;
 		repaint();
 	}
 
@@ -186,7 +213,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		
 	}
 
-	/** TODO Rajouter image  */
+	/** TODO Rajouter image de la gestion du zoom pour la javadoc*/
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 
@@ -231,10 +258,9 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			_mouseScroll = new AffineTransform();
 			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
 	        
+			image = null;
 	        repaint();
-		}
-			
-		
+		}		
 	}
 
 }
