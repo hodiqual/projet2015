@@ -4,12 +4,14 @@ package fr.iessa.vue;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
 
 /** Classe FramePrincipale
  * @author THOMAS Raimana
@@ -36,7 +38,7 @@ public class FramePrincipale extends JFrame {
 	    _menu = new JMenu("Fichier");
 	    _menuChargerPlateForme = new JMenuItem("Charger Plate-Forme");
 	    _menuChargerTrafic = new JMenuItem("Charger Trafic");
-	    //_menuChargerTrafic.disable();
+	    _menuChargerTrafic.setEnabled(false);;
 	    _menuQuitter = new JMenuItem("Quitter");
 	    
 	    _menuChargerPlateForme.addActionListener(new ActionChargerPlateForme());
@@ -62,37 +64,37 @@ public class FramePrincipale extends JFrame {
     class ActionChargerPlateForme implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
-    		// Boîte de sélection de fichier à partir du répertoire courant
-            File repertoireCourant = null;
-            try {
-                // obtention d'un objet File qui désigne le répertoire courant. Le
-                // "getCanonicalFile" n'est pas absolument nécessaire mais permet
-                // d'éviter les /Truc/./Chose/ ...
-                repertoireCourant = new File(".").getCanonicalFile();
-                System.out.println("Répertoire courant : " + repertoireCourant);
-            } catch(IOException e) {}
-             
-            // création de la boîte de dialogue dans ce répertoire courant
-            // (ou dans "home" s'il y a eu une erreur d'entrée/sortie, auquel
-            // cas repertoireCourant vaut null)
-            JFileChooser dialogue = new JFileChooser(repertoireCourant);
-             
-            // affichage
+            File fichierPlateForme = null;
+            String cheminFichierPlateForme = "";
+            JFileChooser dialogue = new JFileChooser(new File("."));
             dialogue.showOpenDialog(null);
             
-            // récupération du fichier sélectionné
-            System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
-            System.out.println("Fichier choisi : " + dialogue.getSelectedFile().getName());
-            
-            //assignation du fichier a la varaible nom_fichier
-            nom_fichier = dialogue.getSelectedFile().getName();
+            if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            		fichierPlateForme = dialogue.getSelectedFile();
+            		cheminFichierPlateForme = fichierPlateForme.getAbsolutePath();
+            		_menuChargerTrafic.setEnabled(true);
+        	}
+             
+            System.out.println("Fichier Plate-forme choisi : " + cheminFichierPlateForme);
     		
     	}
     }
     
     class ActionChargerTrafic implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
-    		chargerTrafic();
+    		
+    		File fichierTrafic = null;
+            String cheminFichierTrafic = "";
+            JFileChooser dialogue = new JFileChooser(new File("."));
+            dialogue.showOpenDialog(null);
+
+            if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            		fichierTrafic = dialogue.getSelectedFile();
+            		cheminFichierTrafic = fichierTrafic.getAbsolutePath();
+        	}
+             
+            System.out.println("Fichier Trafic choisi : " + cheminFichierTrafic);
+    		
     	}
     }
     
