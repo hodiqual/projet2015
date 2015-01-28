@@ -4,6 +4,7 @@
 package fr.iessa.vue;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -53,6 +55,11 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	 */	
 	private final SLConfig _avecLecteurCfg;
 	
+	/**
+	 * Action a faire lorque que le bouton de tabDeBord est clique.
+	 */
+	private Runnable _actionBoutonTabDeBord;
+	
 	
 	public  PanelVisualisationEtLecture(){
 		super();
@@ -83,6 +90,23 @@ public class PanelVisualisationEtLecture extends SLPanel {
 		
 		_visualisation = new JPanel();
 		_visualisation.setOpaque(false);
+		_visualisation.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		JButton boutonTabDeBord = new JButton("<<");
+		boutonTabDeBord.setOpaque(false);
+		boutonTabDeBord.setContentAreaFilled(false);
+		boutonTabDeBord.setBorderPainted(false);
+		boutonTabDeBord.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Thread thread = new Thread(_actionBoutonTabDeBord);
+				thread.start();
+				if(boutonTabDeBord.getText().equals("<<"))
+					boutonTabDeBord.setText(">>");
+				else
+					boutonTabDeBord.setText("<<");
+			}
+		});
+		_visualisation.add(boutonTabDeBord);
 		
 		_zoneDetection = new JPanel();
 		_zoneDetection.setOpaque(false);
@@ -91,7 +115,6 @@ public class PanelVisualisationEtLecture extends SLPanel {
 			public void mouseEntered(MouseEvent e) {
 				_afficheLecteur.run();
 			}
-
 		});
 		
 		//Affiche seulement la visualisation
@@ -150,6 +173,14 @@ public class PanelVisualisationEtLecture extends SLPanel {
 				_cacheLecteur.run();
 		}
 	};
+
+
+	/**
+	 * @param _actionBoutonTabDeBord the _actionBoutonTabDeBord to set
+	 */
+	public void set_actionBoutonTabDeBord(Runnable _actionBoutonTabDeBord) {
+		this._actionBoutonTabDeBord = _actionBoutonTabDeBord;
+	}
 	
 	
 }

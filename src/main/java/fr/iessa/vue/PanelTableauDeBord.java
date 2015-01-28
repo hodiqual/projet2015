@@ -20,7 +20,7 @@ public class PanelTableauDeBord extends JPanel {
 
 	// ***************** A SURPPRIMER **************************
 	private static final Color FG_COLOR = new Color(0xFFFFFF);
-	private static final Color BG_COLOR = new Color(0x3B5998);
+	private static final Color BG_COLOR = Color.RED;
 	private static final Color BORDER_COLOR = new Color(0x000000);
 	private final JLabel label = new JLabel();
 	// ***************** FIN A SURPPRIMER **************************
