@@ -24,7 +24,7 @@ public class PanelDesControles extends SLPanel {
 	
 	
 	private final PanelTableauDeBord _tableauDeBord;
-	private final JPanel _visualisationEtRejeu;
+	private final PanelVisualisationEtLecture _visualisationEtLecture;
 	
 	JButton _boutonTab;
 	private Runnable _nextAction;
@@ -44,9 +44,9 @@ public class PanelDesControles extends SLPanel {
 		super();
 		setOpaque(false);
 		_tableauDeBord = new PanelTableauDeBord();
-		_visualisationEtRejeu = new JPanel();
-		_visualisationEtRejeu.setOpaque(false);
-		
+		_visualisationEtLecture = new PanelVisualisationEtLecture();
+		_visualisationEtLecture.setOpaque(false);
+		/*
 		_boutonTab = new JButton("Affiche");
 		_boutonTab.addActionListener(new ActionListener() {
 			
@@ -55,17 +55,17 @@ public class PanelDesControles extends SLPanel {
 				_nextAction.run();		
 			}
 		});
-		_visualisationEtRejeu.add(_boutonTab);
+		_visualisationEtLecture.add(_boutonTab); */
 		
 		//Affiche seulement la visualisation et le rejeu
 		_principalCfg  = new SLConfig(this)
 								.row(1f).col(1f)
-								.place(0, 0, _visualisationEtRejeu);
+								.place(0, 0, _visualisationEtLecture);
 		
 		//Affiche la visualisation, le rejeu (resizable) et le tableau de bord (fixe 250 px)
 		_avecTableauCfg =  new SLConfig(this)
 								.row(1f).col(1f).col(250)
-								.place(0, 0, _visualisationEtRejeu)
+								.place(0, 0, _visualisationEtLecture)
 								.place(0, 1, _tableauDeBord);
 		
 		_nextAction = afficheTableauDeBord;
