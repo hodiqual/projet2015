@@ -56,6 +56,10 @@ public class Controleur {
 			_swingObservable.firePropertyChange(evtfin.toString(), null, "Le nom du fichier n'est pas renseigne");	
 			return;
 		}		
+		
+
+		ModeleEvent evtfin = ModeleEvent.CHARGEMENT_CARTE_FICHIER_EN_COURS;	
+		_swingObservable.firePropertyChange(evtfin.toString(), null, null);
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
 		SwingWorker<Aeroport, ModeleEvent> sw = new SwingWorker<Aeroport, ModeleEvent>(){
@@ -63,6 +67,7 @@ public class Controleur {
 
 				// 1. Charger fichier infrastructure
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
+				
 				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    

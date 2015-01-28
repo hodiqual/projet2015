@@ -94,15 +94,18 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
-		case CHARGEMENT_CARTE_FICHIER_DONE:
-			//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-			_aeroport = (Aeroport) evt.getNewValue();
-		case CHARGEMENT_CARTE_FICHIER_ERREUR:
-			if(_layerUI!=null)
-				_layerUI.stop();
-			repaint();
+			case CHARGEMENT_CARTE_FICHIER_DONE:
+				//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
+				_aeroport = (Aeroport) evt.getNewValue();
+			case CHARGEMENT_CARTE_FICHIER_ERREUR:
+				if(_layerUI!=null)
+					_layerUI.stop();
+				repaint();
+				break;
+			case CHARGEMENT_CARTE_FICHIER_EN_COURS:
+				if(_layerUI!=null)
+					_layerUI.start();
 			break;
 
 		default:
@@ -110,12 +113,11 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		}
 	}
 	
-	//Faire le scroll de la map (pas le zoom) avec la librairie pour faire l'animation
-	
 	@Override
     public void paintComponent(Graphics g) {
 		//Effacer le contenu pour les animations.
 		super.paintComponent(g);
+		
 		Graphics2D g2 = (Graphics2D) g.create();
 		
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
@@ -129,7 +131,6 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
        
 		if(_aeroport != null)
 		{				 
-		    
 			//Cadrage et position avec clip ou getSubimage
 			//Avec Clip
 			g2.setClip(0,0, getWidth(), getHeight());
@@ -138,22 +139,19 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			//LibereMemoire.controleMemoire();
 		}
     }
+	
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-			if(_aeroport == null)
-			{
-				_controleur.chargerCarte("lfpg.txt");
-				if(_layerUI!=null)
-					_layerUI.start();
-			}
-		}
+		// TODO Auto-generated method stub
+		
+	}
 			
 	@Override
 	public void mousePressed(MouseEvent e) {
 		_whereMousePressed.x = e.getPoint().getX();
 		_whereMousePressed.y = e.getPoint().getY();
-		System.out.println( "mousePressed: " + _whereMousePressed); 
 	}
 
 	@Override
@@ -175,14 +173,12 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		//Rien a faire
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		//Rien a faire
 	}
 
 	public void setChargeEnCoursLayerUI(ChargeEnCoursLayerUI layerUI) {
@@ -234,7 +230,6 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			
 			_mouseScroll = new AffineTransform();
 			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
-			
 	        
 	        repaint();
 		}
