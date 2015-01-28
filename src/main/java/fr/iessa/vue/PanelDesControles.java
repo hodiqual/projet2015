@@ -1,12 +1,6 @@
 package fr.iessa.vue;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import com.sun.xml.internal.ws.api.pipe.NextAction;
 
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;

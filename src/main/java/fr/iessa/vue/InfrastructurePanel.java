@@ -77,14 +77,6 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		
 		//Pour une animation fluide il vaut mieux etre en double buffer.
 		setDoubleBuffered(true);
-		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-		    public void componentResized(ComponentEvent e) {
-		        // TODO sauvegarder le centre de l'image pour faire une translation apres
-				// comme dans google maps
-		    }
-		});
 
 		//rendre sensible le controleur 
 		_controleur.ajoutVue(this);
@@ -104,14 +96,12 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 	public void propertyChange(PropertyChangeEvent evt) {
 		
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
-		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
+		case CHARGEMENT_CARTE_FICHIER_DONE:
 			//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-			System.out.println("Je suis content Vue");
 			_aeroport = (Aeroport) evt.getNewValue();
-
+		case CHARGEMENT_CARTE_FICHIER_ERREUR:
 			if(_layerUI!=null)
 				_layerUI.stop();
-			
 			repaint();
 			break;
 

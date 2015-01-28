@@ -24,9 +24,6 @@ public class TraficPanel extends JPanel implements ActionListener{
     Timer timer = new Timer(1000, this);
 
     public TraficPanel() {
-
-        setBorder(BorderFactory.createLineBorder(Color.orange));
-
         setOpaque(false);
         
         add(redSquare1);
@@ -66,7 +63,7 @@ public class TraficPanel extends JPanel implements ActionListener{
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);       
-        g.drawString("This is my custom Panel!",10,20);
+        //g.drawString("This is my custom Panel!",10,20);
 
         //redSquare1.paintSquare(g);
         //redSquare2.paintSquare(g);
