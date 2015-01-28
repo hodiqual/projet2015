@@ -17,7 +17,6 @@ public class TestDoublonPointTrafic {
 	  }
 
 	public TestDoublonPointTrafic(){
-		// TODO Auto-generated method stub
 
 	}
 	

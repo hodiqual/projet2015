@@ -18,8 +18,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
+import aurelienribon.tweenengine.Tween;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import sun.security.pkcs11.wrapper.Functions;
 import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.trafic.Instant;
@@ -50,6 +51,8 @@ public class TestPleinDeTrafic {
 	}
 	
 	public static void main(String[] args) {
+		//SLAnimator.start();
+		
 		String ficname = "trafic.txt";
 		ArrayList<Trafic> list = new ArrayList<>();
 		for (int i = 0; i < 1; i++) {

@@ -10,7 +10,10 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 
+import aurelienribon.slidinglayout.SLAnimator;
+import aurelienribon.tweenengine.Tween;
 import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.infra.Aeroport;
 
 /**
@@ -24,6 +27,9 @@ public class InfrastructureDrawerTest {
 	 */
 	@Test
 	public void testDessineAeroport() {
+		
+		Tween.registerAccessor(TraficDao.class, null);
+		SLAnimator.start();
 		Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
 		
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
