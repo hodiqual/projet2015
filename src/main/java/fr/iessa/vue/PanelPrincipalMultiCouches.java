@@ -33,7 +33,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
         return true;
       }
 	
-	public PanelPrincipalMultiCouches()
+	public PanelPrincipalMultiCouches(Controleur controleur)
 	{
 		setLayout(new GridLayout(1, 1));
 		
@@ -49,7 +49,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
                                     "Click and Go"));
 		
 		//Gestion de l'infrastructure
-		_controleur = new Controleur();
+		this._controleur = controleur;
 		
 		_infrastructurePanel = new InfrastructurePanel(_controleur);
 		final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();

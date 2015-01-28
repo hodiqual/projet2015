@@ -4,6 +4,8 @@ package fr.iessa.vue;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -12,19 +14,24 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.ModeleEvent;
+
 
 /** Classe FramePrincipale
  * @author THOMAS Raimana
  * @version 1.0 
  */
 
-public class FramePrincipale extends JFrame {
+public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	/** La barre de menu */
 	private JMenuBar _barreMenu;
     private JMenu _menu;
     private JMenuItem _menuChargerPlateForme;
     private JMenuItem _menuChargerTrafic;
     private JMenuItem _menuQuitter;
+    
+    private Controleur _controleur;
     
 	/** Constructeur */
 	public FramePrincipale() {
@@ -51,8 +58,12 @@ public class FramePrincipale extends JFrame {
 	
     	_barreMenu.add(_menu);
     	
-    	//Create and set up the content pane.
-	    this.getContentPane().add(new PanelPrincipalMultiCouches());
+    	// Création et configuration du controleur MVC
+    	_controleur = new Controleur(); 
+	    this.getContentPane().add(new PanelPrincipalMultiCouches(_controleur));
+	    _controleur.ajoutVue(this);
+	    
+	    //Create and set up the content pane.
 	    this.validate();
 	    this.setJMenuBar(_barreMenu);
 	    this.pack();
@@ -65,17 +76,15 @@ public class FramePrincipale extends JFrame {
     	public void actionPerformed(ActionEvent arg0) {
     		
             File fichierPlateForme = null;
-            String cheminFichierPlateForme = "";
+            String nomFichierPlateForme = "";
             JFileChooser dialogue = new JFileChooser(new File("."));
-            dialogue.showOpenDialog(null);
             
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierPlateForme = dialogue.getSelectedFile();
-            		cheminFichierPlateForme = fichierPlateForme.getAbsolutePath();
-            		_menuChargerTrafic.setEnabled(true);
+            		nomFichierPlateForme = fichierPlateForme.getName();
         	}
-             
-            System.out.println("Fichier Plate-forme choisi : " + cheminFichierPlateForme);
+            
+            _controleur.chargerCarte(nomFichierPlateForme);
     		
     	}
     }
@@ -84,17 +93,16 @@ public class FramePrincipale extends JFrame {
     	public void actionPerformed(ActionEvent arg0) {
     		
     		File fichierTrafic = null;
-            String cheminFichierTrafic = "";
+            String nomFichierTrafic = "";
             JFileChooser dialogue = new JFileChooser(new File("."));
-            dialogue.showOpenDialog(null);
-
+           
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierTrafic = dialogue.getSelectedFile();
-            		cheminFichierTrafic = fichierTrafic.getAbsolutePath();
+            		nomFichierTrafic = fichierTrafic.getName();
         	}
-             
-            System.out.println("Fichier Trafic choisi : " + cheminFichierTrafic);
-    		
+            
+            _controleur.chargerCarte(nomFichierTrafic);
+            	
     	}
     }
     
@@ -104,19 +112,19 @@ public class FramePrincipale extends JFrame {
     	}
     }
     
-    /** Fonctions */
-    	// Charger le fichier Plate-Forme
-    public void chargerPlateForme() {
-    	
-    }
-    	// Charger le fichier Trafic
-    public void chargerTrafic() {
-    	
-    }
+    /** Redéfinition des fonctions de l'interface PropertyChangeListener */
+    public void propertyChange(PropertyChangeEvent evt) {
+		
+		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
+		case CHARGEMENT_CARTE_GRAPHIQUE_DONE:
+			_menuChargerTrafic.setEnabled(true);
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+	
     
-    	//Quitter
-    public void quitter() {
-	
-    }
-	
 }
