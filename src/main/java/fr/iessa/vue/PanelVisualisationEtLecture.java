@@ -4,6 +4,8 @@
 package fr.iessa.vue;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
@@ -25,7 +28,7 @@ import aurelienribon.slidinglayout.SLSide;
 public class PanelVisualisationEtLecture extends SLPanel {
 	
 	/**
-	 * Contient la vue du controle de rejeu
+	 * Contient la vue du controle de lecture
 	 */
 	private PanelLecture _lecteur;
 	
@@ -57,11 +60,25 @@ public class PanelVisualisationEtLecture extends SLPanel {
 		setOpaque(false);
 		
 		_lecteur = new PanelLecture();
-		_lecteur.addMouseListener(new MouseAdapter() {
+		_lecteur.addMouseListener(new MouseAdapter () {		
+			private Timer timer ;	
+			{
+				//Cache le lecteur au bout deux secondes hors du lecteur
+				timer = new Timer(2000, _cacheLecteurWrapper);
+				timer.setRepeats(false);
+				timer.stop();
+			}
+ 
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				timer.stop();
+			}
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				//cacheTableauDeBord.run();
+				timer.start();
 			}
+			
 		});
 		
 		_visualisation = new JPanel();
@@ -72,7 +89,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 		_zoneDetection.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				afficheTableauDeBord.run();
+				_afficheLecteur.run();
 			}
 
 		});
@@ -98,7 +115,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	/**
 	 * Animation d'affichage du lecteur
 	 */
-	private final Runnable afficheTableauDeBord = new Runnable() {@Override public void run() {
+	private final Runnable _afficheLecteur = new Runnable() {@Override public void run() {
 
 		PanelVisualisationEtLecture.this.createTransition()
 			.push(new SLKeyframe(_avecLecteurCfg, 0.8f)
@@ -113,7 +130,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	/**
 	 * Animation de cacher le lecteur
 	 */
-	private final Runnable cacheTableauDeBord = new Runnable() {@Override public void run() {
+	private final Runnable _cacheLecteur = new Runnable() {@Override public void run() {
 		PanelVisualisationEtLecture.this.createTransition()
 			.push(new SLKeyframe(_principalCfg, 0.8f)
 				.setEndSide(SLSide.BOTTOM, _lecteur)
@@ -123,6 +140,16 @@ public class PanelVisualisationEtLecture extends SLPanel {
 				}}))
 			.play();
 	}};
+	
+	/**
+	 * Permet a l'animation _cacheLecteur de demarrer sous l'action d'un timer
+	 */
+	private final ActionListener _cacheLecteurWrapper = new ActionListener() {	
+		@Override
+		public void actionPerformed(ActionEvent e) {
+				_cacheLecteur.run();
+		}
+	};
 	
 	
 }
