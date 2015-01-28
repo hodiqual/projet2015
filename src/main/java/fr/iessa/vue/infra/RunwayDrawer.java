@@ -87,39 +87,31 @@ public class RunwayDrawer {
 
 		      // Dessine les QFU L	
 		      if (Integer.parseInt(runway.get_QFUL().toString().substring(0, 2))>Integer.parseInt(runway.get_QFUR().toString().substring(0, 2))){	    	
-		      GlyphVector vectLchiffre1 = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(0, 1));
-		      GlyphVector vectLchiffre2 = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(1, 2));
+		      GlyphVector vectLnombre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(0, 2));
 		      GlyphVector vectLlettre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(2, 3));
-			    g2.drawGlyphVector(vectLchiffre1, (float)runway.get_extremite_x(1)-40, (float)runway.get_extremite_y(1)-20);
-			    g2.drawGlyphVector(vectLchiffre2, (float)runway.get_extremite_x(1)-40, (float)runway.get_extremite_y(1));
-			    g2.drawGlyphVector(vectLlettre, (float)runway.get_extremite_x(1)-10, (float)runway.get_extremite_y(1)-10);  
+			    g2.drawGlyphVector(vectLnombre, (float)runway.get_extremite_x(1)-50, (float)runway.get_extremite_y(1)-15-(int)Math.round(runway.getAngle(-Math.PI/2)));
+			    g2.drawGlyphVector(vectLlettre, (float)runway.get_extremite_x(1)-20, (float)runway.get_extremite_y(1)-5-(int)Math.round(runway.getAngle(-Math.PI/2)));  
 		      }
 		      else{
-			      GlyphVector vectLchiffre1 = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(0, 1));
-			      GlyphVector vectLchiffre2 = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(1, 2));
-			      GlyphVector vectLlettre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(2, 3));
-				    g2.drawGlyphVector(vectLchiffre1, (float)runway.get_extremite_x(0)+40, (float)runway.get_extremite_y(0)+25);
-				    g2.drawGlyphVector(vectLchiffre2, (float)runway.get_extremite_x(0)+40, (float)runway.get_extremite_y(0)+5);
-				    g2.drawGlyphVector(vectLlettre, (float)runway.get_extremite_x(0)+10, (float)runway.get_extremite_y(0)+10);   
+			      GlyphVector vectLnombre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(0, 2));
+			     GlyphVector vectLlettre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(2, 3));
+				    g2.drawGlyphVector(vectLnombre, (float)runway.get_extremite_x(0)+50, (float)runway.get_extremite_y(0)+20+(int)Math.round(runway.getAngle(-Math.PI/2)));
+				    g2.drawGlyphVector(vectLlettre, (float)runway.get_extremite_x(0)+20, (float)runway.get_extremite_y(0)+5+(int)Math.round(runway.getAngle(-Math.PI/2)));   
 		      }
 		      
 		      
 			   // Dessine les QFU R	
 		      if (Integer.parseInt(runway.get_QFUL().toString().substring(0, 2))<Integer.parseInt(runway.get_QFUR().toString().substring(0, 2))){
-		      GlyphVector vectRchiffre1 = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(0, 1));
-		      GlyphVector vectRchiffre2 = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(1, 2));
+		      GlyphVector vectRnombre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(0, 2));
 		      GlyphVector vectRlettre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(2, 3));
-			    g2.drawGlyphVector(vectRchiffre1, (float)runway.get_extremite_x(1)-40, (float)runway.get_extremite_y(1)-20);
-			    g2.drawGlyphVector(vectRchiffre2, (float)runway.get_extremite_x(1)-40, (float)runway.get_extremite_y(1));
-			    g2.drawGlyphVector(vectRlettre, (float)runway.get_extremite_x(1)-10, (float)runway.get_extremite_y(1)-10);}
+			    g2.drawGlyphVector(vectRnombre, (float)runway.get_extremite_x(1)-50, (float)runway.get_extremite_y(1)-15-(int)Math.round(runway.getAngle(-Math.PI/2)));
+			    g2.drawGlyphVector(vectRlettre, (float)runway.get_extremite_x(1)-20, (float)runway.get_extremite_y(1)-5-(int)Math.round(runway.getAngle(-Math.PI/2)));}
 			
 		      else{
-			      GlyphVector vectRchiffre1 = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(0, 1));
-			      GlyphVector vectRchiffre2 = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(1, 2));
+			      GlyphVector vectRnombre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(0, 2));
 			      GlyphVector vectRlettre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(2, 3)); 
-				    g2.drawGlyphVector(vectRchiffre1, (float)runway.get_extremite_x(0)+40, (float)runway.get_extremite_y(0)+25);
-				    g2.drawGlyphVector(vectRchiffre2, (float)runway.get_extremite_x(0)+40, (float)runway.get_extremite_y(0));
-				    g2.drawGlyphVector(vectRlettre, (float)runway.get_extremite_x(0)+10, (float)runway.get_extremite_y(0)+15);
+				    g2.drawGlyphVector(vectRnombre, (float)runway.get_extremite_x(0)+50, (float)runway.get_extremite_y(0)+20+(int)Math.round(runway.getAngle(-Math.PI/2)));
+				    g2.drawGlyphVector(vectRlettre, (float)runway.get_extremite_x(0)+20, (float)runway.get_extremite_y(0)+10+(int)Math.round(runway.getAngle(-Math.PI/2)));
 		      }
 		      
 		    
