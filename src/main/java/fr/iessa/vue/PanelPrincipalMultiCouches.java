@@ -3,21 +3,12 @@
  */
 package fr.iessa.vue;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JToolTip;
 import javax.swing.OverlayLayout;
 
 import fr.iessa.controleur.Controleur;
@@ -30,9 +21,6 @@ public class PanelPrincipalMultiCouches extends JPanel {
 
 	/** Permet de gerer plusieurs plans sur un meme panel*/
 	private JLayeredPane _gestionPlans;
-	
-	/** Permet de gerer plusieurs plans sur un meme panel*/
-	private JPanel _zpanel;
 	
 	/** Controleur de notre pattern MVC */
 	private Controleur _controleur;
