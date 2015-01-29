@@ -146,7 +146,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 		if(_aeroport != null)
 		{		
-		   if (image==null) // création de l'image
+		   if (image==null) // creation de l'image
 		      image = createVolatileImage(getWidth(), getHeight());
 		   
 		      do {

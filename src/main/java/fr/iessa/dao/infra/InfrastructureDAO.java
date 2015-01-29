@@ -102,7 +102,7 @@ public class InfrastructureDAO {
 			throw e;
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
-			throw new NoSuchElementException( "Ligne " + numeroLigne + e.getMessage());	
+			throw new NoSuchElementException( "Ligne " + numeroLigne + " -> format de la ligne incorrect");	
 		}
 		
 		return result;
@@ -137,6 +137,6 @@ public class InfrastructureDAO {
 			return Lookup.RUNWAY;
 		}
 			
-		throw new NoSuchElementException("format incorrecte");
+		throw new NoSuchElementException("format du type de la ligne incorrect");
 	}
 }
