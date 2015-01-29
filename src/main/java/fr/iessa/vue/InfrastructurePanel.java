@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -46,14 +47,16 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 	private static final long serialVersionUID = 25499665468682529L;
 
-	Controleur _controleur;
+	private Controleur _controleur;
 	
-	InfrastructureDrawer _drawer = new InfrastructureDrawer();
-	AffineTransform _mouseScroll = new AffineTransform();
+	private Aeroport _aeroport;
+	 
+	 /**
+	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
+	 */
+	private VolatileImage _imageCarteBuffered;
 	
-	Aeroport _aeroport;
-	
-	BufferedImage _carteEnFond = null;
+	private InfrastructureDrawer _drawer = new InfrastructureDrawer();
 	
 	int _largeurImage;
 	int _hauteurImage;
@@ -61,8 +64,9 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 	/** Permet d'avoir la translation a faire apres un drag de la souris */
 	Point2D.Double _whereMousePressed = new Point2D.Double();
 	Point2D.Double _dxdyscroll = new Point2D.Double();
+	private AffineTransform _mouseScroll = new AffineTransform();
 
-	/** Indique si un charge lourde est en cours*/
+	/** Indique si une charge lourde est en cours*/
 	private ChargeEnCoursLayerUI _layerUI;
 
 	private int _zoomLevel = 1;
@@ -73,20 +77,27 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
         
 		_controleur = controleur;
 		
-		//Acceleres le paint du component:
+		//Acceleres le paint du component etant le fond d'ecran.
 		setOpaque(true);
 		
 		//Pour une animation fluide il vaut mieux etre en double buffer.
 		setDoubleBuffered(true);
 
-		//rendre sensible le controleur 
+		//observe le changement du modele via le controleur (MVC)
 		_controleur.ajoutVue(this);
-		addMouseListener(this);	
-		addMouseWheelListener(this);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    _largeurImage = (int) screenSize.getWidth();
 	    _hauteurImage = (int) screenSize.getHeight();
+		
+		addMouseListener(this);	
+		addMouseWheelListener(this);  
+	    addComponentListener( new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resetImageCarte();	
+			}
+		});
 	}
 
 	/**
@@ -114,60 +125,62 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		}
 	}
 	
-	 // image creation
-	 private VolatileImage image;
 
-	 // rendering to the image
-		private void reCreer() {
-			if(_aeroport != null)
-			{	
-				Graphics2D g2 = image.createGraphics();
-		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		                 RenderingHints.VALUE_ANTIALIAS_ON);
-		        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-		                 RenderingHints.VALUE_RENDER_QUALITY);
-				g2.setClip(0,0, getWidth(), getHeight());
-				_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
-				g2.dispose();
-			}
-		}
 	
+	/** Force le redessin de _imageCarteBuffered */
+	private void resetImageCarte() {
+		_imageCarteBuffered = null;
+	}
+
+	/** Redessine l'image de la carte dans la carte graphique */
+	private void reDessineCarteDansCarteGraphique() {
+		if(_aeroport != null)
+		{	
+			Graphics2D g2 = _imageCarteBuffered.createGraphics();
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+					RenderingHints.VALUE_RENDER_QUALITY);
+			g2.setClip(0,0, getWidth(), getHeight());
+			_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
+			g2.dispose();
+		}
+	}
+
 	@Override
-    public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		//Effacer le contenu pour les animations.
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-       g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
 
 
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 		if(_aeroport != null)
 		{		
-		   if (image==null) // creation de l'image
-		      image = createVolatileImage(getWidth(), getHeight());
-		   
-		      do {
-		         int code = image.validate(getGraphicsConfiguration());
-		         switch(code) {
-		            case VolatileImage.IMAGE_INCOMPATIBLE:
-		                        image = createVolatileImage(getWidth(), getHeight());
-		            case VolatileImage.IMAGE_RESTORED:
-		                        reCreer(); // redessiner l'image
-		         }
-		         if (image.validate(getGraphicsConfiguration())==VolatileImage.IMAGE_OK){
-		 			  g2.setClip(0,0, getWidth(), getHeight());
-		              g2.drawImage(image, 0, 0, this);
-		         }
-		      
-		      } while (image.contentsLost());
-		}
-		
-		//image.
+			if (_imageCarteBuffered==null) // creation de l'image
+				_imageCarteBuffered = createVolatileImage(getWidth(), getHeight());
 
-    }
+			do {
+				int code = _imageCarteBuffered.validate(getGraphicsConfiguration());
+				switch(code) {
+				case VolatileImage.IMAGE_INCOMPATIBLE:
+					_imageCarteBuffered = createVolatileImage(getWidth(), getHeight());
+				case VolatileImage.IMAGE_RESTORED:
+					reDessineCarteDansCarteGraphique(); 
+				}
+				
+				if (_imageCarteBuffered.validate(getGraphicsConfiguration())==VolatileImage.IMAGE_OK){
+					g2.setClip(0,0, getWidth(), getHeight());
+					g2.drawImage(_imageCarteBuffered, 0, 0, this);
+				}
+
+			} while (_imageCarteBuffered.contentsLost());
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -194,7 +207,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 		_mouseScroll = new AffineTransform();
 		_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
 
-		image = null;
+		resetImageCarte();
 		repaint();
 	}
 
@@ -258,7 +271,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			_mouseScroll = new AffineTransform();
 			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
 	        
-			image = null;
+			resetImageCarte();
 	        repaint();
 		}		
 	}

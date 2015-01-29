@@ -1,4 +1,4 @@
-package fr.iessa.metier.trafic;
+package fr.iessa.metier;
 
 import java.util.Calendar;
 import java.util.Collection;

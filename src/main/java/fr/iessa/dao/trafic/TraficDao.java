@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import fr.iessa.metier.trafic.Instant;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.trafic.PointFabrique;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
-import fr.iessa.metier.trafic.Instant.InstantFabrique;
 import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.TypeVol;
 
@@ -38,7 +38,6 @@ public class TraficDao {
 			vols = lignes.parallel()
 					.map(traficDao::chargerVol)
 					.collect(Collectors.toSet());
-					//.collect(Collectors.toCollection(TreeSet::new));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

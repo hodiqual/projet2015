@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -20,35 +22,30 @@ import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import fr.iessa.metier.trafic.Instant.InstantFabrique;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 
 /**
  * @author hodiqual
  */
-public class Trafic {
+public class Trafic implements Observer {
 	
 	private Set<Vol> _vols = null;
 	
-	public Set<Vol> getVols(Instant temps)
-	{
-		return _vols.stream()
-				    .filter( vol -> vol.get_instantVersCoord().containsKey(temps) )
-				    .collect(Collectors.toSet());
-	}
-	
+
 	public Set<Vol> getVolsToAdd(Instant precedent, Instant courant) 
 	{
 		return _vols.stream()
-                    .filter( vol -> vol.get_instantVersCoord().containsKey(courant)
-                    		&& !vol.get_instantVersCoord().containsKey(precedent) )
+                    .filter( vol -> vol.estSurLaPlateforme(courant)
+                    		&& !vol.estSurLaPlateforme(precedent) )
                     .collect(Collectors.toSet());
 	}
 	
 	public Set<Vol> getVolsToRemove(Instant precedent, Instant courant) 
 	{
 		return _vols.stream()
-                .filter( vol -> !vol.get_instantVersCoord().containsKey(courant)
-                		&& vol.get_instantVersCoord().containsKey(precedent) )
+                .filter( vol -> !vol.estSurLaPlateforme(courant)
+                		&& vol.estSurLaPlateforme(precedent) )
                 .collect(Collectors.toSet());
 	}
 	
@@ -106,6 +103,16 @@ public class Trafic {
 	public void setVols(Set<Vol> vols) {
 		_vols = vols;
 		computeDelta();
+	}
+
+	@Override
+	public void update(Observable o, Object i) {
+		Instant instant = (Instant)i;
+		Set<Vol> volsAInstant = _volsParInstant.get(instant);
+		volsAInstant.stream().forEach( v -> v.updateCoordCourantes(instant) );
+		
+		_vols.parallelStream().filter( v -> volsAInstant.contains(v) == false )
+							  .forEach( v -> v.updateCoordCourantes(null) );
 	}
 	
 	

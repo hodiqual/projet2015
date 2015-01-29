@@ -23,8 +23,8 @@ import aurelienribon.tweenengine.Tween;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import sun.security.pkcs11.wrapper.Functions;
 import fr.iessa.dao.trafic.TraficDao;
-import fr.iessa.metier.trafic.Instant;
-import fr.iessa.metier.trafic.Instant.InstantFabrique;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
 
@@ -113,30 +113,6 @@ public class TestPleinDeTrafic {
 		//Trafic trafic = list.get(0);
 		//trafic.computeDelta();
 		
-
-		Predicate <Vol> toAdd = new Predicate<Vol>() {
-
-			@Override
-			public boolean test(Vol t) {
-				fr.iessa.metier.trafic.Instant instant = InstantFabrique.get(70000);
-
-				fr.iessa.metier.trafic.Instant precedent = InstantFabrique.get(70000-5);
-				
-				
-				return t.get_instantVersCoord().containsKey(instant) 
-						&& t.get_instantVersCoord().containsKey(precedent);
-			}
-		};
-		
-
-		Predicate <Vol> toRemove = new Predicate<Vol>() {
-
-			@Override
-			public boolean test(Vol t) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
 		
 		
 		

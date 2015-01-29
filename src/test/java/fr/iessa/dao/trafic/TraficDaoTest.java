@@ -8,11 +8,12 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
-import fr.iessa.metier.trafic.Instant;
-import fr.iessa.metier.trafic.Instant.InstantFabrique;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.metier.type.Categorie;
@@ -50,7 +51,7 @@ public class TraficDaoTest {
 		assertEquals(Categorie.MEDIUM, vol.getCategorie());
 		assertEquals("BCS1748", vol.getId());
 		
-		Hashtable<Instant, Point> expectedMap = new Hashtable<>();
+		TreeMap<Instant, Point> expectedMap = new TreeMap<>();
 		expectedMap.put( InstantFabrique.get(1440), new Point(-946,-1116));
 		expectedMap.put( InstantFabrique.get(1445), new Point(-938,-1128));
 		assertEquals(expectedMap, vol.getInstantVersCoord());
@@ -70,7 +71,7 @@ public class TraficDaoTest {
 		assertEquals(Categorie.HIGH, vol.getCategorie());
 		assertEquals("SRR6316", vol.getId());
 		
-		Hashtable<Instant, Point> expectedMap = new Hashtable<>();
+		TreeMap<Instant, Point> expectedMap = new TreeMap<>();
 		expectedMap.put( InstantFabrique.get(3815), new Point(1565,1935) );
 		expectedMap.put( InstantFabrique.get(3820), new Point(1009,1888) );
 		assertEquals(expectedMap, vol.getInstantVersCoord());

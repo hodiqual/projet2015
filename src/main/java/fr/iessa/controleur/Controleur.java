@@ -3,30 +3,19 @@
  */
 package fr.iessa.controleur;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.ImageIcon;
 import javax.swing.SwingWorker;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import fr.iessa.dao.infra.InfrastructureDAO;
 import fr.iessa.dao.trafic.TraficDao;
+import fr.iessa.metier.Horloge;
+import fr.iessa.metier.Instant;
 import fr.iessa.metier.infra.Aeroport;
-import fr.iessa.metier.infra.Ligne;
-import fr.iessa.metier.infra.Point;
 import fr.iessa.metier.trafic.Trafic;
-import fr.iessa.vue.infra.InfrastructureDrawer;
 
 /**
  * @author hodiqual
@@ -36,6 +25,9 @@ public class Controleur {
 	
 	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
 	private TraficConteneur _modele = new TraficConteneur();
+	
+	/** Horloge de la plateforme */
+	private Horloge _horloge;
 	
 	/** Permet de notifier la vue en garantissant que cela soit dans l'Event Dispatch Thread*/
 	private SwingPropertyChangeSupport _swingObservable;
@@ -78,7 +70,6 @@ public class Controleur {
 
 			public void done(){
 				try {
-
 				    Aeroport aeroport = get();
 					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
@@ -115,10 +106,16 @@ public class Controleur {
 		SwingWorker<Trafic, ModeleEvent> sw = new SwingWorker<Trafic, ModeleEvent>(){
 			protected Trafic doInBackground() throws Exception {
 				
-				//1. Chargement fichier trafic 
+				//1. Chargement fichier trafic  et pre_calcul les vols par instant
 				TraficDao traficDao = new TraficDao();
 				Trafic trafic = traficDao.charger(ficname);
-
+				
+				//2. Creer Horloge
+				_horloge = new Horloge();
+				
+				//3. Enregistre le trafic ˆ l'horloge 
+				_horloge.addObserver(trafic);
+				
 				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
@@ -151,6 +148,74 @@ public class Controleur {
 		//On lance le SwingWorker
 		sw.execute();
 	}
+	
+	private boolean _isTraficRunning = false;
+	
+	private void updateInstant(Instant instant){
+		if(instant == null)
+			_horloge.tick();
+		else
+			_horloge.setInstantCourant(instant);
+		
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), null, _horloge.getInstantCourant());
+	}
+	
+	
+	public final Thread _horlogeManager = new Thread() {
+        @Override
+        public void run() {
+           while (true) {
+        	   if(_isTraficRunning)
+        	   {   
+        		   updateInstant(null);
+        		   try {
+        			   Thread.sleep(40);  //  40 milliseconds 25 update par seconde
+        		   } catch (InterruptedException ignore) {}
+        		   
+        	   }   
+           }
+        }
+     };
+	
+	public void runTrafic(){
+		_isTraficRunning = true;
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_IS_TRAFIC_RUNNING.toString(), !_isTraficRunning, _isTraficRunning);
+				
+		if(_horlogeManager.isAlive() == false)
+			_horlogeManager.start();
+	}
+	
+	public void stopTrafic(){
+		_isTraficRunning = false;
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_IS_TRAFIC_RUNNING.toString(), !_isTraficRunning, _isTraficRunning);
+	}
+	
+	public void setInstant(Instant instant){
+		SwingWorker<Void,Void> sw = new SwingWorker<Void,Void>(){
+			private boolean backupIsTraficRunning = _isTraficRunning;
+			
+			protected Void doInBackground(){
+				_isTraficRunning=false;
+				updateInstant(instant);
+				_isTraficRunning=backupIsTraficRunning;
+				return null;
+			}
+			
+			public void done(){
+				try {
+					Void object = get();
+				} catch (InterruptedException | ExecutionException e) {
+					System.err.println("Erreur du controleur");
+					e.printStackTrace();
+				}
+			}         
+		};
+		
+		//On lance le SwingWorker
+		sw.execute();		
+	}
+	
+	
 	
 
 }
