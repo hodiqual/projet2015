@@ -21,6 +21,7 @@ import javax.swing.SwingWorker;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.infra.Ligne;
 import fr.iessa.metier.infra.Point;
@@ -57,7 +58,6 @@ public class Controleur {
 			return;
 		}		
 		
-
 		ModeleEvent evtfin = ModeleEvent.CHARGEMENT_CARTE_FICHIER_EN_COURS;	
 		_swingObservable.firePropertyChange(evtfin.toString(), null, null);
 
@@ -65,10 +65,10 @@ public class Controleur {
 		SwingWorker<Aeroport, ModeleEvent> sw = new SwingWorker<Aeroport, ModeleEvent>(){
 			protected Aeroport doInBackground() throws Exception {
 
-				// 1. Charger fichier infrastructure
+				//1. Charger fichier infrastructure
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				
-				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
+				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
 				return aeroport;
@@ -107,15 +107,19 @@ public class Controleur {
 			_swingObservable.firePropertyChange(evtfin.toString(), null, "Le nom du fichier n'est pas renseigne");	
 			return;
 		}		
+		
+		ModeleEvent evtfin = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_EN_COURS;	
+		_swingObservable.firePropertyChange(evtfin.toString(), null, null);
 
 		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
 		SwingWorker<Trafic, ModeleEvent> sw = new SwingWorker<Trafic, ModeleEvent>(){
 			protected Trafic doInBackground() throws Exception {
-				//TODO Chargement fichier trafic 
-				Trafic trafic = null;
-				publish(ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE);
+				
+				//1. Chargement fichier trafic 
+				TraficDao traficDao = new TraficDao();
+				Trafic trafic = traficDao.charger(ficname);
 
-				//Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
+				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
 				return trafic;

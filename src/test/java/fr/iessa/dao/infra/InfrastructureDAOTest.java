@@ -2,6 +2,9 @@ package fr.iessa.dao.infra;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
+
 import org.junit.Test;
 
 import fr.iessa.dao.infra.InfrastructureDAO.Lookup;
@@ -50,7 +53,7 @@ public class InfrastructureDAOTest {
 	}
 	
 	@Test
-	public void testCharger()
+	public void testCharger() throws FileNotFoundException, NoSuchElementException
 	{
 		 Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
 		 assertEquals("LFPG", aeroport.get_nom());

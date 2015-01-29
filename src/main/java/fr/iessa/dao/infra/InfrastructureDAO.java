@@ -5,6 +5,7 @@ package fr.iessa.dao.infra;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import fr.iessa.dao.core.DAO;
@@ -51,10 +52,13 @@ public class InfrastructureDAO {
 	 * @param ficname fichier formate contenant la description de la plateforme.
 	 * @return l'infracstructure Aeroport contenant tous ces points,
 	 *         lignes, pushbacks, taxiways, et runways.
+	 * @throws FileNotFoundException, NoSuchElementException
 	 */
-	public static Aeroport charger(String ficname)
+	public static Aeroport charger(String ficname) throws FileNotFoundException, NoSuchElementException
 	{
 		Aeroport result = null;
+		
+		int numeroLigne = 1;
 		
 		try(Scanner scan = new Scanner(new FileReader(ficname));) {
 			//scan ligne par ligne
@@ -65,6 +69,7 @@ public class InfrastructureDAO {
 			//traitement ligne par ligne
 			while(scan.hasNext())
 			{
+				numeroLigne++;
 				String ligne = scan.next();
 				
 				//on trouve le type de ligne
@@ -93,15 +98,18 @@ public class InfrastructureDAO {
 			result.initialiseRunway();
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+			throw new NoSuchElementException( "Ligne " + numeroLigne + e.getMessage());	
 		}
 		
 		return result;
 	}
 
 	/** @return  le type d'infrastructure de la plateforme decrite par la ligne du fichier. */
-	public static Lookup findLookup(String ligne) {
+	public static Lookup findLookup(String ligne) throws NoSuchElementException {
 		
 		if(ligne.startsWith("P"))
 		{
@@ -129,6 +137,6 @@ public class InfrastructureDAO {
 			return Lookup.RUNWAY;
 		}
 			
-		return null;
+		throw new NoSuchElementException("format incorrecte");
 	}
 }

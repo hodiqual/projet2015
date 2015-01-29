@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -24,9 +26,11 @@ public class InfrastructureDrawerTest {
 
 	/**
 	 * Test method for {@link fr.iessa.vue.infra.InfrastructureDrawer#dessineAeroport(fr.iessa.metier.infra.Aeroport, java.awt.Graphics2D, double, double)}.
+	 * @throws NoSuchElementException 
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	public void testDessineAeroport() {
+	public void testDessineAeroport() throws FileNotFoundException, NoSuchElementException {
 		Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
 		
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

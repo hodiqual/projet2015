@@ -7,6 +7,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import fr.iessa.vue.infra.InfrastructureDrawer;
 
 public class TestDessinCarte extends JPanel{
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, NoSuchElementException {
 		
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -54,7 +56,7 @@ public class TestDessinCarte extends JPanel{
 	private int _largeurEcran, _hauteurEcran;
 	private BufferedImage _image;
 	
-	TestDessinCarte()
+	TestDessinCarte() throws FileNotFoundException, NoSuchElementException
 	{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         _largeurEcran = (int) screenSize.getWidth();
@@ -62,7 +64,7 @@ public class TestDessinCarte extends JPanel{
         chargeEtDessineAeroport();
 	}
 	
-	void chargeEtDessineAeroport()
+	void chargeEtDessineAeroport() throws FileNotFoundException, NoSuchElementException
 	{
 		 Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
 	        
