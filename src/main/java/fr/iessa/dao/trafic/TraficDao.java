@@ -5,9 +5,14 @@ package fr.iessa.dao.trafic;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fr.iessa.metier.trafic.Instant;
 import fr.iessa.metier.trafic.PointFabrique;
@@ -23,25 +28,21 @@ import fr.iessa.metier.type.TypeVol;
  */
 public class TraficDao {
 	
-	public Trafic _trafic = new Trafic();
-	
 	public Trafic charger(String ficname) {
 		
-		try(Scanner scan = new Scanner(new FileReader(ficname));) {
-			//scan ligne par ligne
-			scan.useDelimiter("\n");
-			
-			//traitement ligne par ligne
-			while(scan.hasNext())
-			{
-				Vol vol = chargerVol(scan.next());
-				_trafic.ajout(vol);
-			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		Trafic _trafic = new Trafic();
+		
+		Set<Vol> vols = null;
+		TraficDao traficDao = new TraficDao();
+		try (Stream<String> lignes = Files.lines(Paths.get(ficname));) {
+			vols = lignes.parallel()
+					.map(traficDao::chargerVol)
+					.collect(Collectors.toSet());
+					//.collect(Collectors.toCollection(TreeSet::new));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		_trafic.setVols(vols);
 		return _trafic;
 	}
 	

@@ -79,14 +79,16 @@ public class TestPleinDeTrafic {
 									 
 		Set<Vol> vols1 = vols;
 		Function<Instant, Set<Vol> > valueMapper= (Instant instant) -> vols1.stream()
-					.filter(v -> v.estSurLaPlateforme(instant) )
-					.collect( Collectors.toSet() );
+																		.filter(v -> v.estSurLaPlateforme(instant) )
+																		.collect( Collectors.toSet() );
 		
 		long start = System.nanoTime();
 		
 		  ConcurrentMap<Instant, Set<Vol>> volsParInstant = InstantFabrique.getInstants().parallelStream()
-																						.collect( Collectors.toConcurrentMap( Function.identity()
-																															 , valueMapper ) );
+																						 .collect( Collectors.toConcurrentMap( Function.identity()
+																															   ,(Instant i) -> vols1.stream()
+																																					.filter(v -> v.estSurLaPlateforme(i) )
+																																					.collect( Collectors.toSet() ) ) );
 		 TreeMap<Instant, Set<Vol>> treeMap = new TreeMap(volsParInstant);
 		 
 

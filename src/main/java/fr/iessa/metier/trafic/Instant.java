@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * 
@@ -52,8 +53,8 @@ public class Instant implements Comparable<Instant>{
 			return _instantsSingleton.entrySet();
 		}
 		
-		public static Collection<Instant> getInstants() {
-			return _instantsSingleton.values();
+		public static TreeSet<Instant> getInstants() {
+			return new TreeSet<Instant>(_instantsSingleton.values());
 		}
 		
 	}

@@ -4,13 +4,18 @@
 package fr.iessa.metier.trafic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -22,12 +27,7 @@ import fr.iessa.metier.trafic.Instant.InstantFabrique;
  */
 public class Trafic {
 	
-	private ArrayList<Vol> _vols = new ArrayList<>();
-	
-	public void ajout(Vol vol)
-	{
-		_vols.add(vol);
-	}
+	private Set<Vol> _vols = null;
 	
 	public Set<Vol> getVols(Instant temps)
 	{
@@ -52,30 +52,60 @@ public class Trafic {
                 .collect(Collectors.toSet());
 	}
 	
-	private Map<Instant, Set<Vol>> _deltaAdd = new Hashtable<>(); 
-	private Map<Instant, Set<Vol>> _deltaRemove = new Hashtable<>(); 
-	private Map<Instant, Set<Vol>> _current = new Hashtable<>(); 
-	
-	public void computeDelta()
-	{
 
-		Instant previousInstant = null;
+	private TreeMap<Instant, Set<Vol>> _volsParInstant;
+	//private TreeMap<Instant, Set<Vol>> _volsARajouterParInstant; 
+	//private TreeMap<Instant, Set<Vol>> _volsASupprParInstant; 
+	
+	private void computeDelta()
+	{
+		
+		TreeSet<Instant> allOrderedInstants = InstantFabrique.getInstants();
+		ConcurrentMap<Instant, Set<Vol>> volsParInstant = allOrderedInstants.parallelStream()
+				 .collect( Collectors.toConcurrentMap( Function.identity()
+													   ,(Instant i) -> _vols.stream()
+																			.filter(v -> v.estSurLaPlateforme(i) )
+																			.collect( Collectors.toSet() ) ) );
+		
+		_volsParInstant = new TreeMap<Instant, Set<Vol>>(volsParInstant);
+		
+		//Set<Vol> toAdd.removeAll(volsPreviousInstant);
+		//Set<Vol> toAdd.
+		//_volsARajouterParInstant = new TreeMap<Instant, Set<Vol>>(volsParInstant);
+		//_volsASupprParInstant = new TreeMap<Instant, Set<Vol>>(volsParInstant);
+		
+		//Instant[] instantsArray = (Instant[]) allOrderedInstants.toArray();
+		//Set<Vol>[] aRajouter = (Set<Vol>[]) _volsARajouterParInstant.values().toArray();
+		//volsParInstant.entrySet().parallelStream()
+		//						 .forEach( e -> aRajouter[Arrays.binarySearch(instantsArray, e.getKey())+1]. );
+		
+		
+		//ConcurrentMap<Instant, Set<Vol>> volsARajouterParInstant= new ConcurrentMap<Instant, Set<Vol>>(volsParInstant);
+		//ConcurrentMap<Instant, Set<Vol>> volsASupprParInstant 	= new ConcurrentMap<Instant, Set<Vol>>(volsParInstant);
+		
+		
+		/*Instant previousInstant = null;
 		
 		for (Entry<Integer, Instant>  entry : InstantFabrique.getAll()) {
 			Instant instant = entry.getValue();
-			_current.put(instant, getVols(instant));
 			if(previousInstant != null)
 			{
-				_deltaAdd.put(instant, getVolsToAdd(previousInstant,instant));
-				_deltaRemove.put(instant, getVolsToRemove(previousInstant,instant));
+				_volsARajouterParInstant.put(instant, getVolsToAdd(previousInstant,instant));
+				_volsASupprParInstant.put(instant, getVolsToRemove(previousInstant,instant));
 			}
 			else
 			{
-				_deltaAdd.put(instant, getVols(instant));
+				_volsARajouterParInstant.put(instant, getVols(instant));
 			}
 			previousInstant = instant;			
-		}
+		}*/
 		
+		
+	}
+
+	public void setVols(Set<Vol> vols) {
+		_vols = vols;
+		computeDelta();
 	}
 	
 	
