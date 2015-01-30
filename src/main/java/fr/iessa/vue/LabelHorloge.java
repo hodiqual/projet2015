@@ -21,7 +21,7 @@ public class LabelHorloge extends JLabel implements PropertyChangeListener {
 	{
 		super("00:00:00");
 		final ModeleEvent[] evts = {ModeleEvent.UPDATE_INSTANT};
-		controleur.ajoutVue(this,  evts ) ;
+		controleur.ajoutVue(this,  evts) ;
 	}
 
 	/* (non-Javadoc)
