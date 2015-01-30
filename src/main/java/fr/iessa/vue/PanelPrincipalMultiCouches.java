@@ -64,7 +64,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_gestionPlans.add(jlayer, -3000);
 		
 		//Gestion du trafic
-		TraficPanel traficPanel = new  TraficPanel();
+		PanelTrafic traficPanel = new  PanelTrafic();
 		traficPanel.setAlignmentX(0.0f);
 		traficPanel.setAlignmentY(0.0f);
 		_gestionPlans.add(traficPanel,0);

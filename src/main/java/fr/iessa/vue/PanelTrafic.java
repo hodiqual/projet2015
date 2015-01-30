@@ -10,7 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class TraficPanel extends JPanel implements ActionListener{
+public class PanelTrafic extends JPanel implements ActionListener{
 
     Avion redSquare1 = new Avion("Avion 1");
     Avion redSquare2 = new Avion("Avion 2");
@@ -23,7 +23,7 @@ public class TraficPanel extends JPanel implements ActionListener{
     Avion redSquare9 = new Avion("Avion 9");
     Timer timer = new Timer(40, this);
 
-    public TraficPanel() {
+    public PanelTrafic() {
         setOpaque(false);
         
         add(redSquare1);
