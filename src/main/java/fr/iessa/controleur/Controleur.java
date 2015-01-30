@@ -38,6 +38,12 @@ public class Controleur {
 		_swingObservable = new SwingPropertyChangeSupport(_modele, true);
 	}
 	
+	public void ajoutVue(PropertyChangeListener vue, ModeleEvent[] events) {
+		for (ModeleEvent modeleEvent : events) {
+			_swingObservable.addPropertyChangeListener(modeleEvent.toString(), vue);
+		}
+	}
+	
 	public void ajoutVue(PropertyChangeListener vue) {
 		_swingObservable.addPropertyChangeListener(vue);
 	}
@@ -136,7 +142,7 @@ public class Controleur {
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _modele));
-					
+					runTrafic();
 					//TODO Lancer en arriere plan la detection des collisions. pour faire un ReadyToUse.
 					//Attribut qui ecoute le modele chargement trafic fichier done pour lancer la detection 
 					//des collisions dans un swingworker

@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import fr.iessa.controleur.Controleur;
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
@@ -65,7 +66,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	 */
 	private final int tempsAffichageLecteur = 1000;
 	
-	public  PanelVisualisationEtLecture(){
+	public  PanelVisualisationEtLecture(Controleur controleur){
 		super();
 		
 		setOpaque(false);
@@ -110,6 +111,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 					boutonTabDeBord.setText("<<");
 			}
 		});
+		_visualisation.add(new LabelHorloge(controleur));
 		_visualisation.add(boutonTabDeBord);
 		
 		_zoneDetection = new JPanel();

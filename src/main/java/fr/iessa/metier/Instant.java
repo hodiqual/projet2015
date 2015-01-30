@@ -18,17 +18,27 @@ import java.util.TreeSet;
 public class Instant implements Comparable<Instant>{
 	
 	private final int _secondes;
-	
-	private final Date _date;
+	private final String _affichage;
 	
 	private Instant(int secondes)
 	{
 		_secondes = secondes;
-		_date = new Date();
+		
+		StringBuffer buffer = new StringBuffer(8);
+		buffer.append(_secondes/3600 +":");
+		int reste = _secondes%3600;
+		buffer.append(reste/60 +":");
+		buffer.append(reste%60);
+		
+		_affichage = buffer.toString();
 	}
 	
 	public int getSeconds() {
 		return _secondes;
+	}
+	
+	public String toString()  {
+		return _affichage;
 	}
 
 	@Override

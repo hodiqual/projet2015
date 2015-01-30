@@ -70,7 +70,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_gestionPlans.add(traficPanel,0);
 		
 		//Gestion des controles Lecteur et Tableau de Bord
-		PanelDesControles controles = new PanelDesControles();
+		PanelDesControles controles = new PanelDesControles(_controleur);
 		controles.setAlignmentX(0.0f);
 		controles.setAlignmentY(0.0f);
 		_gestionPlans.add(controles,1);

@@ -2,6 +2,7 @@ package fr.iessa.vue;
 
 import javax.swing.JButton;
 
+import fr.iessa.controleur.Controleur;
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
@@ -34,11 +35,11 @@ public class PanelDesControles extends SLPanel {
 	 */	
 	private final SLConfig _avecTableauCfg;
 	
-	public PanelDesControles() {
+	public PanelDesControles(Controleur controleur) {
 		super();
 		setOpaque(false);
 		_tableauDeBord = new PanelTableauDeBord();
-		_visualisationEtLecture = new PanelVisualisationEtLecture();
+		_visualisationEtLecture = new PanelVisualisationEtLecture(controleur);
 		_visualisationEtLecture.setOpaque(false);
 		_visualisationEtLecture.set_actionBoutonTabDeBord(afficheTableauDeBord);
 		
