@@ -60,6 +60,10 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	 */
 	private Runnable _actionBoutonTabDeBord;
 	
+	/**
+	 * Temps au bout duquel le lecteur ne soit plus affiche.
+	 */
+	private final int tempsAffichageLecteur = 1000;
 	
 	public  PanelVisualisationEtLecture(){
 		super();
@@ -71,7 +75,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 			private Timer timer ;	
 			{
 				//Cache le lecteur au bout deux secondes hors du lecteur
-				timer = new Timer(2000, _cacheLecteurWrapper);
+				timer = new Timer(tempsAffichageLecteur, _cacheLecteurWrapper);
 				timer.setRepeats(false);
 				timer.stop();
 			}
