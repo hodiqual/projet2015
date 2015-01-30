@@ -43,7 +43,7 @@ import fr.iessa.vue.infra.InfrastructureDrawer;
  * @author hodiqual
  * 
  */
-public class InfrastructurePanel extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener {
+public class PanelInfrastructure extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener {
 
 	private static final long serialVersionUID = 25499665468682529L;
 
@@ -71,7 +71,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 	private int _zoomLevel = 1;
 	
-	public InfrastructurePanel(Controleur controleur) {
+	public PanelInfrastructure(Controleur controleur) {
         setLayout(new GridLayout(1,1));
         setBackground(Color.white);
         
