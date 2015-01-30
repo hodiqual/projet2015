@@ -5,6 +5,7 @@ package fr.iessa.metier;
 
 import java.util.Arrays;
 import java.util.Observable;
+import java.util.TreeSet;
 
 import fr.iessa.metier.Instant.InstantFabrique;
 
@@ -35,8 +36,8 @@ public class Horloge extends Observable {
 	private int _indexInstantCourant;
 	
 	public Horloge()
-	{
-		_instantsOrdonnees = (Instant[]) InstantFabrique.getInstants().toArray();
+	{		
+		_instantsOrdonnees = InstantFabrique.getInstants().toArray(new Instant[0]);
 		_indexInstantCourant = 0;
 	}
 	
