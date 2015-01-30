@@ -95,7 +95,8 @@ public class InfrastructureDAO {
 				}				
 			}
 			
-			result.initialiseRunway();
+			result.initialiseRunway();	
+			result.initialiseBounds();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

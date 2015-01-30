@@ -76,13 +76,10 @@ public class InfrastructureDrawer {
 		{			
 			_aeroport = aeroport;
 			
-			_minReelX = _minReelY = Integer.MAX_VALUE;
-			_maxReelX = _maxReelY = Integer.MIN_VALUE;
-			 
-	        trouverLimitesReels(aeroport.get_lignes());
-	        trouverLimitesReels(aeroport.get_taxiway());
-	        trouverLimitesReels(aeroport.get_pushbacks());
-	        trouverLimitesReels(aeroport.get_points());
+			_minReelX = _aeroport.getMinX();
+			_minReelY = _aeroport.getMinY();
+			_maxReelX = _aeroport.getMaxX();
+			_maxReelY = _aeroport.getMaxY();
 		}
 		
 		double maxReelXmarge = _maxReelX + _margeReel;
@@ -99,39 +96,4 @@ public class InfrastructureDrawer {
         _transfoAffine.scale(xScale, -yScale);
 		
 	}
-
-	private void trouverLimitesReels(List<? extends Ligne> lignes) {
-       
-		for (Ligne ligne : lignes) {
-			GeneralPath path = ligne.get_lignePointAPoint();
-			double l_minReelX = path.getBounds().getMinX();
-			double l_maxReelX = path.getBounds().getMaxX();
-			double l_minReelY = path.getBounds().getMinY();
-			double l_maxReelY = path.getBounds().getMaxY();
-			
-			_minReelX = Double.min(_minReelX, l_minReelX);
-			_minReelY = Double.min(_minReelY, l_minReelY);
-			_maxReelX = Double.max(_maxReelX, l_maxReelX);
-			_maxReelY = Double.max(_maxReelY, l_maxReelY);	
-		}
-		
-		
-		
-	}
-	
-	private void trouverLimitesReels(Map<String, Point> _points) {
-		for (Map.Entry<String, Point> entry : _points.entrySet()) {
-			Point point = entry.getValue();
-			
-			double p_ReelX = point.getX();
-			double p_ReelY = point.getY();
-			
-			_minReelX = Double.min(_minReelX, p_ReelX);
-			_minReelY = Double.min(_minReelY, p_ReelY);
-			_maxReelX = Double.max(_maxReelX, p_ReelX);
-			_maxReelY = Double.max(_maxReelY, p_ReelY);
-       
-		}
-	}
-
 }
