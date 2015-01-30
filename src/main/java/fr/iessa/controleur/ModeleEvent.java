@@ -20,5 +20,6 @@ public enum ModeleEvent {
 
 ,   UPDATE_INSTANT
 ,   UPDATE_IS_TRAFIC_RUNNING
+,	UPDATE_DUREE_INTERVALLE
 ;
 }

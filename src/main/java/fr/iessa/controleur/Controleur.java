@@ -14,6 +14,7 @@ import fr.iessa.dao.infra.InfrastructureDAO;
 import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.Horloge;
 import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.trafic.Trafic;
 
@@ -116,7 +117,10 @@ public class Controleur {
 				//3. Enregistre le trafic ˆ l'horloge 
 				_horloge.addObserver(trafic);
 				
-				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
+				//4. Initialise horloge
+				_horloge.initialise();
+				
+				//5. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
 				return trafic;
@@ -152,14 +156,22 @@ public class Controleur {
 	private boolean _isTraficRunning = false;
 	
 	private void updateInstant(Instant instant){
+		Instant oldInstant = _horloge.getInstantCourant();
 		if(instant == null)
 			_horloge.tick();
 		else
 			_horloge.setInstantCourant(instant);
 		
-		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), null, _horloge.getInstantCourant());
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
 	}
+    
+	private int _dureeIntervalle = 40; //  40 milliseconds 25 update par seconde
 	
+	public void setDureeInterval( int milliseconds ){
+		int oldUpdateInterval = _dureeIntervalle;
+		_dureeIntervalle = milliseconds;
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_DUREE_INTERVALLE.toString(), oldUpdateInterval, _dureeIntervalle);	
+	}
 	
 	public final Thread _horlogeManager = new Thread() {
         @Override
@@ -169,9 +181,8 @@ public class Controleur {
         	   {   
         		   updateInstant(null);
         		   try {
-        			   Thread.sleep(40);  //  40 milliseconds 25 update par seconde
+        			   Thread.sleep(_dureeIntervalle);  
         		   } catch (InterruptedException ignore) {}
-        		   
         	   }   
            }
         }
@@ -190,13 +201,14 @@ public class Controleur {
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_IS_TRAFIC_RUNNING.toString(), !_isTraficRunning, _isTraficRunning);
 	}
 	
-	public void setInstant(Instant instant){
+	public void setInstant(int secondes){
+		
 		SwingWorker<Void,Void> sw = new SwingWorker<Void,Void>(){
 			private boolean backupIsTraficRunning = _isTraficRunning;
 			
 			protected Void doInBackground(){
 				_isTraficRunning=false;
-				updateInstant(instant);
+				updateInstant(InstantFabrique.getInstantLePlusProche(secondes));
 				_isTraficRunning=backupIsTraficRunning;
 				return null;
 			}
@@ -214,6 +226,7 @@ public class Controleur {
 		//On lance le SwingWorker
 		sw.execute();		
 	}
+	
 	
 	
 	

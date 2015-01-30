@@ -52,10 +52,14 @@ public class Horloge extends Observable {
 		setIndexCourant(_indexInstantCourant+1);
 	}
 	
-	private void setIndexCourant( int newIndex) {
+	private void setIndexCourant( int newIndex ) {
 		_indexInstantCourant = newIndex;
 		setChanged();
 		notifyObservers(getInstantCourant());
+	}
+
+	public void initialise() {
+		setIndexCourant(0);
 	}
 	
 }

@@ -26,6 +26,10 @@ public class Instant implements Comparable<Instant>{
 		_secondes = secondes;
 		_date = new Date();
 	}
+	
+	public int getSeconds() {
+		return _secondes;
+	}
 
 	@Override
 	public int compareTo(Instant o) {
@@ -57,10 +61,25 @@ public class Instant implements Comparable<Instant>{
 			return new TreeSet<Instant>(_instantsSingleton.values());
 		}
 		
-	}
-
-	public int getSeconds() {
-		return _secondes;
+		public static Instant getInstantLePlusProche(int secondes)  {
+			int arrondiParDefaut = _instantsSingleton.floorKey(secondes);
+			int ecartArrondiParDefaut = secondes - arrondiParDefaut;
+			int arrondiParExces = _instantsSingleton.ceilingKey(secondes);
+			int ecartArrondiParExces  = arrondiParExces - secondes;
+			if ( ecartArrondiParExces < ecartArrondiParDefaut) 
+				return _instantsSingleton.get(arrondiParExces);
+			else
+				return _instantsSingleton.get(arrondiParDefaut);
+		}
+		
+		public static Instant getMinimumInstant() {
+			return _instantsSingleton.firstEntry().getValue();
+		}
+		
+		public static Instant getMaximumInstant() {
+			return _instantsSingleton.lastEntry().getValue();
+		}
+		
 	}
 
 }
