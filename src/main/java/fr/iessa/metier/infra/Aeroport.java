@@ -108,7 +108,7 @@ public class Aeroport {
 		_runways.forEach( r -> r.initialisePath(_points));		
 	}
 
-	private double _minX, _maxX, _minY, _maxY;
+	private int _minX, _maxX, _minY, _maxY;
 	
 	public void initialiseBounds() {
 		
@@ -142,10 +142,10 @@ public class Aeroport {
 											.max().getAsDouble();
 		
 
-		_minX = Double.min(_minX, l_minReelX);
-		_minY = Double.min(_minY, l_minReelY);
-		_maxX = Double.max(_maxX, l_maxReelX);
-		_maxY = Double.max(_maxY, l_maxReelY);	
+		_minX = (int) Double.min(_minX, l_minReelX);
+		_minY = (int) Double.min(_minY, l_minReelY);
+		_maxX = (int) Double.max(_maxX, l_maxReelX);
+		_maxY = (int) Double.max(_maxY, l_maxReelY);	
 	}
 	
 	private void trouverLimitesReels(Map<String, Point> _points) {
@@ -155,38 +155,38 @@ public class Aeroport {
 			double p_ReelX = point.getX();
 			double p_ReelY = point.getY();
 			
-			_minX = Double.min(_minX, p_ReelX);
-			_minY = Double.min(_minY, p_ReelY);
-			_maxX = Double.max(_maxX, p_ReelX);
-			_maxY = Double.max(_maxY, p_ReelY);    
+			_minX = (int) Double.min(_minX, p_ReelX);
+			_minY = (int) Double.min(_minY, p_ReelY);
+			_maxX = (int) Double.max(_maxX, p_ReelX);
+			_maxY = (int) Double.max(_maxY, p_ReelY);    
 		}
 	}
 
 	/**
 	 * @return the _minX
 	 */
-	public double getMinX() {
+	public int getMinX() {
 		return _minX;
 	}
 
 	/**
 	 * @return the _maxX
 	 */
-	public double getMaxX() {
+	public int getMaxX() {
 		return _maxX;
 	}
 
 	/**
 	 * @return the _minY
 	 */
-	public double getMinY() {
+	public int getMinY() {
 		return _minY;
 	}
 
 	/**
 	 * @return the _maxY
 	 */
-	public double getMaxY() {
+	public int getMaxY() {
 		return _maxY;
 	}
 	

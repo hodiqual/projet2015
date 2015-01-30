@@ -21,7 +21,7 @@ public class TraficPanel extends JPanel implements ActionListener{
     Avion redSquare7 = new Avion("Avion 7");
     Avion redSquare8 = new Avion("Avion 8");
     Avion redSquare9 = new Avion("Avion 9");
-    Timer timer = new Timer(1000, this);
+    Timer timer = new Timer(40, this);
 
     public TraficPanel() {
         setOpaque(false);
@@ -74,7 +74,7 @@ public class TraficPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
         moveSquare(redSquare1.getX()+10,redSquare1.getY()+10,redSquare1);
-        moveSquare(redSquare2.getX()+10,redSquare2.getY()+2 ,redSquare2);
+        moveSquare(redSquare2.getX()-10,redSquare2.getY()+2 ,redSquare2);
         moveSquare(redSquare3.getX()+3,redSquare3.getY()+3 ,redSquare3);
         moveSquare(redSquare4.getX()+4,redSquare4.getY()+4 ,redSquare4);
         moveSquare(redSquare5.getX()+5,redSquare5.getY()+5 ,redSquare5);

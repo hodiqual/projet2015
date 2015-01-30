@@ -142,7 +142,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 					RenderingHints.VALUE_RENDER_QUALITY);
 			g2.setClip(0,0, getWidth(), getHeight());
-			_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
+			_drawer.dessineAeroport(_aeroport, g2, _zoomLevel, _mouseScroll);
 			g2.dispose();
 		}
 	}
