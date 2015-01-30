@@ -114,7 +114,7 @@ public class Controleur {
 				//2. Creer Horloge
 				_horloge = new Horloge();
 				
-				//3. Enregistre le trafic ˆ l'horloge 
+				//3. Enregistre le trafic a l'horloge 
 				_horloge.addObserver(trafic);
 				
 				//4. Initialise horloge
