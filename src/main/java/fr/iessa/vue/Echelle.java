@@ -4,7 +4,9 @@
 package fr.iessa.vue;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.Observable;
 
 /**
@@ -53,7 +55,7 @@ public class Echelle extends Observable{
 		createZoomTransformation();
 	}
 	
-	public void setZoomLevel(int zoomLevel) {
+	public void setZoomLevel(int zoomLevel, int limiteLargeur, int limiteHauteur) {
 		_zoomLevel = zoomLevel;
 		createZoomTransformation();
 		updateGlobalTransformation();
@@ -61,8 +63,16 @@ public class Echelle extends Observable{
 		notifyObservers(getAffineTransform());
 	}
 	
-	public void setScroll(Point2D.Double dxdyscroll) {
-		_dxdyscroll = dxdyscroll;
+	public void setScroll(Point2D.Double ecartRelatif, int limiteLargeur, int limiteHauteur) {
+		_dxdyscroll.x -= ecartRelatif.getX();
+		_dxdyscroll.y -= ecartRelatif.getY();
+
+		_dxdyscroll.x = java.lang.Double.max(_dxdyscroll.x, 0D);
+		_dxdyscroll.y = java.lang.Double.max(_dxdyscroll.y, 0D);
+
+		_dxdyscroll.x = java.lang.Double.min(_dxdyscroll.x, getDestLargeur()-limiteLargeur);
+		_dxdyscroll.y = java.lang.Double.min(_dxdyscroll.y, getDestHauteur()-limiteHauteur);
+
 		createScrollTransformation();
 		updateGlobalTransformation();
 		setChanged();

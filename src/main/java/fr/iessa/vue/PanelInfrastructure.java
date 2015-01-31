@@ -211,17 +211,11 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(_aeroport != null)
-		{				
-			_dxdyscroll.x -= e.getPoint().getX()-_whereMousePressed.getX();
-			_dxdyscroll.y -= e.getPoint().getY()-_whereMousePressed.getY();
-	
-			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
-			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
-
-			_dxdyscroll.x = Double.min(_dxdyscroll.x, _echelle.getDestLargeur()-getWidth());
-			_dxdyscroll.y = Double.min(_dxdyscroll.y, _echelle.getDestHauteur()-getHeight());
+		{			
+			Point2D.Double ecartRelatif = new Point2D.Double(e.getPoint().getX()-_whereMousePressed.getX()
+													 		,e.getPoint().getY()-_whereMousePressed.getY() );
 			
-			_echelle.setScroll(_dxdyscroll);
+			_echelle.setScroll(ecartRelatif, getWidth(), getHeight());
 		}
 	}
 
@@ -271,7 +265,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	        _hauteurImage = (int)_zoomLevel*heightS; 
 	        
 	        double scaleX = _largeurImage/oldLargeurImage;
-	        double scaleY = _hauteurImage/oldHauteurImage;
+	        double scaleY = _hauteurImage/oldHauteurImage;   
 	        
 	        _dxdyscroll.x = e.getX()*(scaleX-1) + scaleX*_dxdyscroll.x;
 	        _dxdyscroll.y = e.getY()*(scaleY-1) + scaleY*_dxdyscroll.y;
@@ -285,7 +279,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 			_mouseScroll = new AffineTransform();
 			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
 			
-			_echelle.setZoomLevel(_zoomLevel);
+			_echelle.setZoomLevel(_zoomLevel, getWidth(), getHeight());
 		}		
 	}
 
