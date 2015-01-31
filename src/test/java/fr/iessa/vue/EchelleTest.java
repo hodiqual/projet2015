@@ -15,10 +15,10 @@ public class EchelleTest {
 
 	@Test
 	public void testGetAffineTransform() throws FileNotFoundException, NoSuchElementException {
-		//Met en place le contexte
-		Echelle.setLimitesReelles(-3879, 4571, -2219, 1880);
 		
-		Echelle echelle = new Echelle(1);
+		Echelle echelle = new Echelle();
+		
+		echelle.setLimitesReelles(-3879, 4571, -2219, 1880);
 
 		double[] expectedTransAffine = { 0.09248554913294797,               0.0, 0.0,
 										 -0.0902535473365899, 368.0, 178.702023726448 };
@@ -27,4 +27,5 @@ public class EchelleTest {
 		assertArrayEquals(expectedTransAffine, actualTransAffine, 0.000001);
 	}
 }
+
 

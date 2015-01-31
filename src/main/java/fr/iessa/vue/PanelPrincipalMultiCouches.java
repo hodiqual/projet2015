@@ -52,8 +52,8 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		
 		//Gestion de l'infrastructure
 		this._controleur = controleur;
-		
-		_infrastructurePanel = new PanelInfrastructure(_controleur);
+		Echelle echelle = new Echelle();
+		_infrastructurePanel = new PanelInfrastructure(_controleur, echelle);
 		final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
 		_infrastructurePanel.setChargeEnCoursLayerUI(layerUI);
 		JLayer<JPanel> jlayer = new JLayer<JPanel>(_infrastructurePanel, layerUI);

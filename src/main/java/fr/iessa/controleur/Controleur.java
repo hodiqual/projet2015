@@ -68,9 +68,6 @@ public class Controleur {
 				//1. Charger fichier infrastructure
 				Aeroport aeroport = InfrastructureDAO.charger(ficname);
 				
-				Echelle.setLimitesReelles(aeroport.getMinX(), aeroport.getMaxX()
-										  , aeroport.getMinY(), aeroport.getMaxY());
-				
 				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
