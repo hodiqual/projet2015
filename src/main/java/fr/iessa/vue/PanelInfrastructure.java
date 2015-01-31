@@ -154,7 +154,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 			g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 					RenderingHints.VALUE_RENDER_QUALITY);
 			g2.setClip(0,0, getWidth(), getHeight());
-			_drawer.dessineAeroport(_aeroport, g2, _echelle.getAffineTransform(), _mouseScroll);
+			_drawer.dessineAeroport(_aeroport, g2, _echelle.getAffineTransform());
 			g2.dispose();
 		}
 	}
@@ -201,26 +201,28 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 			
 	@Override
 	public void mousePressed(MouseEvent e) {
-		_whereMousePressed.x = e.getPoint().getX();
-		_whereMousePressed.y = e.getPoint().getY();
+		if(_aeroport != null)
+		{
+			_whereMousePressed.x = e.getPoint().getX();
+			_whereMousePressed.y = e.getPoint().getY();
+		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {				
-		_dxdyscroll.x -= e.getPoint().getX()-_whereMousePressed.getX();
-		_dxdyscroll.y -= e.getPoint().getY()-_whereMousePressed.getY();
+	public void mouseReleased(MouseEvent e) {
+		if(_aeroport != null)
+		{				
+			_dxdyscroll.x -= e.getPoint().getX()-_whereMousePressed.getX();
+			_dxdyscroll.y -= e.getPoint().getY()-_whereMousePressed.getY();
 	
-		_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
-		_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
+			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
+			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
 
-		_dxdyscroll.x = Double.min(_dxdyscroll.x, _largeurImage-getWidth());
-		_dxdyscroll.y = Double.min(_dxdyscroll.y, _hauteurImage-getHeight());
-		
-		_mouseScroll = new AffineTransform();
-		_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
-
-		resetImageCarte();
-		repaint();
+			_dxdyscroll.x = Double.min(_dxdyscroll.x, _echelle.getDestLargeur()-getWidth());
+			_dxdyscroll.y = Double.min(_dxdyscroll.y, _echelle.getDestHauteur()-getHeight());
+			
+			_echelle.setScroll(_dxdyscroll);
+		}
 	}
 
 	@Override

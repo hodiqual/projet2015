@@ -21,12 +21,13 @@ public class Echelle extends Observable{
 	/** Permet de faire des marges autour de l'aeroport, exprimee en metre*/
 	private static final int _margeReel = 100;
 	
-	private AffineTransform _zoomTransformation;
+	private AffineTransform _zoomTransformation = new AffineTransform();
 	private AffineTransform _mouseScroll = new AffineTransform(); 
+	private AffineTransform _globalTransformation = new AffineTransform();
 	
 	private int _zoomLevel = 1;
 	
-	private Point2D.Double _dxdyscroll = new Point2D.Double(); 
+	private Point2D.Double _dxdyscroll = new Point2D.Double();
 	
 	public void setLimitesReelles(int minX, int maxX, int minY, int maxY){
 		_minReelX = minX;
@@ -60,7 +61,22 @@ public class Echelle extends Observable{
 		notifyObservers(getAffineTransform());
 	}
 	
+	public void setScroll(Point2D.Double dxdyscroll) {
+		_dxdyscroll = dxdyscroll;
+		createScrollTransformation();
+		updateGlobalTransformation();
+		setChanged();
+		notifyObservers(getAffineTransform());
+	}
+	
+	private void createScrollTransformation() {
+		_mouseScroll = new AffineTransform();
+		_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
+	}
+
 	private void updateGlobalTransformation() {
+		_globalTransformation = new AffineTransform(_mouseScroll);
+		_globalTransformation.concatenate(_zoomTransformation);
 	}
 
 	private void createZoomTransformation()  {
@@ -79,6 +95,14 @@ public class Echelle extends Observable{
 	}
 	
 	public AffineTransform getAffineTransform() {
-		return _zoomTransformation;
-	}	
+		return _globalTransformation;
+	}
+
+	public int getDestLargeur() {
+		return _zoomLevel * _minDestLargeur;
+	}
+
+	public int getDestHauteur() {
+		return _zoomLevel * _minDestHauteur;
+	}		
 }

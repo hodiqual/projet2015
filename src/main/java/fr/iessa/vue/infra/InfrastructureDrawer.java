@@ -26,13 +26,12 @@ public class InfrastructureDrawer {
 	
 	private static RunwayDrawer runwaysDrawer = new RunwayDrawer();
 
-	public void dessineAeroport(Aeroport aeroport, Graphics2D g2, AffineTransform echelle, AffineTransform mouseScroll )
+	public void dessineAeroport(Aeroport aeroport, Graphics2D g2, AffineTransform echelle)
 	{	
 		// 1. Sauvegarde la transformation courante
 		AffineTransform transformToRestore = g2.getTransform();
 		
 		// 2. Appliquer la transformation
-		g2.transform(mouseScroll);
 		g2.transform(echelle);
 		
 		// 3. Faire les dessins
