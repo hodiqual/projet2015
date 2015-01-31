@@ -17,6 +17,7 @@ import fr.iessa.metier.Instant;
 import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.trafic.Trafic;
+import fr.iessa.vue.Echelle;
 
 /**
  * @author hodiqual

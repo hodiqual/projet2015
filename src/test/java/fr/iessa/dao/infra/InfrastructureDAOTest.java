@@ -72,8 +72,7 @@ public class InfrastructureDAOTest {
 		 
 		 assertEquals(585 , aeroport.get_points().size(), 0);
 		 aeroport.get_points().forEach( (s,p) -> { assertNotNull(s); assertNotNull(p); 
-				 									assertEquals(s,p.get_nom()); } );
-		 
+				 									assertEquals(s,p.get_nom()); } );	 
 	}
 
 }

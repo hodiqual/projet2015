@@ -19,7 +19,7 @@ import javax.swing.UIManager.*;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.dao.infra.InfrastructureDAO;
 import fr.iessa.metier.infra.Aeroport;
-import fr.iessa.vue.InfrastructurePanel;
+import fr.iessa.vue.PanelInfrastructure;
 import fr.iessa.vue.infra.InfrastructureDrawer;
 
 public class TestDessinCarte extends JPanel{
@@ -80,7 +80,7 @@ public class TestDessinCarte extends JPanel{
 	        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 	                 RenderingHints.VALUE_RENDER_QUALITY);
 	        
-	     dessinateur.dessineAeroport(aeroport, g2, _largeurEcran, _hauteurEcran, new AffineTransform());	
+	     dessinateur.dessineAeroport(aeroport, g2, new AffineTransform());	
 	}
 	
 	@Override

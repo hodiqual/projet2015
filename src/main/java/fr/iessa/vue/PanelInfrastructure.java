@@ -27,6 +27,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
@@ -43,13 +45,15 @@ import fr.iessa.vue.infra.InfrastructureDrawer;
  * @author hodiqual
  * 
  */
-public class InfrastructurePanel extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener {
+public class PanelInfrastructure extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener, Observer {
 
 	private static final long serialVersionUID = 25499665468682529L;
 
 	private Controleur _controleur;
 	
 	private Aeroport _aeroport;
+	
+	private Echelle _echelle;
 	 
 	 /**
 	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
@@ -71,7 +75,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 
 	private int _zoomLevel = 1;
 	
-	public InfrastructurePanel(Controleur controleur) {
+	public PanelInfrastructure(Controleur controleur, Echelle echelle) {
         setLayout(new GridLayout(1,1));
         setBackground(Color.white);
         
@@ -98,6 +102,12 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 				resetImageCarte();	
 			}
 		});
+	    
+
+		_echelle = echelle;
+		echelle.addObserver(this);
+	    
+	    
 	}
 
 	/**
@@ -110,6 +120,8 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			case CHARGEMENT_CARTE_FICHIER_DONE:
 				//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 				_aeroport = (Aeroport) evt.getNewValue();
+				_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
+						  , _aeroport.getMinY(), _aeroport.getMaxY());
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:
 				if(_layerUI!=null)
 					_layerUI.stop();
@@ -142,7 +154,7 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 					RenderingHints.VALUE_RENDER_QUALITY);
 			g2.setClip(0,0, getWidth(), getHeight());
-			_drawer.dessineAeroport(_aeroport, g2, _largeurImage, _hauteurImage, _mouseScroll);
+			_drawer.dessineAeroport(_aeroport, g2, _echelle.getAffineTransform());
 			g2.dispose();
 		}
 	}
@@ -189,26 +201,22 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 			
 	@Override
 	public void mousePressed(MouseEvent e) {
-		_whereMousePressed.x = e.getPoint().getX();
-		_whereMousePressed.y = e.getPoint().getY();
+		if(_aeroport != null)
+		{
+			_whereMousePressed.x = e.getPoint().getX();
+			_whereMousePressed.y = e.getPoint().getY();
+		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {				
-		_dxdyscroll.x -= e.getPoint().getX()-_whereMousePressed.getX();
-		_dxdyscroll.y -= e.getPoint().getY()-_whereMousePressed.getY();
-	
-		_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
-		_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
-
-		_dxdyscroll.x = Double.min(_dxdyscroll.x, _largeurImage-getWidth());
-		_dxdyscroll.y = Double.min(_dxdyscroll.y, _hauteurImage-getHeight());
-		
-		_mouseScroll = new AffineTransform();
-		_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
-
-		resetImageCarte();
-		repaint();
+	public void mouseReleased(MouseEvent e) {
+		if(_aeroport != null)
+		{			
+			Point2D.Double ecartRelatif = new Point2D.Double(e.getPoint().getX()-_whereMousePressed.getX()
+													 		,e.getPoint().getY()-_whereMousePressed.getY() );
+			
+			_echelle.setScroll(ecartRelatif, getWidth(), getHeight());
+		}
 	}
 
 	@Override
@@ -247,33 +255,19 @@ public class InfrastructurePanel extends JPanel implements PropertyChangeListene
 				}
 			}
 			
-	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	        int widthS = (int) screenSize.getWidth();
-	        int heightS = (int) screenSize.getHeight();
-	        double oldLargeurImage = _largeurImage;
-	        double oldHauteurImage = _hauteurImage;
-	        
-	        _largeurImage = (int)_zoomLevel*widthS;
-	        _hauteurImage = (int)_zoomLevel*heightS; 
-	        
-	        double scaleX = _largeurImage/oldLargeurImage;
-	        double scaleY = _hauteurImage/oldHauteurImage;
-	        
-	        _dxdyscroll.x = e.getX()*(scaleX-1) + scaleX*_dxdyscroll.x;
-	        _dxdyscroll.y = e.getY()*(scaleY-1) + scaleY*_dxdyscroll.y;
-	        
-			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
-			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
-
-			_dxdyscroll.x = Double.min(_dxdyscroll.x, _largeurImage-getWidth());
-			_dxdyscroll.y = Double.min(_dxdyscroll.y, _hauteurImage-getHeight());
-			
-			_mouseScroll = new AffineTransform();
-			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
-	        
-			resetImageCarte();
-	        repaint();
+			_echelle.setZoomLevel(_zoomLevel, e.getPoint(), getWidth(), getHeight());
 		}		
+	}
+
+	/**
+	 * 
+	 * @param o observe echelle
+	 * @param arg la nouvelle transformation a appliquer
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		resetImageCarte();
+        repaint();				
 	}
 
 }

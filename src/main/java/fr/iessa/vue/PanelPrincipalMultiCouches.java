@@ -26,7 +26,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 	private Controleur _controleur;
 	
 	/** Panel qui gere l'infrastructure, ce panel sera en arriere plan */
-	private InfrastructurePanel _infrastructurePanel;
+	private PanelInfrastructure _infrastructurePanel;
 	
 	@Override
 	public boolean isOptimizedDrawingEnabled() {
@@ -52,8 +52,8 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		
 		//Gestion de l'infrastructure
 		this._controleur = controleur;
-		
-		_infrastructurePanel = new InfrastructurePanel(_controleur);
+		Echelle echelle = new Echelle();
+		_infrastructurePanel = new PanelInfrastructure(_controleur, echelle);
 		final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
 		_infrastructurePanel.setChargeEnCoursLayerUI(layerUI);
 		JLayer<JPanel> jlayer = new JLayer<JPanel>(_infrastructurePanel, layerUI);
@@ -64,7 +64,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_gestionPlans.add(jlayer, -3000);
 		
 		//Gestion du trafic
-		TraficPanel traficPanel = new  TraficPanel();
+		PanelTrafic traficPanel = new  PanelTrafic();
 		traficPanel.setAlignmentX(0.0f);
 		traficPanel.setAlignmentY(0.0f);
 		_gestionPlans.add(traficPanel,0);
