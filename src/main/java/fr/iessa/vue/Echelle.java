@@ -3,11 +3,14 @@
  */
 package fr.iessa.vue;
 
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.Observable;
+
+import sun.security.action.GetLongAction;
 
 /**
  * @author hodiqual
@@ -55,9 +58,30 @@ public class Echelle extends Observable{
 		createZoomTransformation();
 	}
 	
-	public void setZoomLevel(int zoomLevel, int limiteLargeur, int limiteHauteur) {
+	//http://stackoverflow.com/questions/13155382/jscrollpane-zoom-relative-to-mouse-position
+	public void setZoomLevel(int zoomLevel, Point position ,int limiteLargeur, int limiteHauteur) {
+		
+		double oldScaleX = _zoomTransformation.getScaleX();
+		double oldScaleY = _zoomTransformation.getScaleY();
+		
 		_zoomLevel = zoomLevel;
+		
 		createZoomTransformation();
+		
+		double scaleX = _zoomTransformation.getScaleX() / oldScaleX;
+		double scaleY = _zoomTransformation.getScaleY() / oldScaleY;
+		
+        _dxdyscroll.x = position.getX()*(scaleX-1) + scaleX*_dxdyscroll.x;
+        _dxdyscroll.y = position.getY()*(scaleY-1) + scaleY*_dxdyscroll.y;
+
+		_dxdyscroll.x = java.lang.Double.max(_dxdyscroll.x, 0D);
+		_dxdyscroll.y = java.lang.Double.max(_dxdyscroll.y, 0D);
+
+		_dxdyscroll.x = java.lang.Double.min(_dxdyscroll.x, getDestLargeur()-limiteLargeur);
+		_dxdyscroll.y = java.lang.Double.min(_dxdyscroll.y, getDestHauteur()-limiteHauteur);
+		
+		createScrollTransformation();
+		
 		updateGlobalTransformation();
 		setChanged();
 		notifyObservers(getAffineTransform());
@@ -114,5 +138,6 @@ public class Echelle extends Observable{
 
 	public int getDestHauteur() {
 		return _zoomLevel * _minDestHauteur;
-	}		
+	}
+	
 }

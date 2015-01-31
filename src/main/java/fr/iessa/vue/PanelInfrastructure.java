@@ -255,31 +255,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 				}
 			}
 			
-	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	        int widthS = (int) screenSize.getWidth();
-	        int heightS = (int) screenSize.getHeight();
-	        double oldLargeurImage = _largeurImage;
-	        double oldHauteurImage = _hauteurImage;
-	        
-	        _largeurImage = (int)_zoomLevel*widthS;
-	        _hauteurImage = (int)_zoomLevel*heightS; 
-	        
-	        double scaleX = _largeurImage/oldLargeurImage;
-	        double scaleY = _hauteurImage/oldHauteurImage;   
-	        
-	        _dxdyscroll.x = e.getX()*(scaleX-1) + scaleX*_dxdyscroll.x;
-	        _dxdyscroll.y = e.getY()*(scaleY-1) + scaleY*_dxdyscroll.y;
-	        
-			_dxdyscroll.x = Double.max(_dxdyscroll.x, 0D);
-			_dxdyscroll.y = Double.max(_dxdyscroll.y, 0D);
-
-			_dxdyscroll.x = Double.min(_dxdyscroll.x, _largeurImage-getWidth());
-			_dxdyscroll.y = Double.min(_dxdyscroll.y, _hauteurImage-getHeight());
-			
-			_mouseScroll = new AffineTransform();
-			_mouseScroll.translate(-(int)(_dxdyscroll.getX()), -(int)(_dxdyscroll.getY()));
-			
-			_echelle.setZoomLevel(_zoomLevel, getWidth(), getHeight());
+			_echelle.setZoomLevel(_zoomLevel, e.getPoint(), getWidth(), getHeight());
 		}		
 	}
 
