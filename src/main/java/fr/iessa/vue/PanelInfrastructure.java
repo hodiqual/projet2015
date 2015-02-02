@@ -8,8 +8,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Paint;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -29,7 +33,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.ExecutionException;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
@@ -135,7 +142,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	
 
 
-	 
+	private DessineCarteWorker _workerEncours = null;
 	 /**
 	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
 	 */
@@ -144,32 +151,38 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	
 	/** Force le redessin de _imageCarteBuffered */
 	private void resetImageCarte() {
+		if(_workerEncours!=null)
+			_workerEncours.cancel(true);
 		_imageCarteBuffered = null;
 	}
 	
-	private class DessineCarteWorker extends SwingWorker<Void, Void> {
+	private class DessineCarteWorker extends SwingWorker<BufferedImage, Void> {
 
 		@Override
-		protected Void doInBackground() throws Exception {
-			if (_imageCarteBuffered==null) // creation de l'image
-				_imageCarteBuffered = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-			
-			reDessineCarteDansCarteGraphique(); 	
-			return null;
+		protected BufferedImage doInBackground() throws Exception {
+			return reDessineCarteDansCarteGraphique(); 
 		}
 		
 		@Override
 		protected void done() {
+			try {
+				BufferedImage imageToBuffer = get();
+				_imageCarteBuffered = imageToBuffer;
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
 			repaint();
 		}
 		
 	}
 
 	/** Redessine l'image de la carte dans la carte graphique */
-	private void reDessineCarteDansCarteGraphique() {
+	private BufferedImage reDessineCarteDansCarteGraphique() {
 		if(_aeroport != null)
 		{	
-			Graphics2D g2 = _imageCarteBuffered.createGraphics();
+			BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+			
+			Graphics2D g2 = image.createGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setRenderingHint(RenderingHints.KEY_RENDERING,
@@ -177,21 +190,25 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 			g2.setClip(0,0, getWidth(), getHeight());
 			_drawer.dessineAeroport(_aeroport, g2, _echelle.getAffineTransform());
 			g2.dispose();
+			
+			return image;
 		}
+		
+		return null;
 	}
-	
-	int Cpt = 0;
 	@Override
 	public void paintComponent(Graphics g) {
+
+		//super.paintComponent(g);
 		//Effacer le contenu pour les animations.
-		System.err.println("CONTEO " + Cpt++);
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 		if(_aeroport != null)
 		{		
 			if ( _imageCarteBuffered != null ){
-
 				super.paintComponent(g);
 				Graphics2D g2 = (Graphics2D) g.create();
+				g2.setBackground(Color.white);
+				g2.setColor(Color.blue);
 				g2.setClip(0,0, getWidth(), getHeight());
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
@@ -201,10 +218,12 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 				g2.drawImage(_imageCarteBuffered, 0, 0, this);
 			}else
 			{	
-				//BufferedImage temp = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_BYTE_INDEXED);
-				//Graphics2D g2temp = temp.createGraphics();
-				//_drawer.dessineAeroport(_aeroport, g2temp, _echelle.getAffineTransform());
-				//g2.drawImage(temp, 0, 0, this);
+				/*BufferedImage temp = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+				Graphics2D g2temp = temp.createGraphics();
+				_drawer.dessineAeroport(_aeroport, g2temp, _echelle.getAffineTransform());
+				super.paintComponent(g);
+				Graphics2D g2 = (Graphics2D) g.create();
+				g2.drawImage(temp, 0, 0, this);*/
 				DessineCarteWorker worker = new DessineCarteWorker();
 				worker.execute();
 			}
