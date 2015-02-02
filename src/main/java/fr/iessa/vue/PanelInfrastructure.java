@@ -31,6 +31,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
@@ -54,11 +55,6 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	private Aeroport _aeroport;
 	
 	private Echelle _echelle;
-	 
-	 /**
-	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
-	 */
-	private VolatileImage _imageCarteBuffered;
 	
 	private InfrastructureDrawer _drawer = new InfrastructureDrawer();
 	
@@ -138,10 +134,35 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	}
 	
 
+
+	 
+	 /**
+	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
+	 */
+	//private VolatileImage _imageCarteBuffered;
+	private BufferedImage _imageCarteBuffered;
 	
 	/** Force le redessin de _imageCarteBuffered */
 	private void resetImageCarte() {
 		_imageCarteBuffered = null;
+	}
+	
+	private class DessineCarteWorker extends SwingWorker<Void, Void> {
+
+		@Override
+		protected Void doInBackground() throws Exception {
+			if (_imageCarteBuffered==null) // creation de l'image
+				_imageCarteBuffered = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+			
+			reDessineCarteDansCarteGraphique(); 	
+			return null;
+		}
+		
+		@Override
+		protected void done() {
+			repaint();
+		}
+		
 	}
 
 	/** Redessine l'image de la carte dans la carte graphique */
@@ -158,39 +179,36 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 			g2.dispose();
 		}
 	}
-
+	
+	int Cpt = 0;
 	@Override
 	public void paintComponent(Graphics g) {
 		//Effacer le contenu pour les animations.
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g.create();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY);
-
-
+		System.err.println("CONTEO " + Cpt++);
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
 		if(_aeroport != null)
 		{		
-			if (_imageCarteBuffered==null) // creation de l'image
-				_imageCarteBuffered = createVolatileImage(getWidth(), getHeight());
+			if ( _imageCarteBuffered != null ){
 
-			do {
-				int code = _imageCarteBuffered.validate(getGraphicsConfiguration());
-				switch(code) {
-				case VolatileImage.IMAGE_INCOMPATIBLE:
-					_imageCarteBuffered = createVolatileImage(getWidth(), getHeight());
-				case VolatileImage.IMAGE_RESTORED:
-					reDessineCarteDansCarteGraphique(); 
-				}
-				
-				if (_imageCarteBuffered.validate(getGraphicsConfiguration())==VolatileImage.IMAGE_OK){
-					g2.setClip(0,0, getWidth(), getHeight());
-					g2.drawImage(_imageCarteBuffered, 0, 0, this);
-				}
+				super.paintComponent(g);
+				Graphics2D g2 = (Graphics2D) g.create();
+				g2.setClip(0,0, getWidth(), getHeight());
+				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+						RenderingHints.VALUE_ANTIALIAS_ON);
+				g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+						RenderingHints.VALUE_RENDER_QUALITY);
 
-			} while (_imageCarteBuffered.contentsLost());
+				g2.drawImage(_imageCarteBuffered, 0, 0, this);
+			}else
+			{	
+				//BufferedImage temp = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_BYTE_INDEXED);
+				//Graphics2D g2temp = temp.createGraphics();
+				//_drawer.dessineAeroport(_aeroport, g2temp, _echelle.getAffineTransform());
+				//g2.drawImage(temp, 0, 0, this);
+				DessineCarteWorker worker = new DessineCarteWorker();
+				worker.execute();
+			}
+
 		}
 	}
 

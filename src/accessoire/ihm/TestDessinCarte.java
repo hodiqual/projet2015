@@ -3,6 +3,7 @@ package ihm;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
@@ -17,8 +18,10 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.*;
 
 import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.dao.infra.InfrastructureDAO;
 import fr.iessa.metier.infra.Aeroport;
+import fr.iessa.vue.Echelle;
 import fr.iessa.vue.PanelInfrastructure;
 import fr.iessa.vue.infra.InfrastructureDrawer;
 
@@ -48,43 +51,67 @@ public class TestDessinCarte extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(new TestDessinCarte());
 	    frame.validate();
-	    frame.setPreferredSize((new Dimension(largeurEcran, hauteurEcran)));
+	    frame.setPreferredSize((new Dimension(echelle.getDestLargeur(), echelle.getDestHauteur())));
 	    frame.pack();
 	    frame.setVisible(true);
 	}
 	
-	private int _largeurEcran, _hauteurEcran;
+	
 	private BufferedImage _image;
 	
 	TestDessinCarte() throws FileNotFoundException, NoSuchElementException
 	{
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        _largeurEcran = (int) screenSize.getWidth();
-        _hauteurEcran = (int) screenSize.getHeight();
         chargeEtDessineAeroport();
+	}
+	
+	private static Aeroport aeroport;
+	private static Echelle echelle;
+	
+	static {
+		try {
+			aeroport = InfrastructureDAO.charger("lfpg.txt");
+		} catch (FileNotFoundException | NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		
+		echelle = new Echelle();
+		echelle.setLimitesReelles(aeroport.getMinX(), aeroport.getMaxX(), aeroport.getMinY(), aeroport.getMaxY());
+
+	     int zoomLevel = 20;
+	     echelle.setZoomLevel(zoomLevel, new Point() , echelle.getDestLargeur(), echelle.getDestHauteur());
+	    
 	}
 	
 	void chargeEtDessineAeroport() throws FileNotFoundException, NoSuchElementException
 	{
-		 Aeroport aeroport = InfrastructureDAO.charger("lfpg.txt");
-	        
-	     InfrastructureDrawer dessinateur = new InfrastructureDrawer();
-	         
-	     _image = new BufferedImage(_largeurEcran, _hauteurEcran, BufferedImage.TYPE_INT_RGB);
-	     Graphics2D g2 = (Graphics2D) _image.getGraphics();
 
-			
-	        // active le lissage des formes
-	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-	                 RenderingHints.VALUE_ANTIALIAS_ON);
-	        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-	                 RenderingHints.VALUE_RENDER_QUALITY);
-	        
-	     dessinateur.dessineAeroport(aeroport, g2, new AffineTransform());	
+	     
+
 	}
 	
 	@Override
     public void paintComponent(Graphics g) {
+
+
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int largeurEcran = (int) screenSize.getWidth();
+        int hauteurEcran = (int) screenSize.getHeight();
+       
+	     InfrastructureDrawer dessinateur = new InfrastructureDrawer(); _image 
+	     	= new BufferedImage(echelle.getDestLargeur(), echelle.getDestHauteur(), 
+	     						BufferedImage.TYPE_BYTE_GRAY);
+	     Graphics2D g2img = (Graphics2D) _image.getGraphics();
+	     // active le lissage des formes
+	     g2img.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	                 RenderingHints.VALUE_ANTIALIAS_ON);
+	     g2img.setRenderingHint(RenderingHints.KEY_RENDERING,
+	                 RenderingHints.VALUE_RENDER_QUALITY);
+	        
+	     dessinateur.dessineAeroport(aeroport, g2img, echelle.getAffineTransform());	
+	     
+	     LibereMemoire.free();
+	     LibereMemoire.controleMemoire();
 		//Effacer le contenu pour les animations.
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g.create();
