@@ -64,7 +64,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	/**
 	 * Temps au bout duquel le lecteur ne soit plus affiche.
 	 */
-	private final int tempsAffichageLecteur = 1000;
+	private final int tempsAffichageLecteur = 100;
 	
 	public  PanelVisualisationEtLecture(Controleur controleur){
 		super();
