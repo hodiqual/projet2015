@@ -218,12 +218,12 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 				g2.drawImage(_imageCarteBuffered, 0, 0, this);
 			}else
 			{	
-				/*BufferedImage temp = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+				BufferedImage temp = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 				Graphics2D g2temp = temp.createGraphics();
 				_drawer.dessineAeroport(_aeroport, g2temp, _echelle.getAffineTransform());
 				super.paintComponent(g);
 				Graphics2D g2 = (Graphics2D) g.create();
-				g2.drawImage(temp, 0, 0, this);*/
+				g2.drawImage(temp, 0, 0, this);
 				DessineCarteWorker worker = new DessineCarteWorker();
 				worker.execute();
 			}

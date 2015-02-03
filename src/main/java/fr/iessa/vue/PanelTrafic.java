@@ -86,8 +86,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//Echelle update
-		//_trafic.getVols(instant).stream().forEach( v -> _volsADessiner.get(v).update() );
+		_volsADessiner.values().forEach(cv -> cv.update(this) );
 	}  
 	
 	private void update(Instant instant) {
