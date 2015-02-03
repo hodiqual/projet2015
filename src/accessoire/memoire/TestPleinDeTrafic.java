@@ -51,51 +51,16 @@ public class TestPleinDeTrafic {
 	}
 	
 	public static void main(String[] args) {
-		//SLAnimator.start();
 		
-		String ficname = "trafic.txt";
-		ArrayList<Trafic> list = new ArrayList<>();
-		for (int i = 0; i < 1; i++) {
-			//charger(ficname, list);	
-		}
-		
-		Set<Vol> vols = null;
-		TraficDao traficDao = new TraficDao();
-		try (Stream<String> lignes = Files.lines(Paths.get(ficname));) {
-			vols = lignes.parallel()
-					.map(traficDao::chargerVol)
-					.collect(Collectors.toSet());
-					//.collect(Collectors.toCollection(TreeSet::new));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		//vols.parallelStream().collect(collector)
-		/*InstantFabrique.getInstants().parallelStream()
-									 .map( instant -> vols.stream()
-											 				.filter(v -> v.estSurLaPlateforme(instant) )
-											 				.collect(Collectors.toSet())
-									 .collect(Collectors.groupingByConcurrent(Functions.identity(),));*/
-									 
-		Set<Vol> vols1 = vols;
-		Function<Instant, Set<Vol> > valueMapper= (Instant instant) -> vols1.stream()
-																		.filter(v -> v.estSurLaPlateforme(instant) )
-																		.collect( Collectors.toSet() );
+
 		
 		long start = System.nanoTime();
 		
-		  ConcurrentMap<Instant, Set<Vol>> volsParInstant = InstantFabrique.getInstants().parallelStream()
-																						 .collect( Collectors.toConcurrentMap( Function.identity()
-																															   ,(Instant i) -> vols1.stream()
-																																					.filter(v -> v.estSurLaPlateforme(i) )
-																																					.collect( Collectors.toSet() ) ) );
-		 TreeMap<Instant, Set<Vol>> treeMap = new TreeMap(volsParInstant);
-		 
+		String ficname = "trafic.txt";
+		Set<Vol> vols = null;
+		TraficDao traficDao = new TraficDao();
+		Trafic trafic = traficDao.charger(ficname);
 
-		/*TreeMap<Instant, Set<Vol>> treeMapTest = InstantFabrique.getInstants().stream()
-												.collect( Collectors.toMap( Function.identity()
-																, valueMapper, (o,n) -> n, TreeMap::new ) );*/
-		
 		final double realTime = System.nanoTime()-start; 
 		final int cores = Runtime.getRuntime().availableProcessors(); 
 		System.out.println(" Cores: " + cores); 
@@ -103,17 +68,7 @@ public class TestPleinDeTrafic {
 		
 		//
 		
-		
-		
-		/*treeMap.keySet().stream().filter( i -> i.getSeconds()%10 == 0 )
-								.forEachOrdered( i -> System.out.println(i.getSeconds() + ": " + volsParInstant.get(i).size()) );
-								*/
-		//vols.parallelStream().
-		
-		//Trafic trafic = list.get(0);
-		//trafic.computeDelta();
-		
-		
+
 		
 		
 	    // Get the Java runtime

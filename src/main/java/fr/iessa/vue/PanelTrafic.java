@@ -1,115 +1,103 @@
 package fr.iessa.vue;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.SwingWorker;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.trafic.Trafic;
+import fr.iessa.metier.trafic.Vol;
+import fr.iessa.vue.trafic.ComponentVol;
 
-public class PanelTrafic extends JPanel implements ActionListener, PropertyChangeListener{
+public class PanelTrafic extends JPanel implements PropertyChangeListener, Observer{
 
-    Avion redSquare1 = new Avion("Avion 1");
-    Avion redSquare2 = new Avion("Avion 2");
-    Avion redSquare3 = new Avion("Avion 3");
-    Avion redSquare4 = new Avion("Avion 4");
-    Avion redSquare5 = new Avion("Avion 5");
-    Avion redSquare6 = new Avion("Avion 6");
-    Avion redSquare7 = new Avion("Avion 7");
-    Avion redSquare8 = new Avion("Avion 8");
-    Avion redSquare9 = new Avion("Avion 9");
-    Timer timer = new Timer(40, this);
+	private Echelle _echelle;
 
-    public PanelTrafic(Controleur controleur) {
+    public PanelTrafic(Controleur controleur, Echelle echelle) {
         setOpaque(false);
-        
-        add(redSquare1);
-        add(redSquare2);
-        add(redSquare3);
-        add(redSquare4);
-        add(redSquare5);
-        add(redSquare6);
-        add(redSquare7);
-        //add(redSquare8);
-        //add(redSquare9);
-        
-        timer.start();
 
-		final ModeleEvent[] evts = {ModeleEvent.UPDATE_INSTANT};
+
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE,
+									 ModeleEvent.UPDATE_INSTANT };
 		controleur.ajoutVue(this,  evts) ;
-
-    }
-
-    private void moveSquare(int x, int y, Avion redSquare){
-
-        // Current square state, stored as final variables 
-        // to avoid repeat invocations of the same methods.
-        final int OFFSET = 1;
-
-            // Update coordinates.
-            redSquare.setX(x);
-            redSquare.setY(y);
-
-            // Repaint the square at the new location.
-            repaint();
-           /* repaint(redSquare.getX(), redSquare.getY(), 
-                    redSquare.getWidth()+OFFSET, 
-                    redSquare.getHeight()+OFFSET); */
+		
+		echelle.addObserver(this);
+		_echelle = echelle;
     }
 
     public Dimension getPreferredSize() {
         return new Dimension(250,200);
     }
-    
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);       
-        //g.drawString("This is my custom Panel!",10,20);
-
-        //redSquare1.paintSquare(g);
-        //redSquare2.paintSquare(g);
-    }
-
-    public int  cpt = 0;
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-        /*moveSquare(redSquare1.getX()+10,redSquare1.getY()+10,redSquare1);
-        moveSquare(redSquare2.getX()-10,redSquare2.getY()+2 ,redSquare2);
-        moveSquare(redSquare3.getX()+3,redSquare3.getY()+3 ,redSquare3);
-        moveSquare(redSquare4.getX()+4,redSquare4.getY()+4 ,redSquare4);
-        moveSquare(redSquare5.getX()+5,redSquare5.getY()+5 ,redSquare5);
-        moveSquare(redSquare6.getX()+6,redSquare6.getY()+6 ,redSquare6);
-        moveSquare(redSquare7.getX()+7,redSquare7.getY()+7 ,redSquare7);*/
-        
-        cpt++;
-        
-        if(cpt==9)
-        	add(redSquare9);
-        
-        if(cpt==15)
-        	remove(redSquare1);
-        
-        if(cpt==20)
-        	add(redSquare1);
-        
-        if(cpt>9)
-            moveSquare(redSquare9.getX()+9,redSquare9.getY()+9 ,redSquare9);
-        
-        
-        
-		
+	private Trafic _trafic;
+	
+	private Map<Vol,ComponentVol> _volsADessiner;
+	
+	private final class InitializeComponentVols extends SwingWorker<Void,Void> {
+		@Override
+		protected Void doInBackground() throws Exception {
+			_volsADessiner = _trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle)));
+			return null;
+		}		
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		ModeleEvent property = ModeleEvent.valueOf(evt.getPropertyName());
+		
+		switch (property) {
+		case CHARGEMENT_TRAFIC_FICHIER_DONE:
+			_trafic = (Trafic) evt.getNewValue();
+			new InitializeComponentVols().execute();
+			break;
+		case UPDATE_INSTANT:
+			update((Instant)evt.getNewValue());
+			break;
+			
+		default:
+			break;
+		}
+		
+	}
+	
+
+	
+	private final class UpdateComponentVols extends SwingWorker<Void,Void> {
+		@Override
+		protected Void doInBackground() throws Exception {
+			//_volsADessiner = _trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle)));
+			return null;
+		}		
+	}
+	
+	
+	private Set<ComponentVol> _volsCourant = new HashSet<ComponentVol>();
+
+	@Override
+	public void update(Observable o, Object arg) {
+		//Echelle update
+		//_trafic.getVols(instant).stream().forEach( v -> _volsADessiner.get(v).update() );
+	}  
+	
+	private void update(Instant instant) {
+		//_volsCourant.forEach(v -> remove(v));
+		//_volsCourant.clear();
+		//_trafic.getVols(instant).stream().forEach( v -> _volsCourant.add(_volsADessiner.get(v)) );
+		_volsADessiner.values().forEach(cv -> cv.update(this) );
+		//_volsCourant.forEach(v -> add(v));
+		revalidate();
+		repaint();
 		
 	}  
 

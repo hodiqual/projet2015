@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.junit.Test;
@@ -33,6 +34,7 @@ public class TraficDaoTest {
 		TraficDao traficDao = new TraficDao();
 		
 		Trafic trafic = traficDao.charger("trafic.txt");
+		assertEquals(1,trafic.getVols(InstantFabrique.get(1440)).size());
 		//Vols 1573, Instant 16452
 		//assertEquals(1573, trafic.getVols().size());
 	}
