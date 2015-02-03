@@ -28,7 +28,6 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
     public PanelTrafic(Controleur controleur, Echelle echelle) {
         setOpaque(false);
 
-
 		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE,
 									 ModeleEvent.UPDATE_INSTANT };
 		controleur.ajoutVue(this,  evts) ;
@@ -97,7 +96,6 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		//_volsCourant.forEach(v -> add(v));
 		revalidate();
 		repaint();
-		
 	}  
 
 }
