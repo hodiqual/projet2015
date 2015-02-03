@@ -1,13 +1,8 @@
 package fr.iessa.vue;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
-import com.sun.xml.internal.ws.api.pipe.NextAction;
-
+import fr.iessa.controleur.Controleur;
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
@@ -40,22 +35,13 @@ public class PanelDesControles extends SLPanel {
 	 */	
 	private final SLConfig _avecTableauCfg;
 	
-	public PanelDesControles() {
+	public PanelDesControles(Controleur controleur) {
 		super();
 		setOpaque(false);
 		_tableauDeBord = new PanelTableauDeBord();
-		_visualisationEtLecture = new PanelVisualisationEtLecture();
+		_visualisationEtLecture = new PanelVisualisationEtLecture(controleur);
 		_visualisationEtLecture.setOpaque(false);
-		/*
-		_boutonTab = new JButton("Affiche");
-		_boutonTab.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_nextAction.run();		
-			}
-		});
-		_visualisationEtLecture.add(_boutonTab); */
+		_visualisationEtLecture.set_actionBoutonTabDeBord(afficheTableauDeBord);
 		
 		//Affiche seulement la visualisation et le rejeu
 		_principalCfg  = new SLConfig(this)
@@ -67,8 +53,6 @@ public class PanelDesControles extends SLPanel {
 								.row(1f).col(1f).col(250)
 								.place(0, 0, _visualisationEtLecture)
 								.place(0, 1, _tableauDeBord);
-		
-		_nextAction = afficheTableauDeBord;
 		
 		this.setTweenManager(SLAnimator.createTweenManager());
 		this.initialize(_principalCfg);
@@ -83,8 +67,7 @@ public class PanelDesControles extends SLPanel {
 			.push(new SLKeyframe(_avecTableauCfg, 0.8f)
 				.setStartSide(SLSide.RIGHT, _tableauDeBord)
 				.setCallback(new SLKeyframe.Callback() {@Override public void done() {
-					_boutonTab.setText("Cache");
-					_nextAction = cacheTableauDeBord;
+					_visualisationEtLecture.set_actionBoutonTabDeBord(cacheTableauDeBord);
 				}}))
 			.play();
 	}};
@@ -97,8 +80,7 @@ public class PanelDesControles extends SLPanel {
 			.push(new SLKeyframe(_principalCfg, 0.8f)
 				.setEndSide(SLSide.RIGHT, _tableauDeBord)
 				.setCallback(new SLKeyframe.Callback() {@Override public void done() {
-					_boutonTab.setText("Affiche");
-					_nextAction = afficheTableauDeBord;
+					_visualisationEtLecture.set_actionBoutonTabDeBord(afficheTableauDeBord);
 				}}))
 			.play();
 	}};

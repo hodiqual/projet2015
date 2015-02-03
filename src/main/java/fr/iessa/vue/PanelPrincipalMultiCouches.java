@@ -26,16 +26,18 @@ public class PanelPrincipalMultiCouches extends JPanel {
 	private Controleur _controleur;
 	
 	/** Panel qui gere l'infrastructure, ce panel sera en arriere plan */
-	private InfrastructurePanel _infrastructurePanel;
+	private PanelInfrastructure _infrastructurePanel;
 	
 	@Override
 	public boolean isOptimizedDrawingEnabled() {
         return true;
       }
 	
-	public PanelPrincipalMultiCouches()
+	public PanelPrincipalMultiCouches(Controleur controleur)
 	{
-		setLayout(new GridLayout(1, 1));
+		setLayout(new GridLayout(1, 1));	
+		//Pour une animation fluide il vaut mieux etre en double buffer.
+		setDoubleBuffered(true);
 		
 		_gestionPlans = new JLayeredPane() {
 		public boolean isOptimizedDrawingEnabled() {
@@ -45,13 +47,13 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		
 		OverlayLayout layout = new OverlayLayout(_gestionPlans);
 		_gestionPlans.setLayout(layout);
-		_gestionPlans.setBorder(BorderFactory.createTitledBorder(
-                                    "Click and Go"));
+		/*_gestionPlans.setBorder(BorderFactory.createTitledBorder(
+                                    "Veuillez charger un fichier de plateforme ..."));*/
 		
 		//Gestion de l'infrastructure
-		_controleur = new Controleur();
-		
-		_infrastructurePanel = new InfrastructurePanel(_controleur);
+		this._controleur = controleur;
+		Echelle echelle = new Echelle();
+		_infrastructurePanel = new PanelInfrastructure(_controleur, echelle);
 		final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
 		_infrastructurePanel.setChargeEnCoursLayerUI(layerUI);
 		JLayer<JPanel> jlayer = new JLayer<JPanel>(_infrastructurePanel, layerUI);
@@ -62,23 +64,16 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_gestionPlans.add(jlayer, -3000);
 		
 		//Gestion du trafic
-		TraficPanel traficPanel = new  TraficPanel();
+		PanelTrafic traficPanel = new  PanelTrafic(controleur);
 		traficPanel.setAlignmentX(0.0f);
 		traficPanel.setAlignmentY(0.0f);
 		_gestionPlans.add(traficPanel,0);
 		
-		//Gestion des controles Rejeu et Tableau de Bord
-		PanelDesControles controles = new PanelDesControles();
+		//Gestion des controles Lecteur et Tableau de Bord
+		PanelDesControles controles = new PanelDesControles(_controleur);
 		controles.setAlignmentX(0.0f);
 		controles.setAlignmentY(0.0f);
 		_gestionPlans.add(controles,1);
-		
-		/*
-		 * IL Y A AUSSI POUR DISPATCHER LES EVENTS
-		 * http://stackoverflow.com/questions/21500162/jlayeredpane-how-to-check-if-component-has-another-drawn-under-it
-		 */
-		
-		//Gestion du panel de controle
 		
 		//Rajout du composant de gestion des plans a ce JPanel
 		add(_gestionPlans);	

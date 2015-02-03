@@ -4,8 +4,12 @@
 package fr.iessa.metier.trafic;
 
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
+import java.util.TreeMap;
 
+import fr.iessa.metier.Instant;
 import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.TypeVol;
 
@@ -17,7 +21,9 @@ public class Vol {
 	private TypeVol _typeVol;
 	private String _id;
 	private Categorie _categorie;
-	private Hashtable<Instant, Point> _instantVersCoord = new Hashtable<>();
+	private Map<Instant, Point> _instantVersCoord = new HashMap(10);
+	
+	private Point _coordCourante;
 	
 	public Vol(TypeVol typeVol, String id, Categorie categorie)
 	{
@@ -30,7 +36,7 @@ public class Vol {
 		_instantVersCoord.put(temps, coord);
 	}
 
-	public Hashtable<Instant, Point> getInstantVersCoord() {
+	public Map<Instant, Point> getInstantVersCoord() {
 		return _instantVersCoord;
 	}
 
@@ -56,14 +62,21 @@ public class Vol {
 	}
 
 	/**
-	 * @return the _instantVersCoord
+	 * @return the _coordCourante
 	 */
-	public Hashtable<Instant, Point> get_instantVersCoord() {
-		return _instantVersCoord;
+	public Point getCoordCourante() {
+		return _coordCourante;
 	}
 	
 	public boolean estSurLaPlateforme(Instant instant) {
 		return _instantVersCoord.containsKey(instant);
+	}
+
+	public void updateCoordCourantes(Instant instant) {
+		if( instant == null )
+			_coordCourante = null;
+		else
+			_coordCourante = _instantVersCoord.get(instant);
 	}
 	
 }

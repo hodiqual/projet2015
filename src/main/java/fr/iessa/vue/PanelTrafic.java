@@ -5,12 +5,17 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class TraficPanel extends JPanel implements ActionListener{
+import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.ModeleEvent;
+
+public class PanelTrafic extends JPanel implements ActionListener, PropertyChangeListener{
 
     Avion redSquare1 = new Avion("Avion 1");
     Avion redSquare2 = new Avion("Avion 2");
@@ -21,12 +26,9 @@ public class TraficPanel extends JPanel implements ActionListener{
     Avion redSquare7 = new Avion("Avion 7");
     Avion redSquare8 = new Avion("Avion 8");
     Avion redSquare9 = new Avion("Avion 9");
-    Timer timer = new Timer(1000, this);
+    Timer timer = new Timer(40, this);
 
-    public TraficPanel() {
-
-        setBorder(BorderFactory.createLineBorder(Color.orange));
-
+    public PanelTrafic(Controleur controleur) {
         setOpaque(false);
         
         add(redSquare1);
@@ -40,6 +42,9 @@ public class TraficPanel extends JPanel implements ActionListener{
         //add(redSquare9);
         
         timer.start();
+
+		final ModeleEvent[] evts = {ModeleEvent.UPDATE_INSTANT};
+		controleur.ajoutVue(this,  evts) ;
 
     }
 
@@ -66,7 +71,7 @@ public class TraficPanel extends JPanel implements ActionListener{
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);       
-        g.drawString("This is my custom Panel!",10,20);
+        //g.drawString("This is my custom Panel!",10,20);
 
         //redSquare1.paintSquare(g);
         //redSquare2.paintSquare(g);
@@ -76,13 +81,13 @@ public class TraficPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-        moveSquare(redSquare1.getX()+10,redSquare1.getY()+10,redSquare1);
-        moveSquare(redSquare2.getX()+10,redSquare2.getY()+2 ,redSquare2);
+        /*moveSquare(redSquare1.getX()+10,redSquare1.getY()+10,redSquare1);
+        moveSquare(redSquare2.getX()-10,redSquare2.getY()+2 ,redSquare2);
         moveSquare(redSquare3.getX()+3,redSquare3.getY()+3 ,redSquare3);
         moveSquare(redSquare4.getX()+4,redSquare4.getY()+4 ,redSquare4);
         moveSquare(redSquare5.getX()+5,redSquare5.getY()+5 ,redSquare5);
         moveSquare(redSquare6.getX()+6,redSquare6.getY()+6 ,redSquare6);
-        moveSquare(redSquare7.getX()+7,redSquare7.getY()+7 ,redSquare7);
+        moveSquare(redSquare7.getX()+7,redSquare7.getY()+7 ,redSquare7);*/
         
         cpt++;
         
@@ -100,6 +105,11 @@ public class TraficPanel extends JPanel implements ActionListener{
         
         
         
+		
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		
 	}  
 

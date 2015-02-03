@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import fr.iessa.metier.trafic.Instant.InstantFabrique;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 
 /**
  * 

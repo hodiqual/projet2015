@@ -1,7 +1,9 @@
 package memoire;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import fr.iessa.dao.infra.InfrastructureDAO;
@@ -44,7 +46,7 @@ public class TestMemoireEtRapiditeParDAO {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, NoSuchElementException {
 		String ficname = "lfpg.txt";
 		//Java 7 try-with-ressource -> Scanner implements Closeable -> AUTOCLOSE  gere aussi le cas null
 		Aeroport aeroport = InfrastructureDAO.charger(ficname);

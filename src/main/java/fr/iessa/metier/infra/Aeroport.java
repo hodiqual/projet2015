@@ -3,11 +3,13 @@
  */
 package fr.iessa.metier.infra;
 
+import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 
 /**
  * @author hodiqual
@@ -106,7 +108,87 @@ public class Aeroport {
 		_runways.forEach( r -> r.initialisePath(_points));		
 	}
 
+	private int _minX, _maxX, _minY, _maxY;
 	
+	public void initialiseBounds() {
+		
+		_minX = _minY = Integer.MAX_VALUE;
+		_maxX = _maxY = Integer.MIN_VALUE;
+		
+		List<Ligne> allLignes = new ArrayList<Ligne>(_lignes);
+		allLignes.addAll(_taxiway);
+		allLignes.addAll(_pushbacks);
+		trouverLimitesReels(allLignes);
+		
+        trouverLimitesReels(get_points());
+	}
+	
+	private void trouverLimitesReels(List<? extends Ligne> lignes) {
+       
+		double l_minReelX = lignes.parallelStream()
+										.mapToDouble(l -> l.get_lignePointAPoint().getBounds().getMinX() )
+										.min().getAsDouble();
+	       
+		double l_minReelY = lignes.parallelStream()
+											.mapToDouble(l -> l.get_lignePointAPoint().getBounds().getMinY() )
+											.min().getAsDouble();
+	       
+		double l_maxReelX = lignes.parallelStream()
+											.mapToDouble(l -> l.get_lignePointAPoint().getBounds().getMaxX() )
+											.max().getAsDouble();
+	       
+		double l_maxReelY = lignes.parallelStream()
+											.mapToDouble(l -> l.get_lignePointAPoint().getBounds().getMaxY() )
+											.max().getAsDouble();
+		
+
+		_minX = (int) Double.min(_minX, l_minReelX);
+		_minY = (int) Double.min(_minY, l_minReelY);
+		_maxX = (int) Double.max(_maxX, l_maxReelX);
+		_maxY = (int) Double.max(_maxY, l_maxReelY);	
+	}
+	
+	private void trouverLimitesReels(Map<String, Point> _points) {
+		for (Map.Entry<String, Point> entry : _points.entrySet()) {
+			Point point = entry.getValue();
+			
+			double p_ReelX = point.getX();
+			double p_ReelY = point.getY();
+			
+			_minX = (int) Double.min(_minX, p_ReelX);
+			_minY = (int) Double.min(_minY, p_ReelY);
+			_maxX = (int) Double.max(_maxX, p_ReelX);
+			_maxY = (int) Double.max(_maxY, p_ReelY);    
+		}
+	}
+
+	/**
+	 * @return the _minX
+	 */
+	public int getMinX() {
+		return _minX;
+	}
+
+	/**
+	 * @return the _maxX
+	 */
+	public int getMaxX() {
+		return _maxX;
+	}
+
+	/**
+	 * @return the _minY
+	 */
+	public int getMinY() {
+		return _minY;
+	}
+
+	/**
+	 * @return the _maxY
+	 */
+	public int getMaxY() {
+		return _maxY;
+	}
 	
 	
 
