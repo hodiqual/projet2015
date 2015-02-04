@@ -73,12 +73,8 @@ public class Echelle extends Observable{
 		
         _dxdyscroll.x = position.getX()*(scaleX-1) + scaleX*_dxdyscroll.x;
         _dxdyscroll.y = position.getY()*(scaleY-1) + scaleY*_dxdyscroll.y;
-
-		_dxdyscroll.x = java.lang.Double.max(_dxdyscroll.x, 0D);
-		_dxdyscroll.y = java.lang.Double.max(_dxdyscroll.y, 0D);
-
-		_dxdyscroll.x = java.lang.Double.min(_dxdyscroll.x, getDestLargeur()-limiteLargeur);
-		_dxdyscroll.y = java.lang.Double.min(_dxdyscroll.y, getDestHauteur()-limiteHauteur);
+        
+        modifieScroll(new Point2D.Double(), limiteLargeur, limiteHauteur);
 		
 		createScrollTransformation();
 		
@@ -87,15 +83,31 @@ public class Echelle extends Observable{
 		notifyObservers(getAffineTransform());
 	}
 	
+	private void modifieScroll(Point2D.Double ecartRelatif, int limiteLargeur, int limiteHauteur) {
+		
+		if(limiteLargeur>=getDestLargeur())
+			_dxdyscroll.x = -(limiteLargeur-getDestLargeur())/2;
+		else
+		{
+			_dxdyscroll.x -= ecartRelatif.getX();
+			_dxdyscroll.x = java.lang.Double.max(_dxdyscroll.x, 0D);
+			_dxdyscroll.x = java.lang.Double.min(_dxdyscroll.x, getDestLargeur()-limiteLargeur);
+		}		
+		
+		if(limiteHauteur>=getDestHauteur())
+			_dxdyscroll.y = -(limiteHauteur-getDestHauteur())/2;
+		else
+		{
+			_dxdyscroll.y -= ecartRelatif.getY();
+			_dxdyscroll.y = java.lang.Double.max(_dxdyscroll.y, 0D);
+			_dxdyscroll.y = java.lang.Double.min(_dxdyscroll.y, getDestHauteur()-limiteHauteur);
+		}	
+		
+	}
+	
 	public void setScroll(Point2D.Double ecartRelatif, int limiteLargeur, int limiteHauteur) {
-		_dxdyscroll.x -= ecartRelatif.getX();
-		_dxdyscroll.y -= ecartRelatif.getY();
-
-		_dxdyscroll.x = java.lang.Double.max(_dxdyscroll.x, 0D);
-		_dxdyscroll.y = java.lang.Double.max(_dxdyscroll.y, 0D);
-
-		_dxdyscroll.x = java.lang.Double.min(_dxdyscroll.x, getDestLargeur()-limiteLargeur);
-		_dxdyscroll.y = java.lang.Double.min(_dxdyscroll.y, getDestHauteur()-limiteHauteur);
+		
+		modifieScroll(ecartRelatif, limiteLargeur, limiteHauteur);
 
 		createScrollTransformation();
 		updateGlobalTransformation();

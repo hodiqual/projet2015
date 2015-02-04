@@ -1,5 +1,6 @@
 package fr.iessa.vue.trafic;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -7,15 +8,17 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
+import java.util.TreeMap;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import fr.iessa.metier.Instant;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.Echelle;
 
@@ -31,6 +34,7 @@ public class ComponentVol extends JComponent {
 	private Vol _vol;
 	private Point2D.Double _coordCouranteDouble = new Point2D.Double();
 	private Point _coordCourante = new Point();
+	private GeneralPath _cheminParcouru = new GeneralPath();
 
 	public ComponentVol(Vol v, Echelle echelle) { 
 
@@ -44,6 +48,10 @@ public class ComponentVol extends JComponent {
 		setPreferredSize(new Dimension(width,height));
 		_nom = v.getId();
 		_vol = v;
+		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
+		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
+		_cheminParcouru.moveTo(premierPoint.x, premierPoint.y);
+		coordOrdonne.values().forEach( p ->_cheminParcouru.lineTo(p.x, p.y));
 		_echelle = echelle;
 		addMouseListener(new MouseAdapter() {
 
@@ -93,15 +101,25 @@ public class ComponentVol extends JComponent {
 		super.paintComponent(g);  
 		
 		Graphics2D g2 = (Graphics2D) g.create();
-
+		Stroke strokeToRestore = g2.getStroke();
+		Color colorToRestore = g2.getColor();
 		g2.setColor(Color.ORANGE);
 		g2.fill(shape);
 		g2.setColor(Color.BLUE);
 		g2.draw(shape);
+
+		//g2.setColor(Color.RED);
+		//g2.setStroke(new BasicStroke(11));
+		//g2.draw(_cheminParcouruShape);
+		
+		g2.setStroke(strokeToRestore);
+		g2.setColor(colorToRestore);
+		
+		
 	}
 
-	int x = 0;
-	int y = 0;
+	private Shape _cheminParcouruShape;
+	
 	public void update(JPanel panel){
 		if(_vol.getCoordCourante() == null)
 			panel.remove(this);
@@ -111,7 +129,7 @@ public class ComponentVol extends JComponent {
 				panel.add(this);
 			
 		_echelle.getAffineTransform().transform(_vol.getCoordCourante(), _coordCouranteDouble);
-		
+		//_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
 		_coordCourante.setLocation(_coordCouranteDouble);
 
 		setX(_coordCourante.x);

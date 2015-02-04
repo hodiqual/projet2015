@@ -95,7 +95,8 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	    addComponentListener( new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				resetImageCarte();	
+				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
+				//resetImageCarte();	
 			}
 		});
 	    
@@ -118,7 +119,8 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 				_aeroport = (Aeroport) evt.getNewValue();
 				_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
 						  , _aeroport.getMinY(), _aeroport.getMaxY());
-				resetImageCarte();
+				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
+				//resetImageCarte();
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:
 				if(_layerUI!=null)
 					_layerUI.stop();
@@ -134,7 +136,6 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		}
 	}
 	
-
 
 	private DessineCarteWorker _workerEncours = null;
 	private DessineCarteWorker _workerPreviewEncours = null;
