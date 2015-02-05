@@ -14,7 +14,28 @@ import fr.iessa.vue.Ressources;
 public enum ShapeAvionFactory {
 	HIGH_BLUE(Ressources.AVION_HIGH_BLUE)
 ,   MEDIUM_BLUE(Ressources.AVION_MEDIUM_BLUE)
-,   LIGHT_BLUE(Ressources.AVION_LIGHT_BLUE) ;
+,   LIGHT_BLUE(Ressources.AVION_LIGHT_BLUE)
+
+,	HIGH_BLUEF(Ressources.AVION_HIGH_BLUEF)
+,   MEDIUM_BLUEF(Ressources.AVION_MEDIUM_BLUEF)
+,   LIGHT_BLUEF(Ressources.AVION_LIGHT_BLUEF)
+
+,	HIGH_RED(Ressources.AVION_HIGH_RED)
+,   MEDIUM_RED(Ressources.AVION_MEDIUM_RED)
+,   LIGHT_RED(Ressources.AVION_LIGHT_RED)
+
+,	HIGH_ORANGE(Ressources.AVION_HIGH_ORANGE)
+,   MEDIUM_ORANGE(Ressources.AVION_MEDIUM_ORANGE)
+,   LIGHT_ORANGE(Ressources.AVION_LIGHT_ORANGE)
+
+,	HIGH_VERT(Ressources.AVION_HIGH_VERT)
+,   MEDIUM_VERT(Ressources.AVION_MEDIUM_VERT)
+,   LIGHT_VERT(Ressources.AVION_LIGHT_VERT)
+
+,	HIGH_VIOLET(Ressources.AVION_HIGH_VIOLET)
+,   MEDIUM_VIOLET(Ressources.AVION_MEDIUM_VIOLET)
+,   LIGHT_VIOLET(Ressources.AVION_LIGHT_VIOLET)
+;
 	
 	private BufferedImage[] _avionsParAngle;
 	

@@ -1,33 +1,22 @@
 package fr.iessa.vue.trafic;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.TreeMap;
 
-import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import fr.iessa.metier.Instant;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.Echelle;
-import fr.iessa.vue.Ressources;
 
 public class ComponentVol extends JComponent {
 
@@ -48,8 +37,6 @@ public class ComponentVol extends JComponent {
 		
 		setOpaque(true);
 		
-		
-		
 		//setBackground(Color.black);
 		//setBorder(BorderFactory.createTitledBorder("AVION"));
 		//setBounds(0,0,width,height);
@@ -59,13 +46,13 @@ public class ComponentVol extends JComponent {
 		
 		switch (v.getCategorie()) {
 			case HIGH:
-				_imageFactory = ShapeAvionFactory.HIGH_BLUE;
+				_imageFactory = ShapeAvionFactory.HIGH_ORANGE;
 				break;
 			case MEDIUM:
 				_imageFactory = ShapeAvionFactory.MEDIUM_BLUE;
 				break;
 			case LIGHT:
-				_imageFactory = ShapeAvionFactory.LIGHT_BLUE;
+				_imageFactory = ShapeAvionFactory.LIGHT_VERT;
 				break;
 			default:
 				break;
@@ -154,8 +141,10 @@ public class ComponentVol extends JComponent {
 					panel.add(this);
 				
 			_echelle.getAffineTransform().transform(_vol.getCoordCourante(), _coordCouranteDouble);
-			//_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
 			_coordCourante.setLocation(_coordCouranteDouble);
+			
+			//_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
+			
 			
 			//Determine le sprite a dessiner selon l'angle entre le point courant et le point suivant
 			if(_vol.getCoordSuivante() != null) {
