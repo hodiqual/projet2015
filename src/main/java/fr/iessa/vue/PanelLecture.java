@@ -3,23 +3,15 @@
  */
 package fr.iessa.vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Vector;
 
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JSlider;
-import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.*;
 
 /**
  * @author duvernal
@@ -32,67 +24,76 @@ public class PanelLecture extends JPanel {
 	private static final Color FG_COLOR = new Color(0xFFFFFF);
 	private static final Color BG_COLOR = new Color(0x3B5998);
 	private static final Color BORDER_COLOR = new Color(0x000000);
-	private final JLabel label = new JLabel();
+	private JButton play, forward, back;
+	private JSlider timeline;
+    private static final ImageIcon BACK = new ImageIcon("back.png");
+    private static final ImageIcon PLAY = new ImageIcon("play.png");
+    private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
+    private static final ImageIcon FORWARD = new ImageIcon("forward.png");
 	// ***************** FIN A SURPPRIMER **************************
 	
+    
+
+
+    
 	public PanelLecture()
 	{
+		
+		
 		super();
-		setOpaque(true);
-		setLayout(new BorderLayout());
-		setBackground(BG_COLOR);
-		
-		// ***************** A SURPPRIMER **************************
-		label.setForeground(FG_COLOR);
-		label.setFont(new Font("Sans", Font.BOLD, 90));
-		label.setVerticalAlignment(SwingConstants.CENTER);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setText("REJEU");
-		label.setVisible(true);
-		
-		// ***************** FIN A SUPPRIMER **************************
+	    UIDefaults sliderDefaults = new UIDefaults();
 
-	/*
-        scr=new Canvas();
-        timeline = new JSlider(0,100,0);
-        timeline.setMajorTickSpacing(10);
-        timeline.setMajorTickSpacing(5);
-        timeline.setPaintTicks(true);
-        //TODO we need Icons instead
-        play= new JButton(tr("play"));
-        back= new JButton("<");
-        forward= new JButton(">");
-        loop= new JToggleButton(tr("loop"));
-        mute= new JToggleButton(tr("mute"));
-        speed = new JSlider(-200,200,0);
-        speed.setMajorTickSpacing(100);
-        speed.setPaintTicks(true);          
-        speed.setOrientation(Adjustable.VERTICAL);
-        Hashtable labelTable = new Hashtable ();
-        labelTable.put( new Integer( 0 ), new JLabel("1x") );
-        labelTable.put( new Integer( -200 ), new JLabel("-2x") );
-        labelTable.put( new Integer( 200 ), new JLabel("2x") );
-        speed.setLabelTable( labelTable );
-        speed.setPaintLabels(true);
-        
-        this.setLayout(new BorderLayout());
-        screenPanel=new JPanel();
-        screenPanel.setLayout(new BorderLayout());
-        controlsPanel=new JPanel();
-        controlsPanel.setLayout(new FlowLayout());
-        add(screenPanel,BorderLayout.CENTER);
-        add(controlsPanel,BorderLayout.SOUTH);
-        //fill screen panel
-        screenPanel.add(scr,BorderLayout.CENTER);
-        screenPanel.add(timeline,BorderLayout.SOUTH);
-        screenPanel.add(speed,BorderLayout.EAST);
-        controlsPanel.add(play);
-        controlsPanel.add(back);
-        controlsPanel.add(forward);
-        controlsPanel.add(loop);
-        controlsPanel.add(mute);
-        loop.setSelected(false);
-        mute.setSelected(false);*/
+	    sliderDefaults.put("Slider.thumbWidth", 20);
+	    sliderDefaults.put("Slider.thumbHeight", 20);
+	    sliderDefaults.put("Slider:SliderThumb.backgroundPainter", new Painter<JComponent>() {
+	        public void paint(Graphics2D g, JComponent c, int w, int h) {
+	            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	            g.setStroke(new BasicStroke(2f));
+	            g.setColor(Color.RED);
+	            g.fillOval(1, 1, w-3, h-3);
+	            g.setColor(Color.WHITE);
+	            g.drawOval(1, 1, w-3, h-3);
+	        }
+	    });
+	                    sliderDefaults.put("Slider:SliderTrack.backgroundPainter", new Painter<JComponent>() {
+                    public void paint(Graphics2D g, JComponent c, int w, int h) {
+                        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g.setStroke(new BasicStroke(2f));
+                        g.setColor(Color.GRAY);
+                        g.fillRoundRect(0, 6, w-1, 8, 8, 8);
+                        g.setColor(Color.WHITE);
+                        g.drawRoundRect(0, 6, w-1, 8, 8, 8);
+                    }
+                });
+		setOpaque(true);
+		timeline = new JSlider(0,100,0);
+		
+		play= new JButton();
+		play.setIcon(PLAY);
+	    back= new JButton();
+	    back.setIcon(BACK);
+	    forward= new JButton();
+	    forward.setIcon(FORWARD);
+
+	    setLayout(new GridBagLayout());
+		setBackground(BG_COLOR);
+		GridBagConstraints c = new GridBagConstraints();
+
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c.gridy = 0;
+	    
+	    c.gridx = 0;
+        add(back,c);
+	    c.gridx = 1;
+        add(play,c);
+	    c.gridx = 2;
+        add(forward,c);
+	    c.gridx = 3;
+	    c.ipadx = 400;
+		c.gridwidth = 40;
+        add(timeline,c);
+        timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
+        timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
 	}
 
 }
