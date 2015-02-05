@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.TypeVol;
 
@@ -22,14 +23,17 @@ public class Vol {
 	private String _id;
 	private Categorie _categorie;
 	private Map<Instant, Point> _instantVersCoord = new HashMap(10);
+	private Instant _premierInstant;
 	
 	private Point _coordCourante;
+	private Point _coordSuivante;
 	
-	public Vol(TypeVol typeVol, String id, Categorie categorie)
+	public Vol(TypeVol typeVol, String id, Categorie categorie, Instant instant)
 	{
 		_typeVol = typeVol;
 		_id = id;
 		_categorie = categorie;
+		_premierInstant = instant;
 	}
 	
 	public void ajout(Instant temps, Point coord) {
@@ -38,6 +42,10 @@ public class Vol {
 
 	public Map<Instant, Point> getInstantVersCoord() {
 		return _instantVersCoord;
+	}
+	
+	public Point getCoord(Instant i ){
+		return _instantVersCoord.get(i);
 	}
 
 	/**
@@ -62,10 +70,24 @@ public class Vol {
 	}
 
 	/**
+	 * @return the _premierInstant
+	 */
+	public Instant getPremierInstant() {
+		return _premierInstant;
+	}
+
+	/**
 	 * @return the _coordCourante
 	 */
 	public Point getCoordCourante() {
 		return _coordCourante;
+	}
+
+	/**
+	 * @return the _coordSuivante
+	 */
+	public Point getCoordSuivante() {
+		return _coordSuivante;
 	}
 	
 	public boolean estSurLaPlateforme(Instant instant) {
@@ -76,7 +98,15 @@ public class Vol {
 		if( instant == null )
 			_coordCourante = null;
 		else
+		{
 			_coordCourante = _instantVersCoord.get(instant);
+			Instant instantSuivant = InstantFabrique.get(instant.getSeconds()+InstantFabrique._pasEntreInstant);
+			_coordSuivante = _instantVersCoord.get(instantSuivant);
+		}
+	}
+	
+	public String toString()  {
+		return getId();
 	}
 	
 }
