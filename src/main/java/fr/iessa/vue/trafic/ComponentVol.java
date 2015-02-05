@@ -33,9 +33,6 @@ public class ComponentVol extends JComponent {
 
 	private int width = 32;
 	private int height = 32;
-	// ***********************************  flyweight pour echelle ********************************** //
-	private Shape shape = new Rectangle(new Dimension(32,32));
-	private Shape shapeADessiner;
 	
 	private BufferedImage _imageCourante;
 	private ShapeAvionFactory _imageFactory;
@@ -46,32 +43,47 @@ public class ComponentVol extends JComponent {
 	private Point2D.Double _coordSuivanteDouble = new Point2D.Double();
 	private Point _coordCourante = new Point();
 	private GeneralPath _cheminParcouru = new GeneralPath();
-	private AffineTransform rotation = new AffineTransform();
 	
 	public ComponentVol(Vol v, Echelle echelle) { 
 		
-		_imageFactory = ShapeAvionFactory.HIGH_BLUE;
+		setOpaque(true);
+		
+		
+		
+		//setBackground(Color.black);
+		//setBorder(BorderFactory.createTitledBorder("AVION"));
+		//setBounds(0,0,width,height);
+
+		_echelle = echelle;
+		_vol = v;
+		
+		switch (v.getCategorie()) {
+			case HIGH:
+				_imageFactory = ShapeAvionFactory.HIGH_BLUE;
+				break;
+			case MEDIUM:
+				_imageFactory = ShapeAvionFactory.MEDIUM_BLUE;
+				break;
+			case LIGHT:
+				_imageFactory = ShapeAvionFactory.LIGHT_BLUE;
+				break;
+			default:
+				break;
+		}
+		
 		_imageCourante = _imageFactory.get(0);
 		
 		width = _imageCourante.getWidth();
 		height = _imageCourante.getHeight(); 
 		
-		//setBackground(Color.black);
-		setOpaque(true);
-		//setBorder(BorderFactory.createTitledBorder("AVION"));
-		//setBounds(0,0,width,height);
-		shape = AffineTransform.getRotateInstance(Math.PI/4).createTransformedShape(shape);
 		setMinimumSize(new Dimension(width,height));
 		setMaximumSize(new Dimension(width,height));
 		setPreferredSize(new Dimension(width,height));
-
-		_vol = v;
+		
 		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
-
 		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
 		_cheminParcouru.moveTo(premierPoint.x, premierPoint.y);
 		coordOrdonne.values().forEach( p ->_cheminParcouru.lineTo(p.x, p.y));
-		_echelle = echelle;
 		
 		addMouseListener(new MouseAdapter() {
 
@@ -88,8 +100,6 @@ public class ComponentVol extends JComponent {
 
 		});
 	}
-	
-	
 	
 	public void setX(int xPos){ 
 		_coordCourante.x = xPos;
@@ -121,24 +131,10 @@ public class ComponentVol extends JComponent {
 		super.paintComponent(g);  
 		
 		Graphics2D g2 = (Graphics2D) g.create();
-		Stroke strokeToRestore = g2.getStroke();
-		Color colorToRestore = g2.getColor();
-		g2.setColor(Color.ORANGE);
-		//g2.fill(shapeADessiner);
-		g2.setColor(Color.BLUE);
-		//g2.draw(shapeADessiner);
 		g2.drawImage(_imageCourante, 0, 0, null);
-		//g2.setColor(Color.RED);
-		//g2.setStroke(new BasicStroke(11));
-		//g2.draw(_cheminParcouruShape);
-		
-		g2.setStroke(strokeToRestore);
-		g2.setColor(colorToRestore);
-		
-		
 	}
 	
-	  /**
+	 /**
      * Retourne l'angle entre la droite parallele ˆ l'axe des x passant par depart et 
      * la droite (depart,arrivee).
      * @return l'angle en degre en 0 et 359 degres.
@@ -148,8 +144,6 @@ public class ComponentVol extends JComponent {
         double dy = arrivee.y - depart.y;
         return Math.toDegrees(Math.atan2(-dy, dx)+2*Math.PI)%360;
     }
-
-	private Shape _cheminParcouruShape;
 	
 	public void update(JPanel panel){
 		if(_vol.getCoordCourante() == null)
@@ -165,8 +159,6 @@ public class ComponentVol extends JComponent {
 			
 			if(_vol.getCoordSuivante() != null) {
 				_echelle.getAffineTransform().transform(_vol.getCoordSuivante(), _coordSuivanteDouble);
-				//rotation.setToRotation( angle(_coordCouranteDouble, _coordSuivanteDouble) );
-				//shapeADessiner = rotation.createTransformedShape(shape);
 				_imageCourante = _imageFactory.get(angle(_coordCouranteDouble, _coordSuivanteDouble));
 			}		
 	
