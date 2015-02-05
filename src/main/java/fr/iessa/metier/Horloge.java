@@ -31,6 +31,8 @@ public class Horloge extends Observable {
 
 	private final Instant[] _instantsOrdonnees;
 	
+	private int _sens = 1;
+	
 	
 	// ******************* PEUT ETRE LA METTRE VOLATILE ou SYNCHRONIZED ***************************
 	private int _indexInstantCourant;
@@ -50,7 +52,7 @@ public class Horloge extends Observable {
 	}
 	
 	public void tick() {
-		setIndexCourant(_indexInstantCourant+1);
+		setIndexCourant(_indexInstantCourant+ _sens * 1);
 	}
 	
 	private void setIndexCourant( int newIndex ) {
@@ -58,6 +60,11 @@ public class Horloge extends Observable {
 		setChanged();
 		notifyObservers(getInstantCourant());
 	}
+	
+	public void setSens( boolean estChronologique ) {
+		_sens = estChronologique ? 1 : -1;
+	}
+	
 
 	public void initialise() {
 		setIndexCourant(0);
