@@ -82,6 +82,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 	}
 
 	@Override
+	//Update a une observation de changement de _echelle
 	public void update(Observable o, Object arg) {
 			_volsADessiner.values().forEach(cv -> cv.update(this) );
 	}  
@@ -90,7 +91,6 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		_volsADessiner.values().forEach(cv -> cv.update(this) );
 		revalidate();
 		repaint();
-		LibereMemoire.controleMemoire();
 	}  
 
 }
