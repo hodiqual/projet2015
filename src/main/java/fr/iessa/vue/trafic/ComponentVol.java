@@ -157,6 +157,7 @@ public class ComponentVol extends JComponent {
 			//_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
 			_coordCourante.setLocation(_coordCouranteDouble);
 			
+			//Determine le sprite a dessiner selon l'angle entre le point courant et le point suivant
 			if(_vol.getCoordSuivante() != null) {
 				_echelle.getAffineTransform().transform(_vol.getCoordSuivante(), _coordSuivanteDouble);
 				_imageCourante = _imageFactory.get(angle(_coordCouranteDouble, _coordSuivanteDouble));
