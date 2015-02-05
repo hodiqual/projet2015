@@ -28,6 +28,8 @@ public class Controleur {
 	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
 	private TraficConteneur _modele = new TraficConteneur();
 	
+	private Trafic _trafic;
+	
 	/** Horloge de la plateforme */
 	private Horloge _horloge;
 	
@@ -117,6 +119,7 @@ public class Controleur {
 				//1. Chargement fichier trafic  et pre_calcul les vols par instant
 				TraficDao traficDao = new TraficDao();
 				Trafic trafic = traficDao.charger(ficname);
+				_trafic = trafic;
 				
 				//2. Creer Horloge
 				_horloge = new Horloge();
