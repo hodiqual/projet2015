@@ -135,7 +135,7 @@ public class ComponentVol extends JComponent {
 	}
 	
 	 /**
-     * Retourne l'angle entre la droite parallele ˆ l'axe des x passant par depart et 
+     * Retourne l'angle entre la droite parallele a l'axe des x passant par depart et 
      * la droite (depart,arrivee).
      * @return l'angle en degre en 0 et 359 degres.
      */
