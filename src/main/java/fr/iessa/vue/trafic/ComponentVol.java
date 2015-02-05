@@ -141,18 +141,17 @@ public class ComponentVol extends JComponent {
 	  /**
      * Retourne l'angle entre la droite parallele ˆ l'axe des x passant par depart et 
      * la droite (depart,arrivee).
-     * @return the angle in radians (between -pi and pi) 
+     * @return l'angle en degre en 0 et 359 degres.
      */
     private double angle(Point2D.Double depart, Point2D.Double arrivee) {
         double dx = arrivee.x - depart.x;
         double dy = arrivee.y - depart.y;
-        return Math.toDegrees(Math.atan2(dy, dx));
+        return Math.toDegrees(Math.atan2(-dy, dx)+2*Math.PI)%360;
     }
 
 	private Shape _cheminParcouruShape;
 	
 	public void update(JPanel panel){
-		System.out.println(this + "UPDATE");
 		if(_vol.getCoordCourante() == null)
 			panel.remove(this);
 		if(_vol.getCoordCourante() != null)

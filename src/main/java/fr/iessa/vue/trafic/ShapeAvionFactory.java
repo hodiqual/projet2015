@@ -61,8 +61,8 @@ public enum ShapeAvionFactory {
 	}
 	
 	public BufferedImage get( double angleEnDegre)  {
-		int index = (int) (angleEnDegre/_stepAngulaire);
-		return _avionsParAngle[index];
+		int index = (int) Math.round((angleEnDegre/_stepAngulaire));
+		return _avionsParAngle[Math.min(index,71)];
 	}
 	
 	
