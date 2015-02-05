@@ -96,4 +96,44 @@ public class PanelLecture extends JPanel {
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
 	}
 
+	
+	
+	
+	 private void addListeners() {
+	 /*      timeline.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                if(!syncTimeline) //only if user moves the slider by hand
+	                {
+	                    if(!timeline.getValueIsAdjusting()) //and the slider is fixed
+	                    {
+	                        //recalc to 0.x percent value
+	                        mp.setPosition((float)timeline.getValue()/100.0f);
+	                    }                   
+	                }
+	           }
+	            });
+	        */
+	        
+    play.addActionListener(new ActionListener() {
+        
+        public void actionPerformed(ActionEvent arg0) {
+       //     if(mp.isPlaying()) mp.pause(); else mp.play();              
+        }
+    });
+    
+    back.addActionListener(new ActionListener() {
+        
+        public void actionPerformed(ActionEvent arg0) {
+        //    backward();
+        }
+    });
+    
+    forward.addActionListener(new ActionListener() {
+        
+        public void actionPerformed(ActionEvent arg0) {
+        //    forward();
+        }
+    });
+	 }
+	
 }
