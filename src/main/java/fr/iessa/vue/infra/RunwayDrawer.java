@@ -6,14 +6,10 @@ package fr.iessa.vue.infra;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.infra.Runway;
 
@@ -23,7 +19,6 @@ import fr.iessa.metier.infra.Runway;
  */
 public class RunwayDrawer {
 
-    private Graphics2D g2d;
 	
 	public void dessine(Aeroport aeroport, Graphics2D g2 )
 	{
@@ -37,12 +32,21 @@ public class RunwayDrawer {
         
         
         for (Runway runway : aeroport.get_runways()) {
+        	// Variables locales
+        	int anglepiste =(int)Math.round(runway.getAngle(-Math.PI/2));
+        	int largeurpiste=(int)(InfraStd.RUNWAY.largeur());
+        	int X_extremite0 = (int)runway.get_extremite_x(0);
+        	int X_extremite1 = (int)runway.get_extremite_x(1);
+        	int Y_extremite0 = (int)runway.get_extremite_y(0);
+        	int Y_extremite1 = (int)runway.get_extremite_y(1);
+        	
+        	
         	
         	// Dessine la piste
         	g2.setColor(InfraStd.RUNWAY.couleur());
         	g2.setStroke(new BasicStroke(InfraStd.RUNWAY.largeur(), BasicStroke.CAP_SQUARE,
                 BasicStroke.CAP_SQUARE));
-			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0), (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1));
+			g2.drawLine(X_extremite0, Y_extremite0, X_extremite1, Y_extremite1);
         	g2.draw(runway.get_runwayPointAPoint());
 			
 			g2.setColor(Color.WHITE);
@@ -57,15 +61,15 @@ public class RunwayDrawer {
 			g2.setStroke(new BasicStroke(1.7f, BasicStroke.CAP_BUTT,
 			        BasicStroke.JOIN_MITER, 2f, dashbordure, 0.0f));
 
-			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)-(int)(InfraStd.RUNWAY.largeur())/2+2, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)-(int)(InfraStd.RUNWAY.largeur())/2+2);
-			g2.drawLine((int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+(int)(InfraStd.RUNWAY.largeur())/2-2, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+(int)(InfraStd.RUNWAY.largeur())/2-2);
+			g2.drawLine(X_extremite0, Y_extremite0-largeurpiste/2+2, X_extremite1, Y_extremite1-largeurpiste/2+2);
+			g2.drawLine(X_extremite0, Y_extremite0+largeurpiste/2-2, X_extremite1, Y_extremite1+largeurpiste/2-2);
 	
 			// Dessine les bandes en seuil de piste
 			float dash2[] = { 2f};
 			g2.setStroke(new BasicStroke(20f, BasicStroke.CAP_BUTT,
 			        BasicStroke.JOIN_MITER, 2f, dash2, 0.0f));
-			g2.drawLine((int)runway.get_extremite_x(0)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(0)-(int)(InfraStd.RUNWAY.largeur())/2+4, (int)runway.get_extremite_x(0), (int)runway.get_extremite_y(0)+(int)(InfraStd.RUNWAY.largeur())/2-4);
-			g2.drawLine((int)runway.get_extremite_x(1)+(int)Math.round(runway.getAngle(-Math.PI/2)), (int)runway.get_extremite_y(1)-(int)(InfraStd.RUNWAY.largeur())/2+4, (int)runway.get_extremite_x(1), (int)runway.get_extremite_y(1)+(int)(InfraStd.RUNWAY.largeur())/2-4);
+			g2.drawLine(X_extremite0+anglepiste, Y_extremite0-largeurpiste/2+4, X_extremite0, Y_extremite0+largeurpiste/2-4);
+			g2.drawLine(X_extremite1+anglepiste, Y_extremite1-largeurpiste/2+4, X_extremite1, Y_extremite1+largeurpiste/2-4);
 
 
 			// Dessine le QFU
@@ -89,14 +93,14 @@ public class RunwayDrawer {
 		      if (Integer.parseInt(runway.get_QFUL().toString().substring(0, 2))>Integer.parseInt(runway.get_QFUR().toString().substring(0, 2))){	    	
 		      GlyphVector vectLnombre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(0, 2));
 		      GlyphVector vectLlettre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(2, 3));
-			    g2.drawGlyphVector(vectLnombre, (float)runway.get_extremite_x(1)-50, (float)runway.get_extremite_y(1)-15-(int)Math.round(runway.getAngle(-Math.PI/2)));
-			    g2.drawGlyphVector(vectLlettre, (float)runway.get_extremite_x(1)-20, (float)runway.get_extremite_y(1)-5-(int)Math.round(runway.getAngle(-Math.PI/2)));  
+			    g2.drawGlyphVector(vectLnombre, (float)X_extremite1-50, (float)Y_extremite1-15-anglepiste);
+			    g2.drawGlyphVector(vectLlettre, (float)X_extremite1-20, (float)Y_extremite1-5-anglepiste);  
 		      }
 		      else{
 			      GlyphVector vectLnombre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(0, 2));
 			     GlyphVector vectLlettre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUL().toString().substring(2, 3));
-				    g2.drawGlyphVector(vectLnombre, (float)runway.get_extremite_x(0)+50, (float)runway.get_extremite_y(0)+20+(int)Math.round(runway.getAngle(-Math.PI/2)));
-				    g2.drawGlyphVector(vectLlettre, (float)runway.get_extremite_x(0)+20, (float)runway.get_extremite_y(0)+5+(int)Math.round(runway.getAngle(-Math.PI/2)));   
+				    g2.drawGlyphVector(vectLnombre, (float)X_extremite0+50, (float)Y_extremite0+20+anglepiste);
+				    g2.drawGlyphVector(vectLlettre, (float)X_extremite0+20, (float)Y_extremite0+5+anglepiste);   
 		      }
 		      
 		      
@@ -104,14 +108,14 @@ public class RunwayDrawer {
 		      if (Integer.parseInt(runway.get_QFUL().toString().substring(0, 2))<Integer.parseInt(runway.get_QFUR().toString().substring(0, 2))){
 		      GlyphVector vectRnombre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(0, 2));
 		      GlyphVector vectRlettre = fontfliprotate.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(2, 3));
-			    g2.drawGlyphVector(vectRnombre, (float)runway.get_extremite_x(1)-50, (float)runway.get_extremite_y(1)-15-(int)Math.round(runway.getAngle(-Math.PI/2)));
-			    g2.drawGlyphVector(vectRlettre, (float)runway.get_extremite_x(1)-20, (float)runway.get_extremite_y(1)-5-(int)Math.round(runway.getAngle(-Math.PI/2)));}
+			    g2.drawGlyphVector(vectRnombre, (float)X_extremite1-50, (float)Y_extremite1-15-anglepiste);
+			    g2.drawGlyphVector(vectRlettre, (float)X_extremite1-20, (float)Y_extremite1-5-anglepiste);}
 			
 		      else{
 			      GlyphVector vectRnombre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(0, 2));
 			      GlyphVector vectRlettre = fontfliprotate2.createGlyphVector(g2.getFontRenderContext(), runway.get_QFUR().toString().substring(2, 3)); 
-				    g2.drawGlyphVector(vectRnombre, (float)runway.get_extremite_x(0)+50, (float)runway.get_extremite_y(0)+20+(int)Math.round(runway.getAngle(-Math.PI/2)));
-				    g2.drawGlyphVector(vectRlettre, (float)runway.get_extremite_x(0)+20, (float)runway.get_extremite_y(0)+10+(int)Math.round(runway.getAngle(-Math.PI/2)));
+				    g2.drawGlyphVector(vectRnombre, (float)X_extremite0+50, (float)Y_extremite0+20+anglepiste);
+				    g2.drawGlyphVector(vectRlettre, (float)X_extremite0+20, (float)Y_extremite0+10+anglepiste);
 		      }
 		      
 		    

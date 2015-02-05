@@ -1,10 +1,5 @@
 package fr.iessa.metier;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
@@ -48,7 +43,13 @@ public class Instant implements Comparable<Instant>{
 	
 	public static class InstantFabrique {
 		
-		private static TreeMap<Integer, Instant> _instantsSingleton = new TreeMap<>();
+		private final static TreeMap<Integer, Instant> _instantsSingleton = new TreeMap<>();
+		public final static int _pasEntreInstant = 5;
+		static {
+			for (int i = 0; i < 24*3600; i+=_pasEntreInstant) {
+				get(i);
+			}
+		}
 		
 		public static Instant get(int secondes) {
 			

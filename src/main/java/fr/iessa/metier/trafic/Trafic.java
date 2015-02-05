@@ -33,16 +33,20 @@ public class Trafic implements Observer {
 	private Set<Vol> _vols = null;
 	
 
-	public Set<Vol> getVolsToAdd(Instant precedent, Instant courant) 
+	public Set<Vol> getVolsToAdd(Instant courant) 
 	{
+		Instant precedent = InstantFabrique.getInstants().lower(courant);
+		
 		return _vols.stream()
                     .filter( vol -> vol.estSurLaPlateforme(courant)
-                    		&& !vol.estSurLaPlateforme(precedent) )
+                    		&& !vol.estSurLaPlateforme( precedent ) )
                     .collect(Collectors.toSet());
 	}
 	
-	public Set<Vol> getVolsToRemove(Instant precedent, Instant courant) 
+	public Set<Vol> getVolsToRemove(Instant courant) 
 	{
+		Instant precedent = InstantFabrique.getInstants().lower(courant);
+		
 		return _vols.stream()
                 .filter( vol -> !vol.estSurLaPlateforme(courant)
                 		&& vol.estSurLaPlateforme(precedent) )
@@ -51,8 +55,8 @@ public class Trafic implements Observer {
 	
 
 	private TreeMap<Instant, Set<Vol>> _volsParInstant;
-	//private TreeMap<Instant, Set<Vol>> _volsARajouterParInstant; 
-	//private TreeMap<Instant, Set<Vol>> _volsASupprParInstant; 
+	private TreeMap<Instant, Set<Vol>> _volsARajouterParInstant; 
+	private TreeMap<Instant, Set<Vol>> _volsASupprParInstant; 
 	
 	private void computeDelta()
 	{
@@ -65,6 +69,17 @@ public class Trafic implements Observer {
 																			.collect( Collectors.toSet() ) ) );
 		
 		_volsParInstant = new TreeMap<Instant, Set<Vol>>(volsParInstant);
+		/*_volsARajouterParInstant = new TreeMap<Instant, Set<Vol>>();
+		allOrderedInstants.parallelStream()
+								 .filter(i -> InstantFabrique.getInstants().lower(i) != null)
+								 .forEach(i -> 
+								 	_volsARajouterParInstant.put(i,getVolsToAdd(i)));*/
+		
+	/*	volsParInstant.entrySet().parallelStream()
+		 .filter(e -> InstantFabrique.getInstants().lower(e.getKey()) != null)
+		 .forEach(e -> 
+		 	_volsASupprParInstant.get(InstantFabrique.getInstants().lower(e.getKey())).removeAll(e.getValue())); */
+		
 		
 		//Set<Vol> toAdd.removeAll(volsPreviousInstant);
 		//Set<Vol> toAdd.
@@ -113,6 +128,15 @@ public class Trafic implements Observer {
 		
 		_vols.parallelStream().filter( v -> volsAInstant.contains(v) == false )
 							  .forEach( v -> v.updateCoordCourantes(null) );
+	}
+
+	public Set<Vol> getVols() {
+		return _vols;	
+	}
+
+	public Set<Vol> getVols(Instant instant) {
+		return _volsParInstant.get(instant);
+		
 	}
 	
 	

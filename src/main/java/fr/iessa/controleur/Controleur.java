@@ -26,7 +26,7 @@ import fr.iessa.vue.Echelle;
 public class Controleur {
 	
 	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
-	private TraficConteneur _modele = new TraficConteneur();
+	private Trafic _trafic;
 	
 	private Trafic _trafic;
 	
@@ -38,7 +38,7 @@ public class Controleur {
 	
 	public Controleur() {
 		// Les observers seront notifies seulement dans l'Event Dispatch Thread
-		_swingObservable = new SwingPropertyChangeSupport(_modele, true);
+		_swingObservable = new SwingPropertyChangeSupport(this, true);
 	}
 	
 	public void ajoutVue(PropertyChangeListener vue, ModeleEvent[] events) {
@@ -142,10 +142,10 @@ public class Controleur {
 			public void done(){
 				try {
 					Trafic trafic = get();
-					_modele.setTrafic(trafic);
+					_trafic = trafic;
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
-					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _modele));
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _trafic));
 					runTrafic();
 					//TODO Lancer en arriere plan la detection des collisions. pour faire un ReadyToUse.
 					//Attribut qui ecoute le modele chargement trafic fichier done pour lancer la detection 
