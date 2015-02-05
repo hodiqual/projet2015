@@ -1,43 +1,61 @@
-/**
- * 
- */
+
 package fr.iessa.vue;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-/**
- * @author hodiqual
- *
- */
-public class PanelTableauDeBord extends JPanel {
+import fr.iessa.controleur.ModeleEvent;
 
+/** Classe Tableau de Bord.
+ * @author THOMAS Raimana
+ * @version 1.0 
+ */
+
+public class PanelTableauDeBord extends JPanel implements PropertyChangeListener {
 
 	// ***************** A SURPPRIMER **************************
 	private static final Color FG_COLOR = new Color(0xFFFFFF);
 	private static final Color BG_COLOR = Color.RED;
-	private static final Color BORDER_COLOR = new Color(0x000000);
-	private final JLabel label = new JLabel();
 	// ***************** FIN A SURPPRIMER **************************
+	
+	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
+	private PanelAffichageVol _affichageVol = new PanelAffichageVol();
 	
 	public PanelTableauDeBord() {
 		super();
 		setOpaque(true);
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(BG_COLOR);
 		
-		// ***************** A SURPPRIMER **************************
-		label.setForeground(FG_COLOR);
-		label.setFont(new Font("Sans", Font.BOLD, 90));
-		label.setVerticalAlignment(SwingConstants.CENTER);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setText("TABLEAU DE BORD");
-		// ***************** FIN A SUPPRIMER **************************
+		_titre.setForeground(FG_COLOR);
+		_titre.setFont(new Font("Sans", Font.BOLD, 10));
+		_titre.setVerticalAlignment(SwingConstants.CENTER);
+		_titre.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		add(_titre);
+		add(_affichageVol);
+		
+	}
+	
+	/** Actions à realiser lors de la mise à jour demandée par le contrôleur */
+    public void propertyChange(PropertyChangeEvent evt) {
+    	
+		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
+			case UPDATE_INSTANT:
+
+				break;
+
+			default:
+				break;
+		}
+		
 	}
 	
 

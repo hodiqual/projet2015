@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
-
 /** Classe FramePrincipale
  * @author THOMAS Raimana
  * @version 1.0 
@@ -37,7 +36,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	/** Constructeur */
 	public FramePrincipale() {
 		// Construction de la fenêtre principale
-    	super("800x600 800x600 800x600");
+    	super("Teahupoo");
     	this.setPreferredSize((new Dimension(800, 600)));
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -113,9 +112,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	}
     }
     
-    /** Redéfinition des fonctions de l'interface PropertyChangeListener */
+    /** Actions à realiser lors d'un evenement du contrôleur */
     public void propertyChange(PropertyChangeEvent evt) {
-    	
     	
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
 			case CHARGEMENT_CARTE_FICHIER_DONE:
