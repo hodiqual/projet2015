@@ -59,11 +59,11 @@ public class TraficDao {
 		String id = scan.next();
 		Categorie categorie = Categorie.from(scan.next());
 		
-		Vol vol = new Vol(typeVol, id, categorie);
-
 		scan.next();scan.next(); // skip
 		
 		int secondes = scan.nextInt();
+		
+		Vol vol = new Vol(typeVol, id, categorie, InstantFabrique.get(secondes));
 		
 		scan.next(); // skip
 		while(scan.hasNext()) //boucle sur les coordonnees.
