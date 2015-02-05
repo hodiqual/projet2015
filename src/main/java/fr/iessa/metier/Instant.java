@@ -44,7 +44,7 @@ public class Instant implements Comparable<Instant>{
 	public static class InstantFabrique {
 		
 		private final static TreeMap<Integer, Instant> _instantsSingleton = new TreeMap<>();
-		private final static int _pasEntreInstant = 5;
+		public final static int _pasEntreInstant = 5;
 		static {
 			for (int i = 0; i < 24*3600; i+=_pasEntreInstant) {
 				get(i);
