@@ -71,7 +71,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 		
 		setOpaque(false);
 		
-		_lecteur = new PanelLecture();
+		_lecteur = new PanelLecture(controleur);
 		_lecteur.addMouseListener(new MouseAdapter () {		
 			private Timer timer ;	
 			{
