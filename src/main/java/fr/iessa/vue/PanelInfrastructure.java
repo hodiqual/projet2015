@@ -90,6 +90,8 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		//observe le changement du modele via le controleur (MVC)
 		_controleur.ajoutVue(this);
 		
+		_aeroport = _controleur.getAeroport();
+		
 		addMouseListener(this);	
 		addMouseWheelListener(this);  
 	    addComponentListener( new ComponentAdapter() {
@@ -103,8 +105,6 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 
 		_echelle = echelle;
 		echelle.addObserver(this);
-	    
-	    
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 				_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
 						  , _aeroport.getMinY(), _aeroport.getMaxY());
 				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
-				//resetImageCarte();
+				
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:
 				if(_layerUI!=null)
 					_layerUI.stop();
@@ -136,18 +136,31 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		}
 	}
 	
-
-	private DessineCarteWorker _workerEncours = null;
-	private DessineCarteWorker _workerPreviewEncours = null;
-	 /**
-	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
+	/**
+	 * Reference sur le thread qui est en train de dessiner l'aeroport en memoire.
 	 */
-	//private VolatileImage _imageCarteBuffered;
-	private BufferedImage _imageCarteBuffered;
+	private DessineCarteWorker _workerEncours = null;
 
+	
+	/**
+	 * Reference sur le thread qui est en train de dessiner une prévisualisation
+	 * de l'aeroport en memoire.
+	 */
+	private DessineCarteWorker _workerPreviewEncours = null;
+	
+	 /**
+	 * Dessin de l'aeroport en memoire tampon
+	 */
+	private BufferedImage _imageCarteBuffered;
+	
+	 /**
+	 * Dessin d'une previsualisation de l'aeroport en memoire tampon (sans anti-aliasing)
+	 */
 	private BufferedImage _imageCartePreview;
 	
-
+	/**
+	 * @param _imageCarteEstPrete est true si _imageCarteBuffered est prete a etre affichee
+	 */
 	private boolean _imageCarteEstPrete = false;
 	
 	/** Force le redessin de _imageCarteBuffered */
@@ -235,8 +248,6 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		else
 			g2.drawImage(_imageCartePreview, 0, 0, this);
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-
-
 	}
 	
 

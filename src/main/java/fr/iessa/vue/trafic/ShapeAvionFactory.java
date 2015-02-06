@@ -41,8 +41,6 @@ public enum ShapeAvionFactory {
 	
 	private ShapeAvionFactory(String ressource){
 		_avionsParAngle = getShapesByColor(ressource);
-		
-		System.out.println("ShapeAvionFactory: " +  _avionsParAngle.length);
 	}
 	
 	private final static int _stepAngulaire = 5;

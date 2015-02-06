@@ -26,7 +26,12 @@ import fr.iessa.vue.trafic.ComponentVol;
 public class PanelTrafic extends JPanel implements PropertyChangeListener, Observer{
 
 	private final Echelle _echelle;
+	
 	private final Controleur _controleur;
+    
+	private Trafic _trafic;
+	
+	private Map<Vol,ComponentVol> _volsADessiner;
 
     public PanelTrafic(Controleur controleur, Echelle echelle) {
         setOpaque(false);
@@ -35,17 +40,24 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 
 		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE };
 		_controleur.ajoutVue(this,  evts) ;
+        
+        setTrafic(_controleur.getTrafic());
 		
-
 		_echelle = echelle;
+    }
+    
+    private void setTrafic(Trafic trafic) {
+    	_trafic = trafic;
+    	
+    	if(_trafic != null)
+    	{
+    		new InitializeComponentVols().execute();
+    	}	
     }
 
     public Dimension getPreferredSize() {
         return new Dimension(250,200);
     }
-	private Trafic _trafic;
-	
-	private Map<Vol,ComponentVol> _volsADessiner;
 	
 	private final class InitializeComponentVols extends SwingWorker<Void,Void> {
 		@Override
@@ -68,8 +80,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		
 		switch (property) {
 		case CHARGEMENT_TRAFIC_FICHIER_DONE:
-			_trafic = (Trafic) evt.getNewValue();
-			new InitializeComponentVols().execute();
+			setTrafic((Trafic) evt.getNewValue());
 			break;
 		case UPDATE_INSTANT:
 			update((Instant)evt.getNewValue());
@@ -78,13 +89,14 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		default:
 			break;
 		}
-		
 	}
 
 	@Override
 	//Update a une observation de changement de _echelle
 	public void update(Observable o, Object arg) {
 			_volsADessiner.values().forEach(cv -> cv.update(this) );
+			revalidate();
+			repaint();
 	}  
 	
 	private void update(Instant instant) {
