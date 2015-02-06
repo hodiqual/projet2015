@@ -168,7 +168,11 @@ public class Controleur {
 		sw.execute();
 	}
 	
-	private boolean _isTraficRunning = false;
+	/**
+	 * Etat de la simulation s'il est en cours ou non. Elle est volatile
+	 * car elle peut-etre lu ou ecrite par different thread (EDT ou Thread de HorlogePrincipale)
+	 */
+	private volatile boolean _isTraficRunning = false;
 	
 	private void updateInstant(Instant instant){
 		Instant oldInstant = _horloge.getInstantCourant();
@@ -195,14 +199,11 @@ public class Controleur {
         	   
         	   if(_isTraficRunning)
         	   {   
-        		   System.out.println("ALIVEEEEE");
         		   updateInstant(null);
         		   try {
         			   Thread.sleep(_dureeIntervalle);  
         		   } catch (InterruptedException ignore) {}
-        	   }
-        	   else
-        		   System.err.println("DEAAAADDDD");   
+        	   }  
            }
         }
      };
