@@ -191,14 +191,18 @@ public class Controleur {
 	public final Thread _horlogeManager = new Thread() {
         @Override
         public void run() {
-           while (true) {
+           while (true) {        	
+        	   
         	   if(_isTraficRunning)
         	   {   
+        		   System.out.println("ALIVEEEEE");
         		   updateInstant(null);
         		   try {
         			   Thread.sleep(_dureeIntervalle);  
         		   } catch (InterruptedException ignore) {}
-        	   }   
+        	   }
+        	   else
+        		   System.err.println("DEAAAADDDD");   
            }
         }
      };
