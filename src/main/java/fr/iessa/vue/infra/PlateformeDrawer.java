@@ -19,7 +19,7 @@ import fr.iessa.vue.Echelle;
  * @author hodiqual
  *
  */
-public class InfrastructureDrawer {
+public class PlateformeDrawer {
 	
 	private static LignesDrawer lignesDrawer = new LignesDrawer();
 	

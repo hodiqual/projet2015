@@ -44,7 +44,7 @@ import javax.swing.SwingWorker;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.infra.Aeroport;
-import fr.iessa.vue.infra.InfrastructureDrawer;
+import fr.iessa.vue.infra.PlateformeDrawer;
 
 /**
  * Gere graphiquement le chargement de la plateforme,
@@ -54,7 +54,7 @@ import fr.iessa.vue.infra.InfrastructureDrawer;
  * @author hodiqual
  * 
  */
-public class PanelInfrastructure extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener, Observer {
+public class PanelPlateforme extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener, Observer {
 
 	private static final long serialVersionUID = 25499665468682529L;
 
@@ -64,7 +64,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	
 	private Echelle _echelle;
 	
-	private InfrastructureDrawer _drawer = new InfrastructureDrawer();
+	private PlateformeDrawer _drawer = new PlateformeDrawer();
 	
 	/** Permet d'avoir la translation a faire apres un drag de la souris */
 	Point2D.Double _whereMousePressed = new Point2D.Double();
@@ -75,7 +75,7 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 
 	private int _zoomLevel = 1;
 	
-	public PanelInfrastructure(Controleur controleur, Echelle echelle) {
+	public PanelPlateforme(Controleur controleur, Echelle echelle) {
         setLayout(new GridLayout(1,1));
         setBackground(Color.white);
         

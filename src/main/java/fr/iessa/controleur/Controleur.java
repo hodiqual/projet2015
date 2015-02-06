@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import javax.swing.event.SwingPropertyChangeSupport;
 
-import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.infra.PlateformeDAO;
 import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.Horloge;
 import fr.iessa.metier.Instant;
@@ -84,7 +84,7 @@ public class Controleur {
 			protected Aeroport doInBackground() throws Exception {
 
 				//1. Charger fichier infrastructure
-				Aeroport aeroport = InfrastructureDAO.charger(ficname);
+				Aeroport aeroport = PlateformeDAO.charger(ficname);
 				
 				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
