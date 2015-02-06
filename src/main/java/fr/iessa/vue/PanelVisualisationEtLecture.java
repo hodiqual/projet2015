@@ -74,6 +74,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 		_lecteur = new PanelLecture(controleur);
 		_lecteur.addMouseListener(new MouseAdapter () {		
 			private Timer timer ;	
+			
 			{
 				//Cache le lecteur au bout deux secondes hors du lecteur
 				timer = new Timer(tempsAffichageLecteur, _cacheLecteurWrapper);
@@ -88,7 +89,10 @@ public class PanelVisualisationEtLecture extends SLPanel {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				timer.start();
+				if(!_lecteur.contains(e.getPoint()))
+				 {
+					timer.start();
+				 }
 			}
 			
 		});

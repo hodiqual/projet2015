@@ -61,19 +61,19 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_infrastructurePanel.setAlignmentX(0.0f);
 		_infrastructurePanel.setAlignmentY(0.0f);
 		
-		_gestionPlans.add(jlayer, -3000);
+		_gestionPlans.add(jlayer, new Integer(1));
 		
 		//Gestion du trafic
 		PanelTrafic traficPanel = new  PanelTrafic(controleur, echelle);
 		traficPanel.setAlignmentX(0.0f);
 		traficPanel.setAlignmentY(0.0f);
-		_gestionPlans.add(traficPanel,0);
+		_gestionPlans.add(traficPanel,new Integer(2));
 		
 		//Gestion des controles Lecteur et Tableau de Bord
 		PanelDesControles controles = new PanelDesControles(_controleur);
 		controles.setAlignmentX(0.0f);
 		controles.setAlignmentY(0.0f);
-		_gestionPlans.add(controles,1);
+		_gestionPlans.add(controles,new Integer(3));
 		
 		//Rajout du composant de gestion des plans a ce JPanel
 		add(_gestionPlans);	
