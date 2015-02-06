@@ -3,6 +3,7 @@
  */
 package fr.iessa.vue;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JLayer;
@@ -23,7 +24,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 	/** Permet de gerer plusieurs plans sur un meme panel*/
 	private JLayeredPane _gestionPlans;
 	
-	public PanelPrincipalMultiCouches(Controleur controleur)  
+	public PanelPrincipalMultiCouches(Controleur controleur, boolean avecControle)  
 	{
 		setLayout(new GridLayout(1, 1));	
 		//Pour une animation fluide il vaut mieux etre en double buffer.
@@ -55,11 +56,22 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		traficLayered.setAlignmentY(0.0f);
 		_gestionPlans.add(traficLayered,new Integer(2));
 		
-		//Gestion des controles Lecteur et Tableau de Bord
-		PanelDesControles controles = new PanelDesControles(controleur);
-		controles.setAlignmentX(0.0f);
-		controles.setAlignmentY(0.0f);
-		_gestionPlans.add(controles,new Integer(3));
+		if(avecControle) {
+			//Gestion des controles Lecteur et Tableau de Bord
+			PanelDesControles controles = new PanelDesControles(controleur);
+			controles.setAlignmentX(0.0f);
+			controles.setAlignmentY(0.0f);
+			_gestionPlans.add(controles,new Integer(3));
+		}else{
+			//Affichage horloge seule
+			JPanel panelHorloge = new JPanel();
+			panelHorloge.setOpaque(false);
+			panelHorloge.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			panelHorloge.add(new LabelHorloge(controleur));
+			panelHorloge.setAlignmentX(0.0f);
+			panelHorloge.setAlignmentY(0.0f);
+			_gestionPlans.add(panelHorloge,new Integer(3));
+		}
 		
 		//Rajout du composant de gestion des plans a ce JPanel
 		add(_gestionPlans);	
