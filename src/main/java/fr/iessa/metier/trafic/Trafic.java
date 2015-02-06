@@ -73,7 +73,12 @@ public class Trafic implements Observer {
 		collisions.entrySet().parallelStream().forEach(e ->
 		{
 			e.getValue().entrySet().stream().filter( z -> z.getValue().size() > 1 )
-			.forEach(z -> System.out.println( e.getKey().getSeconds() + " " + z.getKey() + " " + z.getValue()));
+			.forEach(z -> 
+			{
+				System.out.println( "Collision: " + e.getKey().getSeconds() + " " + z.getKey() + " " + z.getValue());
+				z.getValue().forEach(v -> v.setADesCollisions(true));
+			}
+			);
 		}
 		 );
 	}
@@ -139,6 +144,7 @@ public class Trafic implements Observer {
 	public void setVols(Set<Vol> vols) {
 		_vols = vols;
 		computeDelta();
+		computeCollision();
 	}
 
 	@Override

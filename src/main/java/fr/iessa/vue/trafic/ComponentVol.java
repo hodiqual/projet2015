@@ -1,13 +1,16 @@
 package fr.iessa.vue.trafic;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.TreeMap;
 
@@ -25,7 +28,7 @@ public class ComponentVol extends JComponent {
 	
 	private BufferedImage _imageCourante;
 	private ShapeAvionFactory _imageFactory;
-	
+	private Rectangle2D _collisionHighlight;
 	private Echelle _echelle;
 	private Vol _vol;
 	private Point2D.Double _coordCouranteDouble = new Point2D.Double();
@@ -37,7 +40,7 @@ public class ComponentVol extends JComponent {
 		
 		setOpaque(true);
 		
-		//setBackground(Color.black);
+		//setBackground(Color.red);
 		//setBorder(BorderFactory.createTitledBorder("AVION"));
 		//setBounds(0,0,width,height);
 
@@ -67,6 +70,9 @@ public class ComponentVol extends JComponent {
 		setMaximumSize(new Dimension(width,height));
 		setPreferredSize(new Dimension(width,height));
 		
+		if(_vol.aDesCollisions())
+			_collisionHighlight = new Rectangle(new Dimension(width, height));
+		
 		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
 		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
 		_cheminParcouru.moveTo(premierPoint.x, premierPoint.y);
@@ -75,7 +81,7 @@ public class ComponentVol extends JComponent {
 		addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				System.out.println("Avion clique: " + v.getId());
 				System.out.println("isDisplayable: " + isDisplayable());
 				System.out.println("Showing: " + isShowing());
@@ -118,6 +124,12 @@ public class ComponentVol extends JComponent {
 		super.paintComponent(g);  
 		
 		Graphics2D g2 = (Graphics2D) g.create();
+		if(_collisionHighlight!=null){
+			Color colorToRestore = g2.getColor();
+			g2.setColor(Color.red);
+			g2.fill(_collisionHighlight);
+			g2.setColor(colorToRestore);
+		}
 		g2.drawImage(_imageCourante, 0, 0, null);
 	}
 	
