@@ -168,6 +168,11 @@ public class Trafic implements Observer {
 	public Set<Vol> getVols(Instant instant) {
 		return _volsParInstant.get(instant);
 	}
+
+	public Set<Vol> getVols(Predicate<Vol> filtre) {
+		// TODO Auto-generated method stub
+		return _vols.stream().filter(filtre).collect(Collectors.toSet());
+	}
 	
 	
 }

@@ -6,6 +6,7 @@ package fr.iessa.controleur;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 
 import javax.swing.SwingWorker;
 import javax.swing.event.SwingPropertyChangeSupport;
@@ -16,7 +17,10 @@ import fr.iessa.metier.Horloge;
 import fr.iessa.metier.Instant;
 import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.infra.Aeroport;
+import fr.iessa.metier.trafic.FiltreVol;
 import fr.iessa.metier.trafic.Trafic;
+import fr.iessa.metier.type.Categorie;
+import fr.iessa.metier.type.TypeVol;
 import fr.iessa.vue.Echelle;
 
 /**
@@ -51,6 +55,9 @@ public class Controleur {
 	
 	/** Permet de notifier la vue en garantissant que cela soit dans l'Event Dispatch Thread. */
 	private SwingPropertyChangeSupport _swingObservable;
+	
+	/**Filtre*/
+	private FiltreVol _filtreVol;
 	
 	public Controleur() {
 		// Les observers seront notifies seulement dans l'Event Dispatch Thread
@@ -164,6 +171,12 @@ public class Controleur {
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, trafic));
 					runTrafic();
+					
+					_filtreVol = new FiltreVol(trafic);	
+					evt = ModeleEvent.UPDATE_FILTRE_VOL;
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));
+					
+					
 					//TODO Lancer en arriere plan la detection des collisions. pour faire un ReadyToUse.
 					//Attribut qui ecoute le modele chargement trafic fichier done pour lancer la detection 
 					//des collisions dans un swingworker
@@ -262,6 +275,67 @@ public class Controleur {
 
 	public boolean isTraficRunning() {
 		return _isTraficRunning;
+	}
+	
+
+	/**
+	 * @param filtreTypeVol the filtreTypeVol to set
+	 */
+	public void setFiltreTypeVol(TypeVol filtreTypeVol) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltreTypeVol(filtreTypeVol);
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
+	}
+
+	/**
+	 * @param filtreCategorie the filtreCategorie to set
+	 */
+	public void setFiltreCategorie(Categorie filtreCategorie) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltreCategorie(filtreCategorie);	
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
+	}
+
+	/**
+	 * @param filtreCollision the filtreCollision to set
+	 */
+	public void setFiltreCollision(Boolean filtreCollision) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltreCollision(filtreCollision);	
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
 	}
 	
 	

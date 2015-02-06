@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 /** Classe Tableau de Bord.
@@ -28,7 +29,7 @@ public class PanelTableauDeBord extends JPanel implements PropertyChangeListener
 	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
 	private PanelAffichageVol _affichageVol = new PanelAffichageVol();
 	
-	public PanelTableauDeBord() {
+	public PanelTableauDeBord(Controleur controleur) {
 		super();
 		setOpaque(true);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -40,6 +41,7 @@ public class PanelTableauDeBord extends JPanel implements PropertyChangeListener
 		_titre.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		add(_titre);
+		add(new PanelFiltres(controleur));
 		add(_affichageVol);
 		
 	}
