@@ -5,7 +5,6 @@ package fr.iessa.vue;
 
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -22,44 +21,28 @@ public class PanelPrincipalMultiCouches extends JPanel {
 	/** Permet de gerer plusieurs plans sur un meme panel*/
 	private JLayeredPane _gestionPlans;
 	
-	/** Controleur de notre pattern MVC */
-	private Controleur _controleur;
-	
-	/** Panel qui gere l'infrastructure, ce panel sera en arriere plan */
-	private PanelPlateforme _infrastructurePanel;
-	
-	@Override
-	public boolean isOptimizedDrawingEnabled() {
-        return true;
-      }
-	
-	public PanelPrincipalMultiCouches(Controleur controleur)
+	public PanelPrincipalMultiCouches(Controleur controleur)  
 	{
 		setLayout(new GridLayout(1, 1));	
 		//Pour une animation fluide il vaut mieux etre en double buffer.
 		setDoubleBuffered(true);
 		
-		_gestionPlans = new JLayeredPane() {
-		public boolean isOptimizedDrawingEnabled() {
-	        return true;
-	      }
-		};
+		_gestionPlans = new JLayeredPane();
 		
 		OverlayLayout layout = new OverlayLayout(_gestionPlans);
 		_gestionPlans.setLayout(layout);
 		/*_gestionPlans.setBorder(BorderFactory.createTitledBorder(
                                     "Veuillez charger un fichier de plateforme ..."));*/
 		
-		//Gestion de l'infrastructure
-		this._controleur = controleur;
+		//Gestion de la plateforme
 		Echelle echelle = new Echelle();
-		_infrastructurePanel = new PanelPlateforme(_controleur, echelle);
+		PanelPlateforme _plateformePanel = new PanelPlateforme(controleur, echelle);
 		final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
-		_infrastructurePanel.setChargeEnCoursLayerUI(layerUI);
-		JLayer<JPanel> jlayer = new JLayer<JPanel>(_infrastructurePanel, layerUI);
+		_plateformePanel.setChargeEnCoursLayerUI(layerUI);
+		JLayer<JPanel> jlayer = new JLayer<JPanel>(_plateformePanel, layerUI);
 
-		_infrastructurePanel.setAlignmentX(0.0f);
-		_infrastructurePanel.setAlignmentY(0.0f);
+		_plateformePanel.setAlignmentX(0.0f);
+		_plateformePanel.setAlignmentY(0.0f);
 		
 		_gestionPlans.add(jlayer, new Integer(1));
 		
@@ -70,7 +53,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		_gestionPlans.add(traficPanel,new Integer(2));
 		
 		//Gestion des controles Lecteur et Tableau de Bord
-		PanelDesControles controles = new PanelDesControles(_controleur);
+		PanelDesControles controles = new PanelDesControles(controleur);
 		controles.setAlignmentX(0.0f);
 		controles.setAlignmentY(0.0f);
 		_gestionPlans.add(controles,new Integer(3));

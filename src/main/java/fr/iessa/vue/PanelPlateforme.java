@@ -57,10 +57,8 @@ import fr.iessa.vue.infra.PlateformeDrawer;
 public class PanelPlateforme extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener, Observer {
 
 	private static final long serialVersionUID = 25499665468682529L;
-
-	private Controleur _controleur;
 	
-	private Aeroport _aeroport;
+	private Aeroport _aeroport = null;
 	
 	private Echelle _echelle;
 	
@@ -78,9 +76,7 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 	public PanelPlateforme(Controleur controleur, Echelle echelle) {
         setLayout(new GridLayout(1,1));
         setBackground(Color.white);
-        
-		_controleur = controleur;
-		
+
 		//Acceleres le paint du component etant le fond d'ecran.
 		setOpaque(true);
 		
@@ -88,9 +84,12 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 		setDoubleBuffered(true);
 
 		//observe le changement du modele via le controleur (MVC)
-		_controleur.ajoutVue(this);
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_CARTE_FICHIER_EN_COURS
+								    , ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE
+								    , ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR};
+		controleur.ajoutVue(this,  evts) ;
 		
-		_aeroport = _controleur.getAeroport();
+		_aeroport = controleur.getAeroport();
 		
 		addMouseListener(this);	
 		addMouseWheelListener(this);  
@@ -98,7 +97,6 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 			@Override
 			public void componentResized(ComponentEvent e) {
 				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
-				//resetImageCarte();	
 			}
 		});
 	    
@@ -317,7 +315,6 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 	}
 
 	/**
-	 * 
 	 * @param o observe echelle
 	 * @param arg la nouvelle transformation a appliquer
 	 */
