@@ -136,9 +136,7 @@ public class Trafic implements Observer {
 				_volsARajouterParInstant.put(instant, getVols(instant));
 			}
 			previousInstant = instant;			
-		}*/
-		
-		
+		}*/	
 	}
 
 	public void setVols(Set<Vol> vols) {

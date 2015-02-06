@@ -1,4 +1,4 @@
-package fr.iessa.vue;
+package fr.iessa.vue.trafic;
 
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -22,7 +22,8 @@ import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.Instant;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
-import fr.iessa.vue.trafic.ComponentVol;
+import fr.iessa.vue.ChargeEnCoursLayerUI;
+import fr.iessa.vue.Echelle;
 
 public class PanelTrafic extends JPanel implements PropertyChangeListener, Observer{
 

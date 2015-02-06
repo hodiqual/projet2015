@@ -22,7 +22,7 @@ import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.dao.infra.PlateformeDAO;
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.vue.Echelle;
-import fr.iessa.vue.PanelPlateforme;
+import fr.iessa.vue.infra.PanelPlateforme;
 import fr.iessa.vue.infra.PlateformeDrawer;
 
 public class TestDessinCarte extends JPanel{

@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
 import fr.iessa.controleur.Controleur;
+import fr.iessa.vue.infra.PanelPlateforme;
+import fr.iessa.vue.trafic.PanelTrafic;
 
 /**
  * @author hodiqual

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.iessa.vue;
+package fr.iessa.vue.infra;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,7 +44,8 @@ import javax.swing.SwingWorker;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.infra.Aeroport;
-import fr.iessa.vue.infra.PlateformeDrawer;
+import fr.iessa.vue.ChargeEnCoursLayerUI;
+import fr.iessa.vue.Echelle;
 
 /**
  * Gere graphiquement le chargement de la plateforme,
