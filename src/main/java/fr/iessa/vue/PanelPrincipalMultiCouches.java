@@ -36,21 +36,22 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		
 		//Gestion de la plateforme
 		Echelle echelle = new Echelle();
-		PanelPlateforme _plateformePanel = new PanelPlateforme(controleur, echelle);
+		PanelPlateforme plateformePanel = new PanelPlateforme(controleur, echelle);
 		final ChargeEnCoursLayerUI layerUI = new ChargeEnCoursLayerUI();
-		_plateformePanel.setChargeEnCoursLayerUI(layerUI);
-		JLayer<JPanel> jlayer = new JLayer<JPanel>(_plateformePanel, layerUI);
-
-		_plateformePanel.setAlignmentX(0.0f);
-		_plateformePanel.setAlignmentY(0.0f);
-		
-		_gestionPlans.add(jlayer, new Integer(1));
+		plateformePanel.setChargeEnCoursLayerUI(layerUI);
+		plateformePanel.setAlignmentX(0.0f);
+		plateformePanel.setAlignmentY(0.0f);
+		JLayer<JPanel> plateformLayered = new JLayer<JPanel>(plateformePanel, layerUI);
+		_gestionPlans.add(plateformLayered, new Integer(1));
 		
 		//Gestion du trafic
 		PanelTrafic traficPanel = new  PanelTrafic(controleur, echelle);
-		traficPanel.setAlignmentX(0.0f);
-		traficPanel.setAlignmentY(0.0f);
-		_gestionPlans.add(traficPanel,new Integer(2));
+		final ChargeEnCoursLayerUI layerUI2 = new ChargeEnCoursLayerUI();
+		traficPanel.setChargeEnCoursLayerUI(layerUI2);
+		JLayer<JPanel> traficLayered = new JLayer<JPanel>(traficPanel, layerUI2);
+		traficLayered.setAlignmentX(0.0f);
+		traficLayered.setAlignmentY(0.0f);
+		_gestionPlans.add(traficLayered,new Integer(2));
 		
 		//Gestion des controles Lecteur et Tableau de Bord
 		PanelDesControles controles = new PanelDesControles(controleur);

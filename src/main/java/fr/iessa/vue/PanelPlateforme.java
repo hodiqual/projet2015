@@ -142,7 +142,6 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 	 * Reference sur le thread qui est en train de dessiner l'aeroport en memoire.
 	 */
 	private DessineCarteWorker _workerEncours = null;
-
 	
 	/**
 	 * Reference sur le thread qui est en train de dessiner une prévisualisation

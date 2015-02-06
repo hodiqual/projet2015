@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -33,12 +34,17 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 	
 	private Map<Vol,ComponentVol> _volsADessiner;
 
+	private ChargeEnCoursLayerUI layerUI;
+
     public PanelTrafic(Controleur controleur, Echelle echelle) {
         setOpaque(false);
         
         _controleur = controleur;
 
-		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE };
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE
+									, ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_ERREUR
+									, ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_EN_COURS};
+		
 		_controleur.ajoutVue(this,  evts) ;
         
         setTrafic(_controleur.getTrafic());
@@ -71,7 +77,19 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 			_echelle.addObserver(PanelTrafic.this);
 			
 			return null;
-		}		
+		}
+		
+		protected void done() {
+			try {
+				Void object = get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				if(layerUI!=null)
+					layerUI.stop();
+			}
+		}
 	}
 
 	@Override
@@ -79,9 +97,16 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		ModeleEvent property = ModeleEvent.valueOf(evt.getPropertyName());
 		
 		switch (property) {
+		case CHARGEMENT_TRAFIC_FICHIER_EN_COURS:
+			if(layerUI!=null)
+				layerUI.start();
+			break;
 		case CHARGEMENT_TRAFIC_FICHIER_DONE:
 			setTrafic((Trafic) evt.getNewValue());
 			break;
+		case CHARGEMENT_TRAFIC_FICHIER_ERREUR:
+			if(layerUI!=null)
+				layerUI.stop();
 		case UPDATE_INSTANT:
 			update((Instant)evt.getNewValue());
 			break;
@@ -103,6 +128,10 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		_volsADessiner.values().forEach(cv -> cv.update(this) );
 		revalidate();
 		repaint();
+	}
+
+	public void setChargeEnCoursLayerUI(ChargeEnCoursLayerUI layerUI) {
+		this.layerUI = layerUI;	
 	}  
 
 }
