@@ -32,6 +32,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	private static final Color BORDER_COLOR = new Color(0x000000);
 	private JButton play, forward, back;
 	private JSlider timeline;
+	private JLabel vitesse;
     private static final ImageIcon BACK = new ImageIcon("back.png");
     private static final ImageIcon PLAY = new ImageIcon("play.png");
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
@@ -48,6 +49,10 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 		
 		
 		super();
+		
+		_controleur = controleur;
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING, ModeleEvent.UPDATE_INSTANT, ModeleEvent.UPDATE_DUREE_INTERVALLE};
+		_controleur.ajoutVue(this, evts);
 		
 	    UIDefaults sliderDefaults = new UIDefaults();
 
@@ -74,18 +79,18 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
                     }
                 });
 		setOpaque(true);
-		timeline = new JSlider(0,100,0);
-		
-		_controleur = controleur;
-		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING};
-		_controleur.ajoutVue(this, evts);
-		
+		timeline = new JSlider(0,100,0);		
 		play= new JButton();
 		updateBoutonPlayPause();
 		back= new JButton();
 	    back.setIcon(BACK);
 	    forward= new JButton();
 	    forward.setIcon(FORWARD);
+	    
+		vitesse= new JLabel("Vitesse");		
+		vitesse.setForeground(FG_COLOR);
+		vitesse.setFont(new Font("Sans", Font.BOLD, 10));
+
 
 	    setLayout(new GridBagLayout());
 		setBackground(BG_COLOR);
@@ -104,6 +109,10 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	    c.ipadx = 400;
 		c.gridwidth = 40;
         add(timeline,c);
+	    c.gridx = 0;
+	    c.gridy = 1;
+     //   add(vitesse,c);
+        
         timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
         addListeners();
