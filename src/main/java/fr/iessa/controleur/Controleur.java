@@ -28,6 +28,13 @@ public class Controleur {
 	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
 	private Trafic _trafic;
 	
+	/**
+	 * @return the _trafic
+	 */
+	public Trafic getTrafic() {
+		return _trafic;
+	}
+
 	/** Horloge de la plateforme */
 	private Horloge _horloge;
 	
@@ -184,14 +191,18 @@ public class Controleur {
 	public final Thread _horlogeManager = new Thread() {
         @Override
         public void run() {
-           while (true) {
+           while (true) {        	
+        	   
         	   if(_isTraficRunning)
         	   {   
+        		   System.out.println("ALIVEEEEE");
         		   updateInstant(null);
         		   try {
         			   Thread.sleep(_dureeIntervalle);  
         		   } catch (InterruptedException ignore) {}
-        	   }   
+        	   }
+        	   else
+        		   System.err.println("DEAAAADDDD");   
            }
         }
      };
@@ -233,6 +244,10 @@ public class Controleur {
 		
 		//On lance le SwingWorker
 		sw.execute();		
+	}
+
+	public boolean isTraficRunning() {
+		return _isTraficRunning;
 	}
 	
 	

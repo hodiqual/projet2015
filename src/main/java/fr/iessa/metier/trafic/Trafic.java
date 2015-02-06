@@ -151,13 +151,18 @@ public class Trafic implements Observer {
 							  .forEach( v -> v.updateCoordCourantes(null) );
 	}
 
+	/**
+	 * @return L'ensemble des vols qui composent le trafic
+	 */
 	public Set<Vol> getVols() {
 		return _vols;	
 	}
 
+	/**
+	 * @return L'ensemble des vols qui composent le trafic a l'instant @param instant.
+	 */
 	public Set<Vol> getVols(Instant instant) {
 		return _volsParInstant.get(instant);
-		
 	}
 	
 	
