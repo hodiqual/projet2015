@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.yattasolutions.uml.diagrams.classifier:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.yattasolutions.uml.diagrams.classifier="http://ns.yatta-solutions.com/umllab/diagrams/classifier/1.1.0" xmi:id="_NPgV4K3kEeS64PhZ7ksZkQ">
+  <modelElement href="projet2015.uml#_KLjcsK3kEeS64PhZ7ksZkQ"/>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_Nc4DgK3kEeS64PhZ7ksZkQ" name="fr">
+    <modelElement href="projet2015.uml#_LieMUK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_Nc4Dga3kEeS64PhZ7ksZkQ" position="50.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_NdfHgK3kEeS64PhZ7ksZkQ" name="javax">
+    <modelElement href="projet2015.uml#_LijE0K3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_NdfHga3kEeS64PhZ7ksZkQ" position="-115.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_NdgVoK3kEeS64PhZ7ksZkQ" name="aurelienribon">
+    <modelElement href="projet2015.uml#_LilhEK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_NdgVoa3kEeS64PhZ7ksZkQ" position="206.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_NdiK0K3kEeS64PhZ7ksZkQ" name="java">
+    <modelElement href="projet2015.uml#_LipygK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_NdiK0a3kEeS64PhZ7ksZkQ" position="-280.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_NdjY8K3kEeS64PhZ7ksZkQ" name="com">
+    <modelElement href="projet2015.uml#_LkatEK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_NdjY8a3kEeS64PhZ7ksZkQ" position="380.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_NdknEK3kEeS64PhZ7ksZkQ" name="sun">
+    <modelElement href="projet2015.uml#_Llo1EK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_NdknEa3kEeS64PhZ7ksZkQ" position="-445.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_Ndl1MK3kEeS64PhZ7ksZkQ" name="Point2D">
+    <modelElement href="projet2015.uml#_Llu7sK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_Ndl1Ma3kEeS64PhZ7ksZkQ" position="530.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+</com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

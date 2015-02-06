@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.yattasolutions.uml.diagrams.classifier:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.yattasolutions.uml.diagrams.classifier="http://ns.yatta-solutions.com/umllab/diagrams/classifier/1.1.0" xmi:id="_NQMSYK3kEeS64PhZ7ksZkQ">
+  <modelElement href="projet2015.uml#_Lin9UK3kEeS64PhZ7ksZkQ"/>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_RDlrgK3kEeS64PhZ7ksZkQ" name="Application">
+    <modelElement href="projet2015.uml#_Lo8AsK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_RDlrga3kEeS64PhZ7ksZkQ" position="50.0,50.0"/>
+    <visibility xmi:id="_RDlrgq3kEeS64PhZ7ksZkQ" label="+"/>
+    <operations xmi:id="_RDlrg63kEeS64PhZ7ksZkQ" name="main" staticOperation="true">
+      <modelElement href="projet2015.uml#_LpA5MK3kEeS64PhZ7ksZkQ"/>
+      <visibility xmi:id="_RDlrhK3kEeS64PhZ7ksZkQ" label="+"/>
+      <parameters xmi:id="_RDmSkK3kEeS64PhZ7ksZkQ" name="args">
+        <modelElement href="projet2015.uml#_LpA5Ma3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_RDmSka3kEeS64PhZ7ksZkQ" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </parameters>
+    </operations>
+  </nodes>
+</com.yattasolutions.uml.diagrams.classifier:ClassDiagram>
