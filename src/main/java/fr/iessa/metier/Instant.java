@@ -66,6 +66,10 @@ public class Instant implements Comparable<Instant>{
 			return uniqueInstant;
 		}
 		
+		public static Instant getPreviousInstant(Instant instant) {
+			return get(instant.getSeconds()-_pasEntreInstant);
+		}
+		
 		public static Set<Entry<Integer, Instant>> getAll() {
 			return _instantsSingleton.entrySet();
 		}

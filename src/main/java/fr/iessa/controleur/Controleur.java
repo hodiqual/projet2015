@@ -175,6 +175,7 @@ public class Controleur {
 	private volatile boolean _isTraficRunning = false;
 	
 	private void updateInstant(Instant instant){
+		
 		Instant oldInstant = _horloge.getInstantCourant();
 		if(instant == null)
 			_horloge.tick();
