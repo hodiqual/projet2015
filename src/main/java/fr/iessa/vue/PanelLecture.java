@@ -9,7 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.ModeleEvent;
 
 import javax.swing.*;
 
@@ -17,7 +23,7 @@ import javax.swing.*;
  * @author duvernal
  *
  */
-public class PanelLecture extends JPanel {
+public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	
 
 	// ***************** A SURPPRIMER **************************
@@ -30,17 +36,19 @@ public class PanelLecture extends JPanel {
     private static final ImageIcon PLAY = new ImageIcon("play.png");
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
+    private Controleur _controleur;
 	// ***************** FIN A SURPPRIMER **************************
 	
     
 
 
     
-	public PanelLecture()
+	public PanelLecture(Controleur controleur)
 	{
 		
 		
 		super();
+		
 	    UIDefaults sliderDefaults = new UIDefaults();
 
 	    sliderDefaults.put("Slider.thumbWidth", 20);
@@ -68,9 +76,13 @@ public class PanelLecture extends JPanel {
 		setOpaque(true);
 		timeline = new JSlider(0,100,0);
 		
+		_controleur = controleur;
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING};
+		_controleur.ajoutVue(this, evts);
+		
 		play= new JButton();
-		play.setIcon(PLAY);
-	    back= new JButton();
+		updateBoutonPlayPause();
+		back= new JButton();
 	    back.setIcon(BACK);
 	    forward= new JButton();
 	    forward.setIcon(FORWARD);
@@ -94,15 +106,25 @@ public class PanelLecture extends JPanel {
         add(timeline,c);
         timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
+        addListeners();
+        
+        setEnabled(false);
+        setVisible(false);
 	}
 
 	
+private  void updateBoutonPlayPause()
+{
+	if(_controleur.isTraficRunning()) 		
+		play.setIcon(PAUSE);
+	else 
+		play.setIcon(PLAY);
+}
 	
-	
-	 private void addListeners() {
-	 /*      timeline.addChangeListener(new ChangeListener() {
-	            public void stateChanged(ChangeEvent e) {
-	                if(!syncTimeline) //only if user moves the slider by hand
+ private void addListeners() {
+	//      timeline.addChangeListener(new ChangeListener() {
+	//            public void stateChanged(ChangeEvent e) {
+	/*                if(!syncTimeline) //only if user moves the slider by hand
 	                {
 	                    if(!timeline.getValueIsAdjusting()) //and the slider is fixed
 	                    {
@@ -110,14 +132,19 @@ public class PanelLecture extends JPanel {
 	                        mp.setPosition((float)timeline.getValue()/100.0f);
 	                    }                   
 	                }
-	           }
-	            });
-	        */
+	  */
+	// }
+	  //          });
+	        
 	        
     play.addActionListener(new ActionListener() {
         
         public void actionPerformed(ActionEvent arg0) {
-       //     if(mp.isPlaying()) mp.pause(); else mp.play();              
+
+            if(_controleur.isTraficRunning()) 
+            	_controleur.stopTrafic(); 
+            else 
+            	_controleur.runTrafic();              
         }
     });
     
@@ -136,4 +163,31 @@ public class PanelLecture extends JPanel {
     });
 	 }
 	
+ 
+	public void propertyChange(PropertyChangeEvent evt) {
+
+		
+		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
+
+		case CHARGEMENT_TRAFIC_FICHIER_DONE:
+			setEnabled(true);
+	        setVisible(true);
+			break;
+			
+		case UPDATE_INSTANT:
+			break;
+		
+		case UPDATE_IS_TRAFIC_RUNNING:
+			updateBoutonPlayPause();
+			break;
+
+			
+		case UPDATE_DUREE_INTERVALLE:
+			break;
+
+		default:
+			break;
+	}
+	}
+
 }

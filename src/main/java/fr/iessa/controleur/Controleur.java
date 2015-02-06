@@ -241,6 +241,10 @@ public class Controleur {
 		//On lance le SwingWorker
 		sw.execute();		
 	}
+
+	public boolean isTraficRunning() {
+		return _isTraficRunning;
+	}
 	
 	
 	
