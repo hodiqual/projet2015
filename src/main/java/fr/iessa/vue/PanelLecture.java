@@ -49,7 +49,6 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 		
 		super();
 		
-		_controleur = controleur;
 	    UIDefaults sliderDefaults = new UIDefaults();
 
 	    sliderDefaults.put("Slider.thumbWidth", 20);
@@ -77,9 +76,13 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 		setOpaque(true);
 		timeline = new JSlider(0,100,0);
 		
+		_controleur = controleur;
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING};
+		_controleur.ajoutVue(this, evts);
+		
 		play= new JButton();
-		play.setIcon(PLAY);
-	    back= new JButton();
+		updateBoutonPlayPause();
+		back= new JButton();
 	    back.setIcon(BACK);
 	    forward= new JButton();
 	    forward.setIcon(FORWARD);
@@ -104,10 +107,19 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
         timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
         addListeners();
+        
+        setEnabled(false);
+        setVisible(false);
 	}
 
 	
-	
+private  void updateBoutonPlayPause()
+{
+	if(_controleur.isTraficRunning()) 		
+		play.setIcon(PAUSE);
+	else 
+		play.setIcon(PLAY);
+}
 	
  private void addListeners() {
 	//      timeline.addChangeListener(new ChangeListener() {
@@ -128,13 +140,11 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
     play.addActionListener(new ActionListener() {
         
         public void actionPerformed(ActionEvent arg0) {
-        	if (play.getIcon()==PLAY){
-        		play.setIcon(PAUSE);
-        		}
-        	else {
-            	play.setIcon(PLAY);}
 
-       //     if(mp.isPlaying()) mp.pause(); else mp.play();              
+            if(_controleur.isTraficRunning()) 
+            	_controleur.stopTrafic(); 
+            else 
+            	_controleur.runTrafic();              
         }
     });
     
@@ -158,12 +168,19 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 
 		
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
+
+		case CHARGEMENT_TRAFIC_FICHIER_DONE:
+			setEnabled(true);
+	        setVisible(true);
+			break;
+			
 		case UPDATE_INSTANT:
 			break;
 		
 		case UPDATE_IS_TRAFIC_RUNNING:
-			
+			updateBoutonPlayPause();
 			break;
+
 			
 		case UPDATE_DUREE_INTERVALLE:
 			break;
