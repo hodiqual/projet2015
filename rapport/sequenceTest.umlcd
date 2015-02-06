@@ -114,6 +114,7 @@
     <modelElement href="projet2015.uml#_MVEG4K3kEeS64PhZ7ksZkQ"/>
     <visualProperties xmi:id="_A0884K3oEeS64PhZ7ksZkQ" position="366.0,198.0"/>
   </edges>
+  <edges xsi:type="com.yattasolutions.diagrams:ConnectionVisual" xmi:id="_N9Q_ga3_EeSotYS5HSjZrg" targetItem="_N9RmkK3_EeSotYS5HSjZrg" sourceItem="_N9Q_gK3_EeSotYS5HSjZrg"/>
   <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_57E7AK3nEeS64PhZ7ksZkQ" sourceConnectionVisual="_57E7Aa3nEeS64PhZ7ksZkQ" text="@author hodiqual&#xA; *" item="_57HXSa3nEeS64PhZ7ksZkQ">
     <modelElement href="projet2015.uml#_MbKu5a3kEeS64PhZ7ksZkQ"/>
   </nodes>
@@ -188,7 +189,7 @@
         <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
       </type>
     </attributes>
-    <attributes xmi:id="_8PcKca3nEeS64PhZ7ksZkQ" defaultValue="new Thread() {&#xA;        @Override&#xA;        public void run() {&#xA;           while (true) {&#xA;        &#x9;   if(_isTraficRunning)&#xA;        &#x9;   {   &#xA;        &#x9;&#x9;   updateInstant(null);&#xA;        &#x9;&#x9;   try {&#xA;        &#x9;&#x9;&#x9;   Thread.sleep(_dureeIntervalle);  &#xA;        &#x9;&#x9;   } catch (InterruptedException ignore) {}&#xA;        &#x9;   }   &#xA;           }&#xA;        }&#xA;     }" name="_horlogeManager">
+    <attributes xmi:id="_8PcKca3nEeS64PhZ7ksZkQ" defaultValue="new Thread() {&#xA;        @Override&#xA;        public void run() {&#xA;           while (true) {        &#x9;&#xA;        &#x9;   &#xA;        &#x9;   if(_isTraficRunning)&#xA;        &#x9;   {   &#xA;        &#x9;&#x9;   System.out.println(&quot;ALIVEEEEE&quot;);&#xA;        &#x9;&#x9;   updateInstant(null);&#xA;        &#x9;&#x9;   try {&#xA;        &#x9;&#x9;&#x9;   Thread.sleep(_dureeIntervalle);  &#xA;        &#x9;&#x9;   } catch (InterruptedException ignore) {}&#xA;        &#x9;   }&#xA;        &#x9;   else&#xA;        &#x9;&#x9;   System.err.println(&quot;DEAAAADDDD&quot;);   &#xA;           }&#xA;        }&#xA;     }" name="_horlogeManager">
       <modelElement href="projet2015.uml#_MXnroK3kEeS64PhZ7ksZkQ"/>
       <stereotypes xmi:id="_8PcKc63nEeS64PhZ7ksZkQ" name="LegacyStyledElement">
         <modelElement href="projet2015.uml#_MXnroq3kEeS64PhZ7ksZkQ"/>
@@ -296,6 +297,26 @@
           <modelElement href="projet2015.uml#_MQbega3kEeS64PhZ7ksZkQ"/>
         </type>
       </parameters>
+    </operations>
+    <operations xmi:id="_N9RmkK3_EeSotYS5HSjZrg" comments="_N9Q_gK3_EeSotYS5HSjZrg" targetConnectionVisual="_N9Q_ga3_EeSotYS5HSjZrg" name="getTrafic">
+      <modelElement href="projet2015.uml#_N8j04K3_EeSotYS5HSjZrg"/>
+      <visibility xmi:id="_N9Rmka3_EeSotYS5HSjZrg" label="+"/>
+      <outParameters xmi:id="_N9Rmkq3_EeSotYS5HSjZrg">
+        <modelElement href="projet2015.uml#_N8kb8K3_EeSotYS5HSjZrg"/>
+        <type xmi:id="_N9Rmk63_EeSotYS5HSjZrg" name="Trafic">
+          <modelElement href="projet2015.uml#_LsNXIK3kEeS64PhZ7ksZkQ"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_N9TbwK3_EeSotYS5HSjZrg" name="isTraficRunning">
+      <modelElement href="projet2015.uml#_N8lDAK3_EeSotYS5HSjZrg"/>
+      <visibility xmi:id="_N9Tbwa3_EeSotYS5HSjZrg" label="+"/>
+      <outParameters xmi:id="_N9Tbwq3_EeSotYS5HSjZrg">
+        <modelElement href="projet2015.uml#_N81hsK3_EeSotYS5HSjZrg"/>
+        <type xmi:id="_N9Tbw63_EeSotYS5HSjZrg" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
     </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_A08V0K3oEeS64PhZ7ksZkQ" name="Observable" subclassedBy="_A07uwK3oEeS64PhZ7ksZkQ">
@@ -411,5 +432,8 @@
         </type>
       </parameters>
     </operations>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_N9Q_gK3_EeSotYS5HSjZrg" sourceConnectionVisual="_N9Q_ga3_EeSotYS5HSjZrg" text="@return the _trafic" item="_N9RmkK3_EeSotYS5HSjZrg">
+    <modelElement href="projet2015.uml#_N9Bu8K3_EeSotYS5HSjZrg"/>
   </nodes>
 </com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

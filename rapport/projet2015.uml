@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_KNfWYK3kEeS64PhZ7ksZkQ" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_KNfWYa3kEeS64PhZ7ksZkQ" source="codegen">
         <details xmi:id="_KNfWYq3kEeS64PhZ7ksZkQ" key="codegenDirectory" value="/projet2015/src/main/java"/>
-        <details xmi:id="_NPKXoK3kEeS64PhZ7ksZkQ" key="AssociatedSourceCode" value="/projet2015/src/main/java/fr/iessa/app/Application.java;4065359531/1;/projet2015/src/main/java/fr/iessa/controleur/Controleur.java;2461326561/1;/projet2015/src/main/java/fr/iessa/controleur/LibereMemoire.java;1199253866/1;/projet2015/src/main/java/fr/iessa/controleur/ModeleEvent.java;3945535849/1;/projet2015/src/main/java/fr/iessa/controleur/TraficConteneur.java;53940095/1;/projet2015/src/main/java/fr/iessa/dao/core/DAO.java;297272544/1;/projet2015/src/main/java/fr/iessa/dao/infra/AeroportDAO.java;2118433089/1;/projet2015/src/main/java/fr/iessa/dao/infra/InfrastructureDAO.java;581473138/1;/projet2015/src/main/java/fr/iessa/dao/infra/LigneDAO.java;1373028098/1;/projet2015/src/main/java/fr/iessa/dao/infra/PointDAO.java;579322303/1;/projet2015/src/main/java/fr/iessa/dao/infra/PushbackDAO.java;3551033219/1;/projet2015/src/main/java/fr/iessa/dao/infra/RunwayDAO.java;59358476/1;/projet2015/src/main/java/fr/iessa/dao/infra/TaxiwayDAO.java;491145583/1;/projet2015/src/main/java/fr/iessa/dao/trafic/TraficDao.java;657587110/1;/projet2015/src/main/java/fr/iessa/metier/Avion.java;3005945547/1;/projet2015/src/main/java/fr/iessa/metier/Compagnie.java;93397599/1;/projet2015/src/main/java/fr/iessa/metier/Horloge.java;949532172/1;/projet2015/src/main/java/fr/iessa/metier/Instant.java;2698741690/1;/projet2015/src/main/java/fr/iessa/metier/infra/Aeroport.java;2055772697/1;/projet2015/src/main/java/fr/iessa/metier/infra/Ligne.java;1554194978/1;/projet2015/src/main/java/fr/iessa/metier/infra/Point.java;3099255739/1;/projet2015/src/main/java/fr/iessa/metier/infra/Pushback.java;2748619867/1;/projet2015/src/main/java/fr/iessa/metier/infra/QFU.java;539722762/1;/projet2015/src/main/java/fr/iessa/metier/infra/Runway.java;560632271/1;/projet2015/src/main/java/fr/iessa/metier/infra/Taxiway.java;2675851795/1;/projet2015/src/main/java/fr/iessa/metier/trafic/PointFabrique.java;654569332/1;/projet2015/src/main/java/fr/iessa/metier/trafic/Trafic.java;2349213613/1;/projet2015/src/main/java/fr/iessa/metier/trafic/Vol.java;822546268/1;/projet2015/src/main/java/fr/iessa/metier/type/Categorie.java;2506666425/1;/projet2015/src/main/java/fr/iessa/metier/type/Direction.java;3394953325/1;/projet2015/src/main/java/fr/iessa/metier/type/TypePoint.java;2688364178/1;/projet2015/src/main/java/fr/iessa/metier/type/TypeQFU.java;3267020344/1;/projet2015/src/main/java/fr/iessa/metier/type/TypeVol.java;1824964879/1;/projet2015/src/main/java/fr/iessa/vue/Avion.java;2654057708/1;/projet2015/src/main/java/fr/iessa/vue/ChargeEnCoursLayerUI.java;1428227264/1;/projet2015/src/main/java/fr/iessa/vue/Echelle.java;1939935419/1;/projet2015/src/main/java/fr/iessa/vue/FramePrincipale.java;3110860225/1;/projet2015/src/main/java/fr/iessa/vue/LabelHorloge.java;1156153927/1;/projet2015/src/main/java/fr/iessa/vue/PanelAffichageVol.java;86111005/1;/projet2015/src/main/java/fr/iessa/vue/PanelDesControles.java;1308271626/1;/projet2015/src/main/java/fr/iessa/vue/PanelInfrastructure.java;655122203/1;/projet2015/src/main/java/fr/iessa/vue/PanelLecture.java;342517743/1;/projet2015/src/main/java/fr/iessa/vue/PanelPrincipalMultiCouches.java;1159995187/1;/projet2015/src/main/java/fr/iessa/vue/PanelTableauDeBord.java;2209795231/1;/projet2015/src/main/java/fr/iessa/vue/PanelTrafic.java;2729214707/1;/projet2015/src/main/java/fr/iessa/vue/PanelVisualisationEtLecture.java;272300933/1;/projet2015/src/main/java/fr/iessa/vue/Ressources.java;3013974957/1;/projet2015/src/main/java/fr/iessa/vue/infra/InfraStd.java;1035259564/1;/projet2015/src/main/java/fr/iessa/vue/infra/InfrastructureDrawer.java;4216599669/1;/projet2015/src/main/java/fr/iessa/vue/infra/LignesDrawer.java;4116159097/1;/projet2015/src/main/java/fr/iessa/vue/infra/PointsDrawer.java;2815831075/1;/projet2015/src/main/java/fr/iessa/vue/infra/RunwayDrawer.java;3628034419/1;/projet2015/src/main/java/fr/iessa/vue/trafic/ComponentVol.java;3193711879/1;/projet2015/src/main/java/fr/iessa/vue/trafic/ShapeAvionFactory.java;982325661/1;"/>
+        <details xmi:id="_NPKXoK3kEeS64PhZ7ksZkQ" key="AssociatedSourceCode" value="/projet2015/src/main/java/fr/iessa/app/Application.java;4065359531/1;/projet2015/src/main/java/fr/iessa/controleur/Controleur.java;3322261718/1;/projet2015/src/main/java/fr/iessa/controleur/LibereMemoire.java;1199253866/1;/projet2015/src/main/java/fr/iessa/controleur/ModeleEvent.java;3945535849/1;/projet2015/src/main/java/fr/iessa/controleur/TraficConteneur.java;53940095/1;/projet2015/src/main/java/fr/iessa/dao/core/DAO.java;297272544/1;/projet2015/src/main/java/fr/iessa/dao/infra/AeroportDAO.java;2118433089/1;/projet2015/src/main/java/fr/iessa/dao/infra/InfrastructureDAO.java;581473138/1;/projet2015/src/main/java/fr/iessa/dao/infra/LigneDAO.java;1373028098/1;/projet2015/src/main/java/fr/iessa/dao/infra/PointDAO.java;579322303/1;/projet2015/src/main/java/fr/iessa/dao/infra/PushbackDAO.java;3551033219/1;/projet2015/src/main/java/fr/iessa/dao/infra/RunwayDAO.java;59358476/1;/projet2015/src/main/java/fr/iessa/dao/infra/TaxiwayDAO.java;491145583/1;/projet2015/src/main/java/fr/iessa/dao/trafic/TraficDao.java;657587110/1;/projet2015/src/main/java/fr/iessa/metier/Avion.java;3005945547/1;/projet2015/src/main/java/fr/iessa/metier/Compagnie.java;93397599/1;/projet2015/src/main/java/fr/iessa/metier/Horloge.java;949532172/1;/projet2015/src/main/java/fr/iessa/metier/Instant.java;2698741690/1;/projet2015/src/main/java/fr/iessa/metier/infra/Aeroport.java;2055772697/1;/projet2015/src/main/java/fr/iessa/metier/infra/Ligne.java;1554194978/1;/projet2015/src/main/java/fr/iessa/metier/infra/Point.java;3099255739/1;/projet2015/src/main/java/fr/iessa/metier/infra/Pushback.java;2748619867/1;/projet2015/src/main/java/fr/iessa/metier/infra/QFU.java;539722762/1;/projet2015/src/main/java/fr/iessa/metier/infra/Runway.java;560632271/1;/projet2015/src/main/java/fr/iessa/metier/infra/Taxiway.java;2675851795/1;/projet2015/src/main/java/fr/iessa/metier/trafic/PointFabrique.java;654569332/1;/projet2015/src/main/java/fr/iessa/metier/trafic/Trafic.java;889306819/1;/projet2015/src/main/java/fr/iessa/metier/trafic/Vol.java;822546268/1;/projet2015/src/main/java/fr/iessa/metier/type/Categorie.java;2506666425/1;/projet2015/src/main/java/fr/iessa/metier/type/Direction.java;3394953325/1;/projet2015/src/main/java/fr/iessa/metier/type/TypePoint.java;2688364178/1;/projet2015/src/main/java/fr/iessa/metier/type/TypeQFU.java;3267020344/1;/projet2015/src/main/java/fr/iessa/metier/type/TypeVol.java;1824964879/1;/projet2015/src/main/java/fr/iessa/vue/Avion.java;2654057708/1;/projet2015/src/main/java/fr/iessa/vue/ChargeEnCoursLayerUI.java;1428227264/1;/projet2015/src/main/java/fr/iessa/vue/Echelle.java;1939935419/1;/projet2015/src/main/java/fr/iessa/vue/FramePrincipale.java;3110860225/1;/projet2015/src/main/java/fr/iessa/vue/LabelHorloge.java;1156153927/1;/projet2015/src/main/java/fr/iessa/vue/PanelAffichageVol.java;86111005/1;/projet2015/src/main/java/fr/iessa/vue/PanelDesControles.java;1308271626/1;/projet2015/src/main/java/fr/iessa/vue/PanelInfrastructure.java;655122203/1;/projet2015/src/main/java/fr/iessa/vue/PanelLecture.java;882303104/1;/projet2015/src/main/java/fr/iessa/vue/PanelPrincipalMultiCouches.java;1508472320/1;/projet2015/src/main/java/fr/iessa/vue/PanelTableauDeBord.java;2209795231/1;/projet2015/src/main/java/fr/iessa/vue/PanelTrafic.java;2729214707/1;/projet2015/src/main/java/fr/iessa/vue/PanelVisualisationEtLecture.java;4260480787/1;/projet2015/src/main/java/fr/iessa/vue/Ressources.java;3013974957/1;/projet2015/src/main/java/fr/iessa/vue/infra/InfraStd.java;1035259564/1;/projet2015/src/main/java/fr/iessa/vue/infra/InfrastructureDrawer.java;4216599669/1;/projet2015/src/main/java/fr/iessa/vue/infra/LignesDrawer.java;4116159097/1;/projet2015/src/main/java/fr/iessa/vue/infra/PointsDrawer.java;2815831075/1;/projet2015/src/main/java/fr/iessa/vue/infra/RunwayDrawer.java;3628034419/1;/projet2015/src/main/java/fr/iessa/vue/trafic/ComponentVol.java;3193711879/1;/projet2015/src/main/java/fr/iessa/vue/trafic/ShapeAvionFactory.java;982325661/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_Llr4YK3kEeS64PhZ7ksZkQ">
@@ -2054,10 +2054,19 @@ la navigation zoom et scroll sur l'affichage
             </ownedAttribute>
             <ownedAttribute xmi:id="_MbYKQq3kEeS64PhZ7ksZkQ" name="forward" visibility="private" type="_MTGYAK3kEeS64PhZ7ksZkQ" association="_MdUD8a3kEeS64PhZ7ksZkQ"/>
             <ownedAttribute xmi:id="_MbYxUq3kEeS64PhZ7ksZkQ" name="back" visibility="private" type="_MTGYAK3kEeS64PhZ7ksZkQ" association="_MdUrAa3kEeS64PhZ7ksZkQ"/>
+            <ownedAttribute xmi:id="_N87BQK3_EeSotYS5HSjZrg" name="vitesse" visibility="private" type="_MS_qUK3kEeS64PhZ7ksZkQ" association="_N9JDsK3_EeSotYS5HSjZrg"/>
+            <ownedAttribute xmi:id="_N87oUa3_EeSotYS5HSjZrg" name="_controleur" visibility="private" type="_LpCuYa3kEeS64PhZ7ksZkQ" association="_N9KR0a3_EeSotYS5HSjZrg"/>
+            <interfaceRealization xmi:id="_N8vbEK3_EeSotYS5HSjZrg" client="_LujggK3kEeS64PhZ7ksZkQ" supplier="_MQbega3kEeS64PhZ7ksZkQ" contract="_MQbega3kEeS64PhZ7ksZkQ"/>
             <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Ma4bAK3kEeS64PhZ7ksZkQ" name="PanelLecture" specification="_LulVsK3kEeS64PhZ7ksZkQ">
-              <ownedParameter xmi:id="_Ma4bAa3kEeS64PhZ7ksZkQ" type="_LujggK3kEeS64PhZ7ksZkQ" direction="return"/>
+              <ownedParameter xmi:id="_N8-roK3_EeSotYS5HSjZrg" type="_LujggK3kEeS64PhZ7ksZkQ" direction="return"/>
+              <ownedParameter xmi:id="_N8-roa3_EeSotYS5HSjZrg" name="controleur" type="_LpCuYa3kEeS64PhZ7ksZkQ"/>
               <language>java</language>
               <body>super();
+		
+		_controleur = controleur;
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING, ModeleEvent.UPDATE_INSTANT, ModeleEvent.UPDATE_DUREE_INTERVALLE};
+		_controleur.ajoutVue(this, evts);
+		
 	    UIDefaults sliderDefaults = new UIDefaults();
 
 	    sliderDefaults.put(&quot;Slider.thumbWidth&quot;, 20);
@@ -2083,14 +2092,18 @@ la navigation zoom et scroll sur l'affichage
                  }
              });
 		setOpaque(true);
-		timeline = new JSlider(0,100,0);
-		
+		timeline = new JSlider(0,100,0);		
 		play= new JButton();
-		play.setIcon(PLAY);
-	    back= new JButton();
+		updateBoutonPlayPause();
+		back= new JButton();
 	    back.setIcon(BACK);
 	    forward= new JButton();
 	    forward.setIcon(FORWARD);
+	    
+		vitesse= new JLabel(&quot;Vitesse&quot;);		
+		vitesse.setForeground(FG_COLOR);
+		vitesse.setFont(new Font(&quot;Sans&quot;, Font.BOLD, 10));
+
 
 	    setLayout(new GridBagLayout());
 		setBackground(BG_COLOR);
@@ -2109,15 +2122,23 @@ la navigation zoom et scroll sur l'affichage
 	    c.ipadx = 400;
 		c.gridwidth = 40;
      add(timeline,c);
+	    c.gridx = 0;
+	    c.gridy = 1;
+  //   add(vitesse,c);
+     
      timeline.putClientProperty(&quot;Nimbus.Overrides&quot;,sliderDefaults);
      timeline.putClientProperty(&quot;Nimbus.Overrides.InheritDefaults&quot;,false);
+     addListeners();
+     
+     setEnabled(false);
+     setVisible(false);
 	</body>
             </ownedBehavior>
             <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Ma4bAq3kEeS64PhZ7ksZkQ" name="addListeners" specification="_Lul8wK3kEeS64PhZ7ksZkQ">
               <language>java</language>
-              <body>/*      timeline.addChangeListener(new ChangeListener() {
-	            public void stateChanged(ChangeEvent e) {
-	                if(!syncTimeline) //only if user moves the slider by hand
+              <body>//      timeline.addChangeListener(new ChangeListener() {
+	//            public void stateChanged(ChangeEvent e) {
+	/*                if(!syncTimeline) //only if user moves the slider by hand
 	                {
 	                    if(!timeline.getValueIsAdjusting()) //and the slider is fixed
 	                    {
@@ -2125,14 +2146,19 @@ la navigation zoom et scroll sur l'affichage
 	                        mp.setPosition((float)timeline.getValue()/100.0f);
 	                    }                   
 	                }
-	           }
-	            });
-	        */
+	  */
+	// }
+	  //          });
+	        
 	        
  play.addActionListener(new ActionListener() {
      
      public void actionPerformed(ActionEvent arg0) {
-    //     if(mp.isPlaying()) mp.pause(); else mp.play();              
+
+         if(_controleur.isTraficRunning()) 
+         	_controleur.stopTrafic(); 
+         else 
+         	_controleur.runTrafic();              
      }
  });
  
@@ -2151,13 +2177,52 @@ la navigation zoom et scroll sur l'affichage
  });
 	 </body>
             </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_N8-roq3_EeSotYS5HSjZrg" name="updateBoutonPlayPause" specification="_N8aq8K3_EeSotYS5HSjZrg">
+              <language>java</language>
+              <body>if(_controleur.isTraficRunning()) 		
+		play.setIcon(PAUSE);
+	else 
+		play.setIcon(PLAY);
+</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_N8-ro63_EeSotYS5HSjZrg" name="propertyChange" specification="_N8aq8a3_EeSotYS5HSjZrg">
+              <ownedParameter xmi:id="_N8-rpK3_EeSotYS5HSjZrg" name="evt" type="_MQa3cK3kEeS64PhZ7ksZkQ"/>
+              <language>java</language>
+              <body>switch (ModeleEvent.valueOf(evt.getPropertyName())) {
+
+		case CHARGEMENT_TRAFIC_FICHIER_DONE:
+			setEnabled(true);
+	        setVisible(true);
+			break;
+			
+		case UPDATE_INSTANT:
+			break;
+		
+		case UPDATE_IS_TRAFIC_RUNNING:
+			updateBoutonPlayPause();
+			break;
+
+			
+		case UPDATE_DUREE_INTERVALLE:
+			break;
+
+		default:
+			break;
+	}
+	</body>
+            </ownedBehavior>
             <ownedOperation xmi:id="_LulVsK3kEeS64PhZ7ksZkQ" name="PanelLecture" method="_Ma4bAK3kEeS64PhZ7ksZkQ">
               <eAnnotations xmi:id="_LulVsa3kEeS64PhZ7ksZkQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
                 <details xmi:id="_LulVsq3kEeS64PhZ7ksZkQ" key="create"/>
               </eAnnotations>
               <ownedParameter xmi:id="_LulVs63kEeS64PhZ7ksZkQ" type="_LujggK3kEeS64PhZ7ksZkQ" direction="return"/>
+              <ownedParameter xmi:id="_N8Zc0K3_EeSotYS5HSjZrg" name="controleur" type="_LpCuYa3kEeS64PhZ7ksZkQ"/>
             </ownedOperation>
             <ownedOperation xmi:id="_Lul8wK3kEeS64PhZ7ksZkQ" name="addListeners" visibility="private" method="_Ma4bAq3kEeS64PhZ7ksZkQ"/>
+            <ownedOperation xmi:id="_N8aq8K3_EeSotYS5HSjZrg" name="updateBoutonPlayPause" visibility="private" method="_N8-roq3_EeSotYS5HSjZrg"/>
+            <ownedOperation xmi:id="_N8aq8a3_EeSotYS5HSjZrg" name="propertyChange" method="_N8-ro63_EeSotYS5HSjZrg">
+              <ownedParameter xmi:id="_N8aq8q3_EeSotYS5HSjZrg" name="evt" type="_MQa3cK3kEeS64PhZ7ksZkQ"/>
+            </ownedOperation>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_LuqOMK3kEeS64PhZ7ksZkQ" name="PanelPrincipalMultiCouches">
             <ownedComment xmi:id="_MbZ_cK3kEeS64PhZ7ksZkQ">
@@ -2170,6 +2235,7 @@ Superpose le panel qui gere la carte et le panel qui gere le trafic.</body>
             <ownedAttribute xmi:id="_MZO1MK3kEeS64PhZ7ksZkQ" name="_infrastructurePanel" visibility="private" type="_Lt-4wK3kEeS64PhZ7ksZkQ" association="_Mc7CYa3kEeS64PhZ7ksZkQ"/>
             <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Ma5CEK3kEeS64PhZ7ksZkQ" name="isOptimizedDrawingEnabled" specification="_LurcUK3kEeS64PhZ7ksZkQ">
               <ownedParameter xmi:id="_Ma5CEa3kEeS64PhZ7ksZkQ" direction="return">
+                <name xsi:nil="true"/>
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
               </ownedParameter>
               <language>java</language>
@@ -2178,7 +2244,9 @@ Superpose le panel qui gere la carte et le panel qui gere le trafic.</body>
             </ownedBehavior>
             <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Ma5CEq3kEeS64PhZ7ksZkQ" name="PanelPrincipalMultiCouches" specification="_MTs08a3kEeS64PhZ7ksZkQ">
               <ownedParameter xmi:id="_Ma5CE63kEeS64PhZ7ksZkQ" name="controleur" type="_LpCuYa3kEeS64PhZ7ksZkQ"/>
-              <ownedParameter xmi:id="_Ma5CFK3kEeS64PhZ7ksZkQ" type="_LuqOMK3kEeS64PhZ7ksZkQ" direction="return"/>
+              <ownedParameter xmi:id="_Ma5CFK3kEeS64PhZ7ksZkQ" type="_LuqOMK3kEeS64PhZ7ksZkQ" direction="return">
+                <name xsi:nil="true"/>
+              </ownedParameter>
               <language>java</language>
               <body>setLayout(new GridLayout(1, 1));	
 		//Pour une animation fluide il vaut mieux etre en double buffer.
@@ -2206,19 +2274,19 @@ Superpose le panel qui gere la carte et le panel qui gere le trafic.</body>
 		_infrastructurePanel.setAlignmentX(0.0f);
 		_infrastructurePanel.setAlignmentY(0.0f);
 		
-		_gestionPlans.add(jlayer, -3000);
+		_gestionPlans.add(jlayer, new Integer(1));
 		
 		//Gestion du trafic
 		PanelTrafic traficPanel = new  PanelTrafic(controleur, echelle);
 		traficPanel.setAlignmentX(0.0f);
 		traficPanel.setAlignmentY(0.0f);
-		_gestionPlans.add(traficPanel,0);
+		_gestionPlans.add(traficPanel,new Integer(2));
 		
 		//Gestion des controles Lecteur et Tableau de Bord
 		PanelDesControles controles = new PanelDesControles(_controleur);
 		controles.setAlignmentX(0.0f);
 		controles.setAlignmentY(0.0f);
-		_gestionPlans.add(controles,1);
+		_gestionPlans.add(controles,new Integer(3));
 		
 		//Rajout du composant de gestion des plans a ce JPanel
 		add(_gestionPlans);	
@@ -2437,15 +2505,18 @@ Superpose le panel qui gere la carte et le panel qui gere le trafic.</body>
             </ownedAttribute>
             <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Ma7eUK3kEeS64PhZ7ksZkQ" name="PanelVisualisationEtLecture" specification="_MT5pQK3kEeS64PhZ7ksZkQ">
               <ownedParameter xmi:id="_Ma7eUa3kEeS64PhZ7ksZkQ" name="controleur" type="_LpCuYa3kEeS64PhZ7ksZkQ"/>
-              <ownedParameter xmi:id="_Ma7eUq3kEeS64PhZ7ksZkQ" type="_Lu9wMK3kEeS64PhZ7ksZkQ" direction="return"/>
+              <ownedParameter xmi:id="_Ma7eUq3kEeS64PhZ7ksZkQ" type="_Lu9wMK3kEeS64PhZ7ksZkQ" direction="return">
+                <name xsi:nil="true"/>
+              </ownedParameter>
               <language>java</language>
               <body>super();
 		
 		setOpaque(false);
 		
-		_lecteur = new PanelLecture();
+		_lecteur = new PanelLecture(controleur);
 		_lecteur.addMouseListener(new MouseAdapter () {		
 			private Timer timer ;	
+			
 			{
 				//Cache le lecteur au bout deux secondes hors du lecteur
 				timer = new Timer(tempsAffichageLecteur, _cacheLecteurWrapper);
@@ -2460,7 +2531,10 @@ Superpose le panel qui gere la carte et le panel qui gere le trafic.</body>
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				timer.start();
+				if(!_lecteur.contains(e.getPoint()))
+				 {
+					timer.start();
+				 }
 			}
 			
 		});
@@ -2844,6 +2918,12 @@ Superpose le panel qui gere la carte et le panel qui gere le trafic.</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Association" xmi:id="_MdUrAa3kEeS64PhZ7ksZkQ" name="" memberEnd="_MdUrAq3kEeS64PhZ7ksZkQ _MbYxUq3kEeS64PhZ7ksZkQ">
             <ownedEnd xmi:id="_MdUrAq3kEeS64PhZ7ksZkQ" name="" type="_LujggK3kEeS64PhZ7ksZkQ" association="_MdUrAa3kEeS64PhZ7ksZkQ"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_N9JDsK3_EeSotYS5HSjZrg" name="" memberEnd="_N9JDsa3_EeSotYS5HSjZrg _N87BQK3_EeSotYS5HSjZrg">
+            <ownedEnd xmi:id="_N9JDsa3_EeSotYS5HSjZrg" name="" type="_LujggK3kEeS64PhZ7ksZkQ" association="_N9JDsK3_EeSotYS5HSjZrg"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_N9KR0a3_EeSotYS5HSjZrg" name="" memberEnd="_N9KR0q3_EeSotYS5HSjZrg _N87oUa3_EeSotYS5HSjZrg">
+            <ownedEnd xmi:id="_N9KR0q3_EeSotYS5HSjZrg" name="" type="_LujggK3kEeS64PhZ7ksZkQ" association="_N9KR0a3_EeSotYS5HSjZrg"/>
           </packagedElement>
         </packagedElement>
         <packagedElement xmi:type="uml:Package" xmi:id="_Lin9UK3kEeS64PhZ7ksZkQ" name="app">
@@ -4409,6 +4489,7 @@ Classe metier qui definit la plateforme aeroportuaire</body>
               <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_MaicwK3kEeS64PhZ7ksZkQ" name="getVolsToAdd" specification="_MR9IgK3kEeS64PhZ7ksZkQ">
                 <ownedParameter xmi:id="_Maicwa3kEeS64PhZ7ksZkQ" name="courant" type="_Lqzo8K3kEeS64PhZ7ksZkQ"/>
                 <ownedParameter xmi:id="_Maicwq3kEeS64PhZ7ksZkQ" type="_LsaLcK3kEeS64PhZ7ksZkQ" direction="return">
+                  <name xsi:nil="true"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Maicw63kEeS64PhZ7ksZkQ" value="*"/>
                 </ownedParameter>
                 <language>java</language>
@@ -4423,6 +4504,7 @@ Classe metier qui definit la plateforme aeroportuaire</body>
               <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_MajD0K3kEeS64PhZ7ksZkQ" name="getVolsToRemove" specification="_MR9vkK3kEeS64PhZ7ksZkQ">
                 <ownedParameter xmi:id="_MajD0a3kEeS64PhZ7ksZkQ" name="courant" type="_Lqzo8K3kEeS64PhZ7ksZkQ"/>
                 <ownedParameter xmi:id="_MajD0q3kEeS64PhZ7ksZkQ" type="_LsaLcK3kEeS64PhZ7ksZkQ" direction="return">
+                  <name xsi:nil="true"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MajD063kEeS64PhZ7ksZkQ" value="*"/>
                 </ownedParameter>
                 <language>java</language>
@@ -4530,6 +4612,7 @@ Classe metier qui definit la plateforme aeroportuaire</body>
               </ownedBehavior>
               <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_MakR8K3kEeS64PhZ7ksZkQ" name="getVols" specification="_LsQacK3kEeS64PhZ7ksZkQ">
                 <ownedParameter xmi:id="_MakR8a3kEeS64PhZ7ksZkQ" type="_LsaLcK3kEeS64PhZ7ksZkQ" direction="return">
+                  <name xsi:nil="true"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MakR8q3kEeS64PhZ7ksZkQ" value="*"/>
                 </ownedParameter>
                 <language>java</language>
@@ -4539,16 +4622,19 @@ Classe metier qui definit la plateforme aeroportuaire</body>
               <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_MakR863kEeS64PhZ7ksZkQ" name="getVols" specification="_MR_kwK3kEeS64PhZ7ksZkQ">
                 <ownedParameter xmi:id="_MakR9K3kEeS64PhZ7ksZkQ" name="instant" type="_Lqzo8K3kEeS64PhZ7ksZkQ"/>
                 <ownedParameter xmi:id="_MakR9a3kEeS64PhZ7ksZkQ" type="_LsaLcK3kEeS64PhZ7ksZkQ" direction="return">
+                  <name xsi:nil="true"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MakR9q3kEeS64PhZ7ksZkQ" value="*"/>
                 </ownedParameter>
                 <language>java</language>
                 <body>return _volsParInstant.get(instant);
-		
 	</body>
               </ownedBehavior>
               <ownedOperation xmi:id="_LsPMUK3kEeS64PhZ7ksZkQ" name="computeCollision" method="_MajD1K3kEeS64PhZ7ksZkQ"/>
               <ownedOperation xmi:id="_LsPzYK3kEeS64PhZ7ksZkQ" name="computeDelta" visibility="private" method="_Majq4K3kEeS64PhZ7ksZkQ"/>
               <ownedOperation xmi:id="_LsQacK3kEeS64PhZ7ksZkQ" name="getVols" method="_MakR8K3kEeS64PhZ7ksZkQ">
+                <ownedComment xmi:id="_N9BH4K3_EeSotYS5HSjZrg">
+                  <body>@return L'ensemble des vols qui composent le trafic</body>
+                </ownedComment>
                 <ownedParameter xmi:id="_LsRBgK3kEeS64PhZ7ksZkQ" type="_LsaLcK3kEeS64PhZ7ksZkQ" direction="return">
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LsRBga3kEeS64PhZ7ksZkQ" value="*"/>
                 </ownedParameter>
@@ -4566,6 +4652,9 @@ Classe metier qui definit la plateforme aeroportuaire</body>
                 </ownedParameter>
               </ownedOperation>
               <ownedOperation xmi:id="_MR_kwK3kEeS64PhZ7ksZkQ" name="getVols" method="_MakR863kEeS64PhZ7ksZkQ">
+                <ownedComment xmi:id="_N9BH4a3_EeSotYS5HSjZrg">
+                  <body>@return L'ensemble des vols qui composent le trafic a l'instant @param instant.</body>
+                </ownedComment>
                 <ownedParameter xmi:id="_MSAL0K3kEeS64PhZ7ksZkQ" name="instant" type="_Lqzo8K3kEeS64PhZ7ksZkQ"/>
                 <ownedParameter xmi:id="_MSAL0a3kEeS64PhZ7ksZkQ" type="_LsaLcK3kEeS64PhZ7ksZkQ" direction="return">
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MSAL0q3kEeS64PhZ7ksZkQ" value="*"/>
@@ -5370,10 +5459,12 @@ Classe metier qui definit la plateforme aeroportuaire</body>
               <defaultValue xmi:type="uml:LiteralString" xmi:id="_MXnEka3kEeS64PhZ7ksZkQ" value="40"/>
             </ownedAttribute>
             <ownedAttribute xmi:id="_MXnroK3kEeS64PhZ7ksZkQ" name="_horlogeManager" isLeaf="true" type="_MU3SkK3kEeS64PhZ7ksZkQ" isReadOnly="true" association="_McF78a3kEeS64PhZ7ksZkQ">
-              <defaultValue xmi:type="uml:LiteralString" xmi:id="_MXnroa3kEeS64PhZ7ksZkQ" value="new Thread() {&#xA;        @Override&#xA;        public void run() {&#xA;           while (true) {&#xA;        &#x9;   if(_isTraficRunning)&#xA;        &#x9;   {   &#xA;        &#x9;&#x9;   updateInstant(null);&#xA;        &#x9;&#x9;   try {&#xA;        &#x9;&#x9;&#x9;   Thread.sleep(_dureeIntervalle);  &#xA;        &#x9;&#x9;   } catch (InterruptedException ignore) {}&#xA;        &#x9;   }   &#xA;           }&#xA;        }&#xA;     }"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_MXnroa3kEeS64PhZ7ksZkQ" value="new Thread() {&#xA;        @Override&#xA;        public void run() {&#xA;           while (true) {        &#x9;&#xA;        &#x9;   &#xA;        &#x9;   if(_isTraficRunning)&#xA;        &#x9;   {   &#xA;        &#x9;&#x9;   System.out.println(&quot;ALIVEEEEE&quot;);&#xA;        &#x9;&#x9;   updateInstant(null);&#xA;        &#x9;&#x9;   try {&#xA;        &#x9;&#x9;&#x9;   Thread.sleep(_dureeIntervalle);  &#xA;        &#x9;&#x9;   } catch (InterruptedException ignore) {}&#xA;        &#x9;   }&#xA;        &#x9;   else&#xA;        &#x9;&#x9;   System.err.println(&quot;DEAAAADDDD&quot;);   &#xA;           }&#xA;        }&#xA;     }"/>
             </ownedAttribute>
             <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_MaDUkK3kEeS64PhZ7ksZkQ" name="Controleur" specification="_LpEjkK3kEeS64PhZ7ksZkQ">
-              <ownedParameter xmi:id="_MaDUka3kEeS64PhZ7ksZkQ" type="_LpCuYa3kEeS64PhZ7ksZkQ" direction="return"/>
+              <ownedParameter xmi:id="_MaDUka3kEeS64PhZ7ksZkQ" type="_LpCuYa3kEeS64PhZ7ksZkQ" direction="return">
+                <name xsi:nil="true"/>
+              </ownedParameter>
               <language>java</language>
               <body>// Les observers seront notifies seulement dans l'Event Dispatch Thread
 		_swingObservable = new SwingPropertyChangeSupport(this, true);
@@ -5581,6 +5672,20 @@ Classe metier qui definit la plateforme aeroportuaire</body>
 		sw.execute();		
 	</body>
             </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_N8_SsK3_EeSotYS5HSjZrg" name="getTrafic" specification="_N8j04K3_EeSotYS5HSjZrg">
+              <ownedParameter xmi:id="_N8_Ssa3_EeSotYS5HSjZrg" type="_LsNXIK3kEeS64PhZ7ksZkQ" direction="return"/>
+              <language>java</language>
+              <body>return _trafic;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_N8_5wK3_EeSotYS5HSjZrg" name="isTraficRunning" specification="_N8lDAK3_EeSotYS5HSjZrg">
+              <ownedParameter xmi:id="_N8_5wa3_EeSotYS5HSjZrg" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>return _isTraficRunning;
+	</body>
+            </ownedBehavior>
             <ownedOperation xmi:id="_LpEjkK3kEeS64PhZ7ksZkQ" name="Controleur" method="_MaDUkK3kEeS64PhZ7ksZkQ">
               <eAnnotations xmi:id="_LpFKoK3kEeS64PhZ7ksZkQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
                 <details xmi:id="_LpFKoa3kEeS64PhZ7ksZkQ" key="create"/>
@@ -5620,6 +5725,17 @@ Classe metier qui definit la plateforme aeroportuaire</body>
             </ownedOperation>
             <ownedOperation xmi:id="_MU1dYK3kEeS64PhZ7ksZkQ" name="ajoutVue" method="_MaD7oK3kEeS64PhZ7ksZkQ">
               <ownedParameter xmi:id="_MU1dYa3kEeS64PhZ7ksZkQ" name="vue" type="_MQbega3kEeS64PhZ7ksZkQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_N8j04K3_EeSotYS5HSjZrg" name="getTrafic" method="_N8_SsK3_EeSotYS5HSjZrg">
+              <ownedComment xmi:id="_N9Bu8K3_EeSotYS5HSjZrg">
+                <body>@return the _trafic</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_N8kb8K3_EeSotYS5HSjZrg" type="_LsNXIK3kEeS64PhZ7ksZkQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_N8lDAK3_EeSotYS5HSjZrg" name="isTraficRunning" method="_N8_5wK3_EeSotYS5HSjZrg">
+              <ownedParameter xmi:id="_N81hsK3_EeSotYS5HSjZrg" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
             </ownedOperation>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_LpR-8K3kEeS64PhZ7ksZkQ" name="LibereMemoire" isLeaf="true">
@@ -6740,4 +6856,9 @@ pour le controleur et la vue.
   <UMLLabProfile:Reference xmi:id="_MdUD8K3kEeS64PhZ7ksZkQ" base_Element="_MdTc4a3kEeS64PhZ7ksZkQ"/>
   <UMLLabProfile:Reference xmi:id="_MdUrAK3kEeS64PhZ7ksZkQ" base_Element="_MdUD8a3kEeS64PhZ7ksZkQ"/>
   <UMLLabProfile:Reference xmi:id="_MdUrA63kEeS64PhZ7ksZkQ" base_Element="_MdUrAa3kEeS64PhZ7ksZkQ"/>
+  <UMLLabProfile:Array xmi:id="_N8e8YK3_EeSotYS5HSjZrg" dimensions="1" base_Element="_MU02UK3kEeS64PhZ7ksZkQ"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_N87oUK3_EeSotYS5HSjZrg" base_Element="_N87BQK3_EeSotYS5HSjZrg"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_N88PYK3_EeSotYS5HSjZrg" base_Element="_N87oUa3_EeSotYS5HSjZrg"/>
+  <UMLLabProfile:Reference xmi:id="_N9KR0K3_EeSotYS5HSjZrg" base_Element="_N9JDsK3_EeSotYS5HSjZrg"/>
+  <UMLLabProfile:Reference xmi:id="_N9Lf8K3_EeSotYS5HSjZrg" base_Element="_N9KR0a3_EeSotYS5HSjZrg"/>
 </xmi:XMI>
