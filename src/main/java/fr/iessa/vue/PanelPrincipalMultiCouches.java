@@ -14,7 +14,7 @@ import fr.iessa.controleur.Controleur;
 
 /**
  * @author hodiqual
- * Superpose le panel qui gere la carte et le panel qui gere le trafic.
+ * Superpose le panel qui gere la carte, le panel qui gere le trafic, le panel des controles.
  */
 public class PanelPrincipalMultiCouches extends JPanel {
 

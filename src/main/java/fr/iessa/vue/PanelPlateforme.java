@@ -48,8 +48,7 @@ import fr.iessa.vue.infra.PlateformeDrawer;
 
 /**
  * Gere graphiquement le chargement de la plateforme,
- * le chargement du trafic
- * l'affichage de l'image de la plateforme et de son trafic
+ * l'affichage de l'image de la plateforme
  * la navigation zoom et scroll sur l'affichage
  * @author hodiqual
  * 
@@ -89,7 +88,10 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 								    , ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR};
 		controleur.ajoutVue(this,  evts) ;
 		
-		_aeroport = controleur.getAeroport();
+		_echelle = echelle;
+		echelle.addObserver(this);
+		
+		setAeroport(controleur.getAeroport());
 		
 		addMouseListener(this);	
 		addMouseWheelListener(this);  
@@ -99,10 +101,15 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
 			}
 		});
-	    
-
-		_echelle = echelle;
-		echelle.addObserver(this);
+	}
+	
+	private void setAeroport(Aeroport aeroport) {
+		_aeroport = aeroport;
+		if(aeroport!=null) {
+			_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
+										, _aeroport.getMinY(), _aeroport.getMaxY());
+			_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
+		}
 	}
 
 	/**
@@ -114,10 +121,7 @@ public class PanelPlateforme extends JPanel implements PropertyChangeListener, M
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
 			case CHARGEMENT_CARTE_FICHIER_DONE:
 				//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-				_aeroport = (Aeroport) evt.getNewValue();
-				_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
-						  , _aeroport.getMinY(), _aeroport.getMaxY());
-				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
+				setAeroport((Aeroport) evt.getNewValue());
 				
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:
 				if(_layerUI!=null)
