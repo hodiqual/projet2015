@@ -28,6 +28,13 @@ public class Controleur {
 	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
 	private Trafic _trafic;
 	
+	/**
+	 * @return the _trafic
+	 */
+	public Trafic getTrafic() {
+		return _trafic;
+	}
+
 	/** Horloge de la plateforme */
 	private Horloge _horloge;
 	
