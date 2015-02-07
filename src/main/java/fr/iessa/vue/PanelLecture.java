@@ -3,21 +3,21 @@
  */
 package fr.iessa.vue;
 
-
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 import javax.swing.*;
+
 
 /**
  * @author duvernal
@@ -32,7 +32,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	private static final Color BORDER_COLOR = new Color(0x000000);
 	private JButton play, forward, back;
 	private JSlider timeline;
-	private JLabel vitesse;
+    private boolean syncTimeline=false;
     private static final ImageIcon BACK = new ImageIcon("back.png");
     private static final ImageIcon PLAY = new ImageIcon("play.png");
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
@@ -79,17 +79,14 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
                     }
                 });
 		setOpaque(true);
-		timeline = new JSlider(0,100,0);		
+		timeline = new JSlider(0,10000,0);		
 		play= new JButton();
 		updateBoutonPlayPause();
 		back= new JButton();
 	    back.setIcon(BACK);
 	    forward= new JButton();
 	    forward.setIcon(FORWARD);
-	    
-		vitesse= new JLabel("Vitesse");		
-		vitesse.setForeground(FG_COLOR);
-		vitesse.setFont(new Font("Sans", Font.BOLD, 10));
+
 
 
 	    setLayout(new GridBagLayout());
@@ -109,9 +106,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	    c.ipadx = 400;
 		c.gridwidth = 40;
         add(timeline,c);
-	    c.gridx = 0;
-	    c.gridy = 1;
-     //   add(vitesse,c);
+
         
         timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
@@ -129,21 +124,24 @@ private  void updateBoutonPlayPause()
 	else 
 		play.setIcon(PLAY);
 }
+
 	
  private void addListeners() {
-	//      timeline.addChangeListener(new ChangeListener() {
-	//            public void stateChanged(ChangeEvent e) {
-	/*                if(!syncTimeline) //only if user moves the slider by hand
-	                {
-	                    if(!timeline.getValueIsAdjusting()) //and the slider is fixed
-	                    {
-	                        //recalc to 0.x percent value
-	                        mp.setPosition((float)timeline.getValue()/100.0f);
-	                    }                   
-	                }
-	  */
-	// }
-	  //          });
+	 
+	      timeline.addMouseListener(new MouseAdapter() {
+	            public void mousePressed(MouseEvent e) {
+	            		syncTimeline=true;
+	            }
+	            public void mouseReleased(MouseEvent e) {
+	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400);
+	            		syncTimeline=false;
+	            }
+	  
+	 
+	       }
+	      
+	    		  
+	 );
 	        
 	        
     play.addActionListener(new ActionListener() {
@@ -157,22 +155,102 @@ private  void updateBoutonPlayPause()
         }
     });
     
-    back.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent arg0) {
-        //    backward();
+    
+    
+    
+    back.addMouseListener(new MouseAdapter() {
+
+
+    	
+    	private java.util.Timer t;
+    	private int secondes;
+        public void mousePressed(MouseEvent e)
+        {
+        	syncTimeline=true;
+            if(t == null)
+            {
+                t = new java.util.Timer();
+                secondes = 0;
+                
+            }
+            t.scheduleAtFixedRate(new TimerTask()
+            {
+                public void run()
+                {
+                	secondes++;
+                	if (timeline.getValue()/10000*86400-100*secondes>0){
+               	   _controleur.updateInstant((float)timeline.getValue()/10000*86400-100*secondes);
+                	}
+                	else{
+                		_controleur.updateInstant((float)0);               }
+                }
+            },0,100);
+        }
+
+        public void mouseReleased(MouseEvent e)
+        {
+            if(t != null)
+            {
+                t.cancel();
+                t = null;
+    	       	syncTimeline=false;
+            }
         }
     });
     
-    forward.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent arg0) {
-        //    forward();
-        }
+    
+
+    forward.addMouseListener(new MouseAdapter() {
+
+
+
+        	
+        	private java.util.Timer t;
+        	private int secondes;
+            public void mousePressed(MouseEvent e)
+            {
+            	syncTimeline=true;
+                if(t == null)
+                {
+                    t = new java.util.Timer();
+                    secondes = 0;
+                    
+                }
+                t.scheduleAtFixedRate(new TimerTask()
+                {
+                    public void run()
+                    {
+                    	secondes++;                	
+                    	if (timeline.getValue()/10000*86400+100*secondes<86300){
+                   	   _controleur.updateInstant((float)timeline.getValue()/10000*86400+100*secondes);
+                    	}
+                    	else{
+                    		_controleur.updateInstant((float)86390);
+                    }
+                    }
+                },0,100);
+            }
+
+            public void mouseReleased(MouseEvent e)
+            {
+                if(t != null)
+                {
+                    t.cancel();
+                    t = null;
+        	       	syncTimeline=false;
+                }
+            }
+        	
+       
+		
     });
+    
 	 }
 	
  
+
+ 
+
 	public void propertyChange(PropertyChangeEvent evt) {
 
 		
@@ -184,6 +262,8 @@ private  void updateBoutonPlayPause()
 			break;
 			
 		case UPDATE_INSTANT:
+			if (!syncTimeline) {
+			timeline.setValue(Math.round((float)_controleur.getInstantCourant()*10000/86400));}
 			break;
 		
 		case UPDATE_IS_TRAFIC_RUNNING:

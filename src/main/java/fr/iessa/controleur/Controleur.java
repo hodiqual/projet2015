@@ -210,6 +210,22 @@ public class Controleur {
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
 	}
     
+	public void updateInstant(float secondes){
+		Instant oldInstant = _horloge.getInstantCourant();
+		if(secondes == 0)
+			_horloge.tick();
+		else
+			this.setInstant((int)secondes);
+		
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
+	}
+    
+	public int getInstantCourant(){
+	Instant InstantCourant = _horloge.getInstantCourant();
+	int PositionSeconde = InstantCourant.getSeconds();
+	return PositionSeconde;	
+	}
+	
 	private int _dureeIntervalle = 40; //  40 milliseconds 25 update par seconde
 	
 	public void setDureeInterval( int milliseconds ){
