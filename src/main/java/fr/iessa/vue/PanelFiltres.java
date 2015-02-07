@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -277,14 +279,13 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 			    	         else if (value instanceof Vol)
 			    	         {
 			    	        	 Vol vol = (Vol)value;
-			    	        	 setText((value == null) ? "" : vol.getId() + " " + vol.getTypeVol() + " " + vol.getPremierInstant());		
+			    	        	 setText((value == null) ? "" : vol.getId() + "\t" + vol.getTypeVol() + "\t" + vol.getPremierInstant());		
 			    	         }
 			    	         else
 			    	             setText((value == null) ? "" : value.toString());			
 	        				return cmp;
 	                    }
 	        });
-
 			final ModeleEvent[] evts = { ModeleEvent.UPDATE_FILTRE_VOL };
 			_controleur.ajoutVue(this, evts) ;	
 		}
@@ -293,7 +294,15 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		public void propertyChange(PropertyChangeEvent evt) {
 			FiltreVol filtre = (FiltreVol) evt.getNewValue();
 			removeAllItems();
-			for (Vol vol : filtre.getResult()) {
+			ArrayList<Vol> listOrdonnee = new ArrayList<Vol>(filtre.getResult());
+			listOrdonnee.sort(new Comparator<Vol>() {
+				@Override
+				public int compare(Vol o1, Vol o2) {
+					return o1.getPremierInstant().compareTo(o2.getPremierInstant());
+				}
+			});
+			
+			for (Vol vol : listOrdonnee) {
 				addItem(vol);
 			}
 		}
