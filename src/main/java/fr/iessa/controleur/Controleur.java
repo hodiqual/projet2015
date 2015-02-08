@@ -353,6 +353,23 @@ public class Controleur {
 		
 		sw.execute();
 	}
+
+	public void setFiltrePremierInstant(int filtrePremierInstant) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltrePremierInstant(InstantFabrique.getInstantLePlusProche(filtrePremierInstant));	
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
+	}
 	
 	
 	

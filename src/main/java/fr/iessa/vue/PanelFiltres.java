@@ -15,13 +15,19 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
+import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.trafic.FiltreVol;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
@@ -41,13 +47,14 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		add(new FiltreTypeVol());
 		add(new FiltreCategorie());
 		add(new FiltreCollision());
+		add(new FiltrePremierInstant());
 		add(new Combo());
 		
 		setEnabled(false);
 
 		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE };
 		_controleur.ajoutVue(this, evts) ;	
-		setMaximumSize(new Dimension(300,240));
+		setMaximumSize(new Dimension(300,400));
 	}
 	
 	@Override
@@ -258,6 +265,57 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 				_avec.setSelected(true);
 			else
 				_sans.setSelected(true);
+		}
+	}
+	
+	private class FiltrePremierInstant  extends JPanel implements PropertyChangeListener {
+
+		JSlider _slider = new JSlider();
+		JLabel  _horaire = new JLabel();
+		
+		private final ChangeListener action = new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				_controleur.setFiltrePremierInstant(_slider.getValue());
+			}
+		};
+		
+		public FiltrePremierInstant(){
+			setBorder(BorderFactory.createTitledBorder("Vol après: "));
+			_slider.setMinimum(InstantFabrique.getMinimumInstant().getSeconds());
+			_slider.setMaximum(InstantFabrique.getMaximumInstant().getSeconds());
+			final int nbSecondsEnSixHeures = 3600*6;
+			_slider.setMajorTickSpacing(3600*6);
+			_slider.setMinorTickSpacing(nbSecondsEnSixHeures/2);
+			_slider.setPaintTicks(true);
+			
+			add(_slider);
+			add(_horaire);
+			
+			_slider.addChangeListener(action);
+
+			final ModeleEvent[] evts = { ModeleEvent.UPDATE_FILTRE_VOL };
+			_controleur.ajoutVue(this, evts) ;	
+		}
+		
+		@Override
+		public void setEnabled(boolean enabled) {
+			super.setEnabled(enabled);
+			for (Component child : getComponents()) {
+				child.setEnabled(enabled);
+			}
+		}
+
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			FiltreVol filtre = (FiltreVol) evt.getNewValue();
+			Instant instant = filtre.getFiltrePremierInstant();
+			if(instant == null){
+				instant = InstantFabrique.getMinimumInstant();
+			}
+			
+			_slider.setValue(instant.getSeconds());
+			_horaire.setText(instant.toString());
 		}
 	}
 	
