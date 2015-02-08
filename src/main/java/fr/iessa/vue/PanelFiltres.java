@@ -281,7 +281,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		};
 		
 		public FiltrePremierInstant(){
-			setBorder(BorderFactory.createTitledBorder("Vol après: "));
+			setBorder(BorderFactory.createTitledBorder("Vol apres: "));
 			_slider.setMinimum(InstantFabrique.getMinimumInstant().getSeconds());
 			_slider.setMaximum(InstantFabrique.getMaximumInstant().getSeconds());
 			final int nbSecondsEnSixHeures = 3600*6;
