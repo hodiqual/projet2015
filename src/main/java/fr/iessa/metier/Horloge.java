@@ -15,26 +15,11 @@ import fr.iessa.metier.Instant.InstantFabrique;
  *
  */
 public class Horloge extends Observable {
-	
-	// ********************************************************
-	// ********************************************************
-	// ********************************************************
-	// ********************************************************
-	// ********************************************************
-	// *********************** ATTENTION A SYNCHRONIZE *************************** //
-	// ********************************************************
-	// ********************************************************
-	// ********************************************************
-	// ********************************************************
-	// ********************************************************
-	
 
 	private final Instant[] _instantsOrdonnees;
 	
 	private int _sens = 1;
 	
-	
-	// ******************* PEUT ETRE LA METTRE VOLATILE ou SYNCHRONIZED ***************************
 	private int _indexInstantCourant;
 	
 	public Horloge()
@@ -47,15 +32,17 @@ public class Horloge extends Observable {
 		return _instantsOrdonnees[_indexInstantCourant];
 	}
 	
-	public void setInstantCourant( Instant instant ) {
+	public void setInstantCourant( Instant instant ) throws HorsLimiteHorloge {
 		setIndexCourant(Arrays.binarySearch(_instantsOrdonnees, instant));
 	}
 	
-	public void tick() {
+	public void tick() throws HorsLimiteHorloge {
 		setIndexCourant(_indexInstantCourant+ _sens * 1);
 	}
 	
-	private void setIndexCourant( int newIndex ) {
+	private void setIndexCourant( int newIndex ) throws HorsLimiteHorloge {
+		if( newIndex < 0 || newIndex >= _instantsOrdonnees.length )
+			throw new HorsLimiteHorloge(newIndex);
 		_indexInstantCourant = newIndex;
 		setChanged();
 		notifyObservers(getInstantCourant());
@@ -66,7 +53,7 @@ public class Horloge extends Observable {
 	}
 	
 
-	public void initialise() {
+	public void initialise() throws HorsLimiteHorloge {
 		setIndexCourant(0);
 	}
 	

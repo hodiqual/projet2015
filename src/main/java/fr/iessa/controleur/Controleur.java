@@ -14,6 +14,7 @@ import javax.swing.event.SwingPropertyChangeSupport;
 import fr.iessa.dao.infra.PlateformeDAO;
 import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.Horloge;
+import fr.iessa.metier.HorsLimiteHorloge;
 import fr.iessa.metier.Instant;
 import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.infra.Aeroport;
@@ -170,7 +171,7 @@ public class Controleur {
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, trafic));
-					runTrafic();
+					//runTrafic();
 					
 					_filtreVol = new FiltreVol(trafic);	
 					evt = ModeleEvent.UPDATE_FILTRE_VOL;
@@ -202,18 +203,29 @@ public class Controleur {
 	
 	private void updateInstant(Instant instant){
 		Instant oldInstant = _horloge.getInstantCourant();
-		if(instant == null)
-			_horloge.tick();
-		else
-			_horloge.setInstantCourant(instant);
+
+		try {
+			if(instant == null)
+				_horloge.tick();
+			else
+				_horloge.setInstantCourant(instant);
+		} catch (HorsLimiteHorloge e) {
+			stopTrafic();
+		}
 		
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
 	}
     
 	public void updateInstant(float secondes){
 		Instant oldInstant = _horloge.getInstantCourant();
-		if(secondes == 0)
-			_horloge.tick();
+		if(secondes == 0){
+			try {
+				_horloge.tick();
+			} catch (HorsLimiteHorloge e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		else
 			this.setInstant((int)secondes);
 		
@@ -238,7 +250,6 @@ public class Controleur {
         @Override
         public void run() {
            while (true) {        	
-        	   
         	   if(_isTraficRunning)
         	   {   
         		   updateInstant(null);
@@ -249,6 +260,10 @@ public class Controleur {
            }
         }
      };
+     
+ 	public boolean isTraficRunning() {
+ 		return _isTraficRunning;
+ 	}
 	
 	public void runTrafic(){
 		_isTraficRunning = true;
@@ -287,10 +302,6 @@ public class Controleur {
 		
 		//On lance le SwingWorker
 		sw.execute();		
-	}
-
-	public boolean isTraficRunning() {
-		return _isTraficRunning;
 	}
 	
 

@@ -75,10 +75,15 @@ public class Instant implements Comparable<Instant>{
 		}
 		
 		public static Instant getInstantLePlusProche(int secondes)  {
-			int arrondiParDefaut = _instantsSingleton.floorKey(secondes);
-			int ecartArrondiParDefaut = secondes - arrondiParDefaut;
-			int arrondiParExces = _instantsSingleton.ceilingKey(secondes);
-			int ecartArrondiParExces  = arrondiParExces - secondes;
+			int ecartArrondiParDefaut = Integer.MAX_VALUE;
+			Integer arrondiParDefaut = _instantsSingleton.floorKey(secondes);
+			if(arrondiParDefaut!=null)
+				ecartArrondiParDefaut = secondes - arrondiParDefaut;
+			int ecartArrondiParExces = Integer.MAX_VALUE;
+			Integer arrondiParExces = _instantsSingleton.ceilingKey(secondes);
+			if(arrondiParExces!=null)
+				ecartArrondiParExces  = arrondiParExces - secondes;
+			
 			if ( ecartArrondiParExces < ecartArrondiParDefaut) 
 				return _instantsSingleton.get(arrondiParExces);
 			else
