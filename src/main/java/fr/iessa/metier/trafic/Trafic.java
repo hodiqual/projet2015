@@ -73,7 +73,12 @@ public class Trafic implements Observer {
 		collisions.entrySet().parallelStream().forEach(e ->
 		{
 			e.getValue().entrySet().stream().filter( z -> z.getValue().size() > 1 )
-			.forEach(z -> System.out.println( e.getKey().getSeconds() + " " + z.getKey() + " " + z.getValue()));
+			.forEach(z -> 
+			{
+				System.out.println( "Collision: " + e.getKey().getSeconds() + " " + z.getKey() + " " + z.getValue());
+				z.getValue().forEach(v -> v.setADesCollisions(true));
+			}
+			);
 		}
 		 );
 	}
@@ -131,14 +136,13 @@ public class Trafic implements Observer {
 				_volsARajouterParInstant.put(instant, getVols(instant));
 			}
 			previousInstant = instant;			
-		}*/
-		
-		
+		}*/	
 	}
 
 	public void setVols(Set<Vol> vols) {
 		_vols = vols;
 		computeDelta();
+		computeCollision();
 	}
 
 	@Override
@@ -163,6 +167,11 @@ public class Trafic implements Observer {
 	 */
 	public Set<Vol> getVols(Instant instant) {
 		return _volsParInstant.get(instant);
+	}
+
+	public Set<Vol> getVols(Predicate<Vol> filtre) {
+		// TODO Auto-generated method stub
+		return _vols.stream().filter(filtre).collect(Collectors.toSet());
 	}
 	
 	

@@ -19,11 +19,11 @@ import javax.swing.UIManager.*;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.LibereMemoire;
-import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.infra.PlateformeDAO;
 import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.vue.Echelle;
-import fr.iessa.vue.PanelInfrastructure;
-import fr.iessa.vue.infra.InfrastructureDrawer;
+import fr.iessa.vue.infra.PanelPlateforme;
+import fr.iessa.vue.infra.PlateformeDrawer;
 
 public class TestDessinCarte extends JPanel{
 
@@ -69,7 +69,7 @@ public class TestDessinCarte extends JPanel{
 	
 	static {
 		try {
-			aeroport = InfrastructureDAO.charger("lfpg.txt");
+			aeroport = PlateformeDAO.charger("lfpg.txt");
 		} catch (FileNotFoundException | NoSuchElementException e) {
 			e.printStackTrace();
 		}
@@ -98,7 +98,7 @@ public class TestDessinCarte extends JPanel{
         int largeurEcran = (int) screenSize.getWidth();
         int hauteurEcran = (int) screenSize.getHeight();
        
-	     InfrastructureDrawer dessinateur = new InfrastructureDrawer(); _image 
+	     PlateformeDrawer dessinateur = new PlateformeDrawer(); _image 
 	     	= new BufferedImage(echelle.getDestLargeur(), echelle.getDestHauteur(), 
 	     						BufferedImage.TYPE_BYTE_GRAY);
 	     Graphics2D g2img = (Graphics2D) _image.getGraphics();

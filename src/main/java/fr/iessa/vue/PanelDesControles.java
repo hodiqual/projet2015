@@ -38,7 +38,7 @@ public class PanelDesControles extends SLPanel {
 	public PanelDesControles(Controleur controleur) {
 		super();
 		setOpaque(false);
-		_tableauDeBord = new PanelTableauDeBord();
+		_tableauDeBord = new PanelTableauDeBord(controleur);
 		_visualisationEtLecture = new PanelVisualisationEtLecture(controleur);
 		_visualisationEtLecture.setOpaque(false);
 		_visualisationEtLecture.set_actionBoutonTabDeBord(afficheTableauDeBord);

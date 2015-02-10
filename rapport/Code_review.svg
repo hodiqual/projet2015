@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="code_review.svg"
+   inkscape:export-filename="/home/sdague/code/openstack/diagrams/code_review.png"
+   inkscape:export-xdpi="76.970001"
+   inkscape:export-ydpi="76.970001">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="TriangleOutL"
+       style="overflow:visible">
+      <path
+         id="path5411"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Mend"
+       style="overflow:visible;">
+      <path
+         id="path5296"
+         style="fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(0.6) rotate(180) translate(0,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lend"
+       style="overflow:visible;">
+      <path
+         id="path5290"
+         style="fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path5272"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5290-1"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-3"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5290-7"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-5"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5290-76"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="987.13759"
+     inkscape:cy="389.83386"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1912"
+     inkscape:window-height="1050"
+     inkscape:window-x="60"
+     inkscape:window-y="50"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <rect
+       style="fill:#e6e6ff;fill-opacity:1;fill-rule:nonzero;stroke:#cdcdd9;stroke-width:1.89191663;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect5211"
+       width="423.86963"
+       height="656.70728"
+       x="601.48926"
+       y="338.13028"
+       ry="18.463541" />
+    <g
+       id="g4918"
+       transform="translate(61.365463,11.428571)">
+      <rect
+         ry="10.944809"
+         y="423.9534"
+         x="641.35303"
+         height="106.25378"
+         width="221.41116"
+         id="rect4070"
+         style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:1.81224298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <g
+         id="g4914">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           x="689.51593"
+           y="483.0603"
+           id="text4840"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4842"
+             x="689.51593"
+             y="483.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">nova / master</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4908"
+       transform="translate(60.860397,-7.5484313)">
+      <g
+         id="g4905">
+        <rect
+           style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:1.81224298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           id="rect4070-6"
+           width="221.41116"
+           height="106.25378"
+           x="641.85809"
+           y="632.54993"
+           ry="10.944809" />
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4840-1"
+         y="691.62683"
+         x="667.60742"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="691.62683"
+           x="667.60742"
+           id="tspan4842-8"
+           sodipodi:role="line">nova / fix_bug_foo</tspan></text>
+    </g>
+    <g
+       id="g4900"
+       transform="translate(55.809677,-24)">
+      <rect
+         ry="10.944809"
+         y="838.62103"
+         x="646.90881"
+         height="106.25378"
+         width="221.41116"
+         id="rect4070-6-9"
+         style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:1.81224298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4840-1-3"
+         y="897.69794"
+         x="672.65814"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="897.69794"
+           x="672.65814"
+           id="tspan4842-8-1"
+           sodipodi:role="line">nova / fix_bug_foo</tspan></text>
+    </g>
+    <g
+       transform="translate(-540.89612,11.428571)"
+       id="g4918-0">
+      <rect
+         ry="10.944809"
+         y="423.9534"
+         x="641.35303"
+         height="106.25378"
+         width="221.41116"
+         id="rect4070-2"
+         style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:1.81224298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <g
+         id="g4914-0">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           x="689.51593"
+           y="483.0603"
+           id="text4840-5"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4842-9"
+             x="689.51593"
+             y="483.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">nova / master</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g5116"
+       transform="translate(-3.0304576,-3.0304576)">
+      <rect
+         ry="10.944809"
+         y="598.1347"
+         x="102.68661"
+         height="106.25378"
+         width="221.41116"
+         id="rect4070-2-5"
+         style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:1.81224298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <g
+         transform="translate(-566.48393,161.65132)"
+         id="g4914-0-5">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           x="689.51593"
+           y="483.0603"
+           id="text4840-5-9"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4842-9-8"
+             x="689.51593"
+             y="483.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Zuul / Jenkins</tspan><tspan
+             id="tspan4988"
+             sodipodi:role="line"
+             x="689.51593"
+             y="508.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">(automated testing)</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g5116-4"
+       transform="translate(-78.031748,307.1564)">
+      <rect
+         ry="10.944809"
+         y="598.1347"
+         x="102.68661"
+         height="106.25378"
+         width="221.41116"
+         id="rect4070-2-5-6"
+         style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:1.81224298;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <g
+         transform="translate(-566.48393,161.65132)"
+         id="g4914-0-5-6">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           x="689.51593"
+           y="483.0603"
+           id="text4840-5-9-3"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4842-9-8-1"
+             x="689.51593"
+             y="483.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Zuul / Jenkins</tspan><tspan
+             id="tspan4988-6"
+             sodipodi:role="line"
+             x="689.51593"
+             y="508.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">(automated testing)</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g5202"
+       transform="translate(17.142857,-21.428571)">
+      <rect
+         ry="18.460503"
+         y="763.24841"
+         x="259.39911"
+         height="179.21721"
+         width="268.11063"
+         id="rect4070-2-5-6-3"
+         style="fill:#6b4794;fill-opacity:1;fill-rule:nonzero;stroke:#3c1c5f;stroke-width:2.58994985;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <g
+         transform="translate(-410.29886,327.47671)"
+         id="g4914-0-5-6-5">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           x="689.51593"
+           y="483.0603"
+           id="text4840-5-9-3-7"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4842-9-8-1-4"
+             x="689.51593"
+             y="483.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Gerrit  (Review System)</tspan><tspan
+             id="tspan5196"
+             sodipodi:role="line"
+             x="689.51593"
+             y="508.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu" /><tspan
+             id="tspan4988-6-4"
+             sodipodi:role="line"
+             x="689.51593"
+             y="533.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Review Requirements:</tspan><tspan
+             sodipodi:role="line"
+             x="689.51593"
+             y="558.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+             id="tspan8573">  Core Reviews: 2 +2, 0 -2</tspan><tspan
+             sodipodi:role="line"
+             x="689.51593"
+             y="583.0603"
+             style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+             id="tspan8569">  Jenkins: +1</tspan></text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="720"
+       y="66.951622"
+       id="text5213"
+       sodipodi:linespacing="125%"
+       transform="translate(0,308.2677)"><tspan
+         sodipodi:role="line"
+         id="tspan5215"
+         x="720"
+         y="66.951622"
+         style="font-size:20px;font-weight:bold">Your Local Environment</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="773.03149"
+       y="587.12506"
+       id="text5213-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5215-5"
+         x="773.03149"
+         y="587.12506"
+         style="font-size:20px;font-weight:normal">git branch fix_bug_foo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="773.03149"
+       y="752.8136"
+       id="text5213-1-6"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="32.857143"
+       inkscape:transform-center-y="-167.14286"><tspan
+         sodipodi:role="line"
+         id="tspan5215-5-5"
+         x="773.03149"
+         y="752.8136"
+         style="font-size:20px;font-weight:normal">Fix changes</tspan><tspan
+         sodipodi:role="line"
+         x="773.03149"
+         y="777.8136"
+         style="font-size:20px;font-weight:normal"
+         id="tspan5259">Run unit tests</tspan><tspan
+         sodipodi:role="line"
+         x="773.03149"
+         y="802.8136"
+         style="font-size:20px;font-weight:normal"
+         id="tspan5261">git commit</tspan></text>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.65699946999999992;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend)"
+       d="m 731.42826,553.86963 c 0,57.52593 0,57.52593 0,57.52593"
+       id="path5263"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.65699946999999992;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend)"
+       d="m 731.42826,743.48919 c 0,57.52593 0,57.52593 0,57.52593"
+       id="path5263-1"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.80000000000000004;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="m 677.14286,561.23734 -105.71429,0"
+       id="path6911"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="583.21271"
+       y="898.24213"
+       id="text5213-1-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5215-5-8"
+         x="583.21271"
+         y="898.24213"
+         style="font-size:20px;font-weight:normal">git review</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.79999995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="M 511.42857,424.09448 C 603.75059,372.75004 649.64329,384.84492 710,494.09449"
+       id="path7128"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="502.08246"
+       y="687.55646"
+       id="text5213-1-2-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5215-5-8-5"
+         x="502.08246"
+         y="687.55646"
+         style="font-size:20px;font-weight:normal">git commit --amend</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.80000000000000004;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="m 351.42857,184.09448 c 317.14286,0 317.14286,0 317.14286,0 l 0,0"
+       id="path7539"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="463.51108"
+       y="476.69931"
+       id="text5213-1-2-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5215-5-8-1"
+         x="463.51108"
+         y="476.69931"
+         style="font-size:20px;font-weight:normal">git clone</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.79999995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="m 175.71429,585.52305 c 29.22953,-36.27611 41.26763,-41.60931 87.14285,-41.42857"
+       id="path7756"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.79999995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="m 331.42857,624.09449 c -7.11207,31.84646 -38.13449,46.71479 -74.28571,49.99999"
+       id="path7758"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.80000000000000004;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="m 205.71429,272.66591 0,-31.42857"
+       id="path8148"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.79999995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-5)"
+       d="m 261.42857,458.3802 c -27.14285,-22.85715 -30,-57.14286 -30,-57.14286"
+       id="path8150"
+       inkscape:connector-curvature="0"
+       transform="translate(0,308.2677)"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="134.57143"
+       y="367.21933"
+       id="text8540"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan8542"
+         x="134.57143"
+         y="367.21933"
+         style="font-size:20px;font-weight:bold">Upstream Code</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="50.57143"
+       y="1033.505"
+       id="text8544"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan8546"
+         x="50.57143"
+         y="1033.505"
+         style="font-size:20px;fill:#333333">check queue</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       x="109.08006"
+       y="721.98651"
+       id="text8544-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan8546-5"
+         x="109.08006"
+         y="721.98651"
+         style="font-size:20px;fill:#333333">gate queue</tspan></text>
+  </g>
+</svg>

@@ -6,8 +6,6 @@ package fr.iessa.metier.infra;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import fr.iessa.metier.Avion;
 import fr.iessa.metier.type.TypeQFU;
 
 /**

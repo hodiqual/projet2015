@@ -34,7 +34,7 @@ public class RunwayDrawer {
         for (Runway runway : aeroport.get_runways()) {
         	// Variables locales
         	int anglepiste =(int)Math.round(runway.getAngle(-Math.PI/2));
-        	int largeurpiste=(int)(InfraStd.RUNWAY.largeur());
+        	int largeurpiste=(int)(PlateformeStd.RUNWAY.largeur());
         	int X_extremite0 = (int)runway.get_extremite_x(0);
         	int X_extremite1 = (int)runway.get_extremite_x(1);
         	int Y_extremite0 = (int)runway.get_extremite_y(0);
@@ -43,8 +43,8 @@ public class RunwayDrawer {
         	
         	
         	// Dessine la piste
-        	g2.setColor(InfraStd.RUNWAY.couleur());
-        	g2.setStroke(new BasicStroke(InfraStd.RUNWAY.largeur(), BasicStroke.CAP_SQUARE,
+        	g2.setColor(PlateformeStd.RUNWAY.couleur());
+        	g2.setStroke(new BasicStroke(PlateformeStd.RUNWAY.largeur(), BasicStroke.CAP_SQUARE,
                 BasicStroke.CAP_SQUARE));
 			g2.drawLine(X_extremite0, Y_extremite0, X_extremite1, Y_extremite1);
         	g2.draw(runway.get_runwayPointAPoint());

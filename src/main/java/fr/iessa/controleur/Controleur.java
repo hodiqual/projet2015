@@ -6,17 +6,22 @@ package fr.iessa.controleur;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 
 import javax.swing.SwingWorker;
 import javax.swing.event.SwingPropertyChangeSupport;
 
-import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.infra.PlateformeDAO;
 import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.Horloge;
+import fr.iessa.metier.HorsLimiteHorloge;
 import fr.iessa.metier.Instant;
 import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.infra.Aeroport;
+import fr.iessa.metier.trafic.FiltreVol;
 import fr.iessa.metier.trafic.Trafic;
+import fr.iessa.metier.type.Categorie;
+import fr.iessa.metier.type.TypeVol;
 import fr.iessa.vue.Echelle;
 
 /**
@@ -25,8 +30,19 @@ import fr.iessa.vue.Echelle;
  */
 public class Controleur {
 	
-	/** Contiendra le trafic lorsqu'il sera charge dans l'application. */
-	private Trafic _trafic;
+
+	/** Contient la plateforme lorsqu'elle est chargee dans l'application. */
+	private Aeroport _aeroport;
+
+	/**
+	 * @return the _aeroport
+	 */
+	public Aeroport getAeroport() {
+		return _aeroport;
+	}
+	
+	/** Contient le trafic lorsqu'il est charge dans l'application. */
+	private Trafic _trafic = null;
 	
 	/**
 	 * @return the _trafic
@@ -35,11 +51,14 @@ public class Controleur {
 		return _trafic;
 	}
 
-	/** Horloge de la plateforme */
+	/** Horloge de la simulation. */
 	private Horloge _horloge;
 	
-	/** Permet de notifier la vue en garantissant que cela soit dans l'Event Dispatch Thread*/
+	/** Permet de notifier la vue en garantissant que cela soit dans l'Event Dispatch Thread. */
 	private SwingPropertyChangeSupport _swingObservable;
+	
+	/**Filtre*/
+	private FiltreVol _filtreVol;
 	
 	public Controleur() {
 		// Les observers seront notifies seulement dans l'Event Dispatch Thread
@@ -58,7 +77,7 @@ public class Controleur {
 	
 	public void chargerCarte(String ficname) {
 		//Controle de ficname
-		if(ficname == null || ficname.equals("") )//fichierexistant)
+		if(ficname == null || ficname.equals("") )
 		{
 			ModeleEvent evtfin = ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR;	
 			_swingObservable.firePropertyChange(evtfin.toString(), null, "Le nom du fichier n'est pas renseigne");	
@@ -73,7 +92,7 @@ public class Controleur {
 			protected Aeroport doInBackground() throws Exception {
 
 				//1. Charger fichier infrastructure
-				Aeroport aeroport = InfrastructureDAO.charger(ficname);
+				Aeroport aeroport = PlateformeDAO.charger(ficname);
 				
 				//2. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
@@ -85,11 +104,12 @@ public class Controleur {
 
 			public void done(){
 				try {
-				    Aeroport aeroport = get();
+				    _aeroport = get();
+				    
 					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE;	
-					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, aeroport));
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _aeroport));
 
 				} catch (ExecutionException | InterruptedException e) {
 					//Cas ou le doInBackground a lancé une exception ou a ete interrompu
@@ -138,7 +158,7 @@ public class Controleur {
 				//5. Destruction des Scanner et des String qui ont permis le chargement et qui n'ont plus de reference.
 			    LibereMemoire.free();
 			    
-				return trafic;
+				return _trafic;
 			}
 
 			//process & publish pour la gestion des resultats intermediaires, PROGRESS fire le TRAVAIL EN COURS 
@@ -147,17 +167,24 @@ public class Controleur {
 			public void done(){
 				try {
 					Trafic trafic = get();
-					_trafic = trafic;
+					
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
-					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _trafic));
-					runTrafic();
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, trafic));
+					//runTrafic();
+					
+					_filtreVol = new FiltreVol(trafic);	
+					evt = ModeleEvent.UPDATE_FILTRE_VOL;
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));
+					
+					
 					//TODO Lancer en arriere plan la detection des collisions. pour faire un ReadyToUse.
 					//Attribut qui ecoute le modele chargement trafic fichier done pour lancer la detection 
 					//des collisions dans un swingworker
 				} catch (ExecutionException | InterruptedException e) {
 					//Cas ou le doInBackground a lancé une exception ou a ete interrompu
 					e.printStackTrace();
+					
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_ERREUR;	
 					_swingObservable.firePropertyChange(evt.toString(), null, e.getCause().getMessage());
 				}
@@ -169,22 +196,49 @@ public class Controleur {
 	}
 	
 	/**
-	 * Etat de la simulation s'il est en cours ou non. Elle est volatile
-	 * car elle peut-etre lu ou ecrite par different thread (EDT ou Thread de HorlogePrincipale)
+	 * Etat de la simulation s'il est en cours ou non. L'attribut est volatile
+	 * car il peut etre lu ou ecrit par different thread (EDT ou Thread de HorlogePrincipale)
 	 */
 	private volatile boolean _isTraficRunning = false;
 	
 	private void updateInstant(Instant instant){
 		
 		Instant oldInstant = _horloge.getInstantCourant();
-		if(instant == null)
-			_horloge.tick();
-		else
-			_horloge.setInstantCourant(instant);
+
+		try {
+			if(instant == null)
+				_horloge.tick();
+			else
+				_horloge.setInstantCourant(instant);
+		} catch (HorsLimiteHorloge e) {
+			stopTrafic();
+		}
 		
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
 	}
     
+	public void updateInstant(float secondes){
+		Instant oldInstant = _horloge.getInstantCourant();
+		if(secondes == 0){
+			try {
+				_horloge.tick();
+			} catch (HorsLimiteHorloge e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else
+			this.setInstant((int)secondes);
+		
+		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
+	}
+    
+	public int getInstantCourant(){
+	Instant InstantCourant = _horloge.getInstantCourant();
+	int PositionSeconde = InstantCourant.getSeconds();
+	return PositionSeconde;	
+	}
+	
 	private int _dureeIntervalle = 40; //  40 milliseconds 25 update par seconde
 	
 	public void setDureeInterval( int milliseconds ){
@@ -193,11 +247,10 @@ public class Controleur {
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_DUREE_INTERVALLE.toString(), oldUpdateInterval, _dureeIntervalle);	
 	}
 	
-	public final Thread _horlogeManager = new Thread() {
+	public final Thread _horlogeManager = new Thread("Simulation Thread") {
         @Override
         public void run() {
            while (true) {        	
-        	   
         	   if(_isTraficRunning)
         	   {   
         		   updateInstant(null);
@@ -208,6 +261,10 @@ public class Controleur {
            }
         }
      };
+     
+ 	public boolean isTraficRunning() {
+ 		return _isTraficRunning;
+ 	}
 	
 	public void runTrafic(){
 		_isTraficRunning = true;
@@ -247,9 +304,83 @@ public class Controleur {
 		//On lance le SwingWorker
 		sw.execute();		
 	}
+	
 
-	public boolean isTraficRunning() {
-		return _isTraficRunning;
+	/**
+	 * @param filtreTypeVol the filtreTypeVol to set
+	 */
+	public void setFiltreTypeVol(TypeVol filtreTypeVol) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltreTypeVol(filtreTypeVol);
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
+	}
+
+	/**
+	 * @param filtreCategorie the filtreCategorie to set
+	 */
+	public void setFiltreCategorie(Categorie filtreCategorie) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltreCategorie(filtreCategorie);	
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
+	}
+
+	/**
+	 * @param filtreCollision the filtreCollision to set
+	 */
+	public void setFiltreCollision(Boolean filtreCollision) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltreCollision(filtreCollision);	
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
+	}
+
+	public void setFiltrePremierInstant(int filtrePremierInstant) {
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				_filtreVol.setFiltrePremierInstant(InstantFabrique.getInstantLePlusProche(filtrePremierInstant));	
+				return null;
+			}
+			
+			protected void done(){
+				ModeleEvent evt = ModeleEvent.UPDATE_FILTRE_VOL;
+				_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));		
+			}
+		};
+		
+		sw.execute();
 	}
 	
 	

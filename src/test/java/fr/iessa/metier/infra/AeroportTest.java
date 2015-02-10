@@ -5,14 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.infra.PlateformeDAO;
 
 public class AeroportTest {
 
 	static Aeroport aeroport;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		 aeroport = InfrastructureDAO.charger("lfpg.txt");
+		 aeroport = PlateformeDAO.charger("lfpg.txt");
 	}
 
 	@Test
