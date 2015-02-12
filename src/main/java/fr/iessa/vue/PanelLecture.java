@@ -133,7 +133,10 @@ private  void updateBoutonPlayPause()
 	            		syncTimeline=true;
 	            }
 	            public void mouseReleased(MouseEvent e) {
-	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400);
+	            	if((timeline.getValue())==0){
+	            	_controleur.setInstant((int)0); }
+	            	else{
+	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
 	            		syncTimeline=false;
 	            }
 	  
