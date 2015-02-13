@@ -2,6 +2,8 @@
 package fr.iessa.vue;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -19,26 +21,30 @@ import fr.iessa.controleur.ModeleEvent;
  */
 
 public class PanelTableauDeBord extends JPanel implements PropertyChangeListener {
-
-	// ***************** A SURPPRIMER **************************
-	private static final Color FG_COLOR = new Color(0xFFFFFF);
-	private static final Color BG_COLOR = Color.RED;
-	// ***************** FIN A SURPPRIMER **************************
-	
+	/** Attributs */
 	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
 	private PanelAffichageVol _affichageVol = new PanelAffichageVol();
 	
+	/** Constructeur */
 	public PanelTableauDeBord() {
 		super();
+		
+		// Configuration du Layout
+		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+		setLayout(layout);
+		
+		// Configuration du Background
 		setOpaque(true);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(BG_COLOR);
+		setBackground(Color.LIGHT_GRAY);
 		
-		_titre.setForeground(FG_COLOR);
-		_titre.setFont(new Font("Sans", Font.BOLD, 10));
+		// Configuration du titre
+		_titre.setForeground(Color.BLUE);
+		_titre.setFont(new Font("Sans", Font.BOLD, 12));
+		//_titre.setAlignmentX(Component.CENTER_ALIGNMENT);
 		_titre.setVerticalAlignment(SwingConstants.CENTER);
-		_titre.setHorizontalAlignment(SwingConstants.CENTER);
+		//_titre.setHorizontalAlignment(SwingConstants.CENTER);
 		
+		// Ajout des différents éléments du Tableau de bord
 		add(_titre);
 		add(_affichageVol);
 		
