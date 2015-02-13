@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.yattasolutions.uml.diagrams.classifier:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.yattasolutions.diagrams="http://ns.yatta-solutions.com/umllab/diagrams/1.1.0" xmlns:com.yattasolutions.uml.diagrams.classifier="http://ns.yatta-solutions.com/umllab/diagrams/classifier/1.1.0" xmi:id="_NQcKAK3kEeS64PhZ7ksZkQ">
+  <modelElement href="projet2015.uml#_LirAo63kEeS64PhZ7ksZkQ"/>
+  <edges xsi:type="com.yattasolutions.diagrams:ConnectionVisual" xmi:id="_R6YJka3kEeS64PhZ7ksZkQ" targetItem="_R6ZXsK3kEeS64PhZ7ksZkQ" sourceItem="_R6YJkK3kEeS64PhZ7ksZkQ"/>
+  <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_R6YJkK3kEeS64PhZ7ksZkQ" sourceConnectionVisual="_R6YJka3kEeS64PhZ7ksZkQ" text="@author hodiqual&#xA; *" item="_R6ZXsK3kEeS64PhZ7ksZkQ">
+    <modelElement href="projet2015.uml#_MbKu4q3kEeS64PhZ7ksZkQ"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_R6ZXsK3kEeS64PhZ7ksZkQ" comments="_R6YJkK3kEeS64PhZ7ksZkQ" targetConnectionVisual="_R6YJka3kEeS64PhZ7ksZkQ" name="TraficDao">
+    <modelElement href="projet2015.uml#_LqjxUK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_R6ZXsa3kEeS64PhZ7ksZkQ" position="50.0,50.0"/>
+    <visibility xmi:id="_R6ZXsq3kEeS64PhZ7ksZkQ" label="+"/>
+    <operations xmi:id="_R6ZXs63kEeS64PhZ7ksZkQ" name="charger">
+      <modelElement href="projet2015.uml#_Lqk_cK3kEeS64PhZ7ksZkQ"/>
+      <visibility xmi:id="_R6ZXtK3kEeS64PhZ7ksZkQ" label="+"/>
+      <outParameters xmi:id="_R6ZXta3kEeS64PhZ7ksZkQ">
+        <modelElement href="projet2015.uml#_MRM6ka3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_R6ZXtq3kEeS64PhZ7ksZkQ" name="Trafic">
+          <modelElement href="projet2015.uml#_LsNXIK3kEeS64PhZ7ksZkQ"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_R6ZXt63kEeS64PhZ7ksZkQ" name="ficname">
+        <modelElement href="projet2015.uml#_Lqk_ca3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_R6ZXuK3kEeS64PhZ7ksZkQ" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </parameters>
+    </operations>
+    <operations xmi:id="_R6ZXua3kEeS64PhZ7ksZkQ" name="chargerVol">
+      <modelElement href="projet2015.uml#_LqmNkK3kEeS64PhZ7ksZkQ"/>
+      <visibility xmi:id="_R6ZXuq3kEeS64PhZ7ksZkQ" label="+"/>
+      <outParameters xmi:id="_R6ZXu63kEeS64PhZ7ksZkQ">
+        <modelElement href="projet2015.uml#_MRM6kq3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_R6ZXvK3kEeS64PhZ7ksZkQ" name="Vol">
+          <modelElement href="projet2015.uml#_LsaLcK3kEeS64PhZ7ksZkQ"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_R6ZXva3kEeS64PhZ7ksZkQ" name="ligneFormatVol">
+        <modelElement href="projet2015.uml#_LqmNka3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_R6ZXvq3kEeS64PhZ7ksZkQ" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </parameters>
+    </operations>
+  </nodes>
+</com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

@@ -1,5 +1,6 @@
 package fr.iessa.metier;
 
+import java.text.DecimalFormat;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
@@ -14,16 +15,17 @@ public class Instant implements Comparable<Instant>{
 	
 	private final int _secondes;
 	private final String _affichage;
+	private static final DecimalFormat f = new DecimalFormat("00");
 	
 	private Instant(int secondes)
 	{
 		_secondes = secondes;
 		
 		StringBuffer buffer = new StringBuffer(8);
-		buffer.append(_secondes/3600 +":");
+		buffer.append( f.format(_secondes/3600) +":");
 		int reste = _secondes%3600;
-		buffer.append(reste/60 +":");
-		buffer.append(reste%60);
+		buffer.append( f.format(reste/60) +":");
+		buffer.append( f.format(reste%60) );
 		
 		_affichage = buffer.toString();
 	}
@@ -73,10 +75,15 @@ public class Instant implements Comparable<Instant>{
 		}
 		
 		public static Instant getInstantLePlusProche(int secondes)  {
-			int arrondiParDefaut = _instantsSingleton.floorKey(secondes);
-			int ecartArrondiParDefaut = secondes - arrondiParDefaut;
-			int arrondiParExces = _instantsSingleton.ceilingKey(secondes);
-			int ecartArrondiParExces  = arrondiParExces - secondes;
+			int ecartArrondiParDefaut = Integer.MAX_VALUE;
+			Integer arrondiParDefaut = _instantsSingleton.floorKey(secondes);
+			if(arrondiParDefaut!=null)
+				ecartArrondiParDefaut = secondes - arrondiParDefaut;
+			int ecartArrondiParExces = Integer.MAX_VALUE;
+			Integer arrondiParExces = _instantsSingleton.ceilingKey(secondes);
+			if(arrondiParExces!=null)
+				ecartArrondiParExces  = arrondiParExces - secondes;
+			
 			if ( ecartArrondiParExces < ecartArrondiParDefaut) 
 				return _instantsSingleton.get(arrondiParExces);
 			else

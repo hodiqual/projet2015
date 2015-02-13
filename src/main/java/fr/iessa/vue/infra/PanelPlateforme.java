@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.iessa.vue;
+package fr.iessa.vue.infra;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,27 +44,25 @@ import javax.swing.SwingWorker;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.infra.Aeroport;
-import fr.iessa.vue.infra.InfrastructureDrawer;
+import fr.iessa.vue.ChargeEnCoursLayerUI;
+import fr.iessa.vue.Echelle;
 
 /**
  * Gere graphiquement le chargement de la plateforme,
- * le chargement du trafic
- * l'affichage de l'image de la plateforme et de son trafic
+ * l'affichage de l'image de la plateforme
  * la navigation zoom et scroll sur l'affichage
  * @author hodiqual
  * 
  */
-public class PanelInfrastructure extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener, Observer {
+public class PanelPlateforme extends JPanel implements PropertyChangeListener, MouseListener, MouseWheelListener, Observer {
 
 	private static final long serialVersionUID = 25499665468682529L;
-
-	private Controleur _controleur;
 	
-	private Aeroport _aeroport;
+	private Aeroport _aeroport = null;
 	
 	private Echelle _echelle;
 	
-	private InfrastructureDrawer _drawer = new InfrastructureDrawer();
+	private PlateformeDrawer _drawer = new PlateformeDrawer();
 	
 	/** Permet d'avoir la translation a faire apres un drag de la souris */
 	Point2D.Double _whereMousePressed = new Point2D.Double();
@@ -75,12 +73,10 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 
 	private int _zoomLevel = 1;
 	
-	public PanelInfrastructure(Controleur controleur, Echelle echelle) {
+	public PanelPlateforme(Controleur controleur, Echelle echelle) {
         setLayout(new GridLayout(1,1));
         setBackground(Color.white);
-        
-		_controleur = controleur;
-		
+
 		//Acceleres le paint du component etant le fond d'ecran.
 		setOpaque(true);
 		
@@ -88,7 +84,15 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		setDoubleBuffered(true);
 
 		//observe le changement du modele via le controleur (MVC)
-		_controleur.ajoutVue(this);
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_CARTE_FICHIER_EN_COURS
+								    , ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE
+								    , ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR};
+		controleur.ajoutVue(this,  evts) ;
+		
+		_echelle = echelle;
+		echelle.addObserver(this);
+		
+		setAeroport(controleur.getAeroport());
 		
 		addMouseListener(this);	
 		addMouseWheelListener(this);  
@@ -96,15 +100,17 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 			@Override
 			public void componentResized(ComponentEvent e) {
 				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
-				//resetImageCarte();	
 			}
 		});
-	    
-
-		_echelle = echelle;
-		echelle.addObserver(this);
-	    
-	    
+	}
+	
+	private void setAeroport(Aeroport aeroport) {
+		_aeroport = aeroport;
+		if(aeroport!=null) {
+			_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
+										, _aeroport.getMinY(), _aeroport.getMaxY());
+			_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
+		}
 	}
 
 	/**
@@ -116,11 +122,8 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
 			case CHARGEMENT_CARTE_FICHIER_DONE:
 				//http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-				_aeroport = (Aeroport) evt.getNewValue();
-				_echelle.setLimitesReelles(_aeroport.getMinX(), _aeroport.getMaxX()
-						  , _aeroport.getMinY(), _aeroport.getMaxY());
-				_echelle.setScroll(new Point2D.Double(), getWidth(), getHeight());
-				//resetImageCarte();
+				setAeroport((Aeroport) evt.getNewValue());
+				
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:
 				if(_layerUI!=null)
 					_layerUI.stop();
@@ -136,18 +139,30 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		}
 	}
 	
-
-	private DessineCarteWorker _workerEncours = null;
-	private DessineCarteWorker _workerPreviewEncours = null;
-	 /**
-	 * Dessin de l'aeroport en memoire tampon (memoire de la carte graphique)
+	/**
+	 * Reference sur le thread qui est en train de dessiner l'aeroport en memoire.
 	 */
-	//private VolatileImage _imageCarteBuffered;
+	private DessineCarteWorker _workerEncours = null;
+	
+	/**
+	 * Reference sur le thread qui est en train de dessiner une previsualisation
+	 * de l'aeroport en memoire.
+	 */
+	private DessineCarteWorker _workerPreviewEncours = null;
+	
+	 /**
+	 * Dessin de l'aeroport en memoire tampon
+	 */
 	private BufferedImage _imageCarteBuffered;
-
+	
+	 /**
+	 * Dessin d'une previsualisation de l'aeroport en memoire tampon (sans anti-aliasing)
+	 */
 	private BufferedImage _imageCartePreview;
 	
-
+	/**
+	 * @param _imageCarteEstPrete est true si _imageCarteBuffered est prete a etre affichee
+	 */
 	private boolean _imageCarteEstPrete = false;
 	
 	/** Force le redessin de _imageCarteBuffered */
@@ -235,8 +250,6 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 		else
 			g2.drawImage(_imageCartePreview, 0, 0, this);
 		//VOLATILE IMAGE: http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/image.html
-
-
 	}
 	
 
@@ -306,7 +319,6 @@ public class PanelInfrastructure extends JPanel implements PropertyChangeListene
 	}
 
 	/**
-	 * 
 	 * @param o observe echelle
 	 * @param arg la nouvelle transformation a appliquer
 	 */

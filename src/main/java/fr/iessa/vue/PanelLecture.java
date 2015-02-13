@@ -3,21 +3,27 @@
  */
 package fr.iessa.vue;
 
-
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Vector;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+
+import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.ModeleEvent;
 
 import javax.swing.*;
+
 
 /**
  * @author duvernal
  *
  */
-public class PanelLecture extends JPanel {
+public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	
 
 	// ***************** A SURPPRIMER **************************
@@ -26,21 +32,28 @@ public class PanelLecture extends JPanel {
 	private static final Color BORDER_COLOR = new Color(0x000000);
 	private JButton play, forward, back;
 	private JSlider timeline;
+    private boolean syncTimeline=false;
     private static final ImageIcon BACK = new ImageIcon("back.png");
     private static final ImageIcon PLAY = new ImageIcon("play.png");
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
+    private Controleur _controleur;
 	// ***************** FIN A SURPPRIMER **************************
 	
     
 
 
     
-	public PanelLecture()
+	public PanelLecture(Controleur controleur)
 	{
 		
 		
 		super();
+		
+		_controleur = controleur;
+		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING, ModeleEvent.UPDATE_INSTANT, ModeleEvent.UPDATE_DUREE_INTERVALLE};
+		_controleur.ajoutVue(this, evts);
+		
 	    UIDefaults sliderDefaults = new UIDefaults();
 
 	    sliderDefaults.put("Slider.thumbWidth", 20);
@@ -66,14 +79,15 @@ public class PanelLecture extends JPanel {
                     }
                 });
 		setOpaque(true);
-		timeline = new JSlider(0,100,0);
-		
+		timeline = new JSlider(0,10000,0);		
 		play= new JButton();
-		play.setIcon(PLAY);
-	    back= new JButton();
+		updateBoutonPlayPause();
+		back= new JButton();
 	    back.setIcon(BACK);
 	    forward= new JButton();
 	    forward.setIcon(FORWARD);
+
+
 
 	    setLayout(new GridBagLayout());
 		setBackground(BG_COLOR);
@@ -92,48 +106,188 @@ public class PanelLecture extends JPanel {
 	    c.ipadx = 400;
 		c.gridwidth = 40;
         add(timeline,c);
+
+        
         timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
+        addListeners();
+        
+        setEnabled(false);
+        setVisible(false);
 	}
 
 	
+private  void updateBoutonPlayPause()
+{
+	if(_controleur.isTraficRunning()) 		
+		play.setIcon(PAUSE);
+	else 
+		play.setIcon(PLAY);
+}
+
 	
-	
-	 private void addListeners() {
-	 /*      timeline.addChangeListener(new ChangeListener() {
-	            public void stateChanged(ChangeEvent e) {
-	                if(!syncTimeline) //only if user moves the slider by hand
-	                {
-	                    if(!timeline.getValueIsAdjusting()) //and the slider is fixed
-	                    {
-	                        //recalc to 0.x percent value
-	                        mp.setPosition((float)timeline.getValue()/100.0f);
-	                    }                   
-	                }
-	           }
-	            });
-	        */
+ private void addListeners() {
+	 
+	      timeline.addMouseListener(new MouseAdapter() {
+	            public void mousePressed(MouseEvent e) {
+	            		syncTimeline=true;
+	            }
+	            public void mouseReleased(MouseEvent e) {
+	            	if((timeline.getValue())==0){
+	            	_controleur.setInstant((int)0); }
+	            	else{
+	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
+	            		syncTimeline=false;
+	            }
+	  
+	 
+	       }
+	      
+	    		  
+	 );
+	        
 	        
     play.addActionListener(new ActionListener() {
         
         public void actionPerformed(ActionEvent arg0) {
-       //     if(mp.isPlaying()) mp.pause(); else mp.play();              
+
+            if(_controleur.isTraficRunning()) 
+            	_controleur.stopTrafic(); 
+            else 
+            	_controleur.runTrafic();              
         }
     });
     
-    back.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent arg0) {
-        //    backward();
+    
+    
+    
+    back.addMouseListener(new MouseAdapter() {
+
+
+
+    	
+    	private java.util.Timer t;
+    	private int secondes;
+        public void mousePressed(MouseEvent e)
+        {
+        	syncTimeline=true;
+            if(t == null)
+            {
+                t = new java.util.Timer();
+                secondes = 0;
+                
+            }
+            t.scheduleAtFixedRate(new TimerTask()
+            {
+                public void run()
+                {
+                	secondes++;                	
+                	if ((timeline.getValue()/10000*86400+100*secondes)>=0){
+               	   _controleur.updateInstant((float)timeline.getValue()/10000*86400-100*(float)secondes);
+                	}
+                	else{
+                		_controleur.updateInstant((float)0);                
+                }
+                	timeline.setValue((Math.round((float)_controleur.getInstantCourant()-(float)0.1)*10000/86400));	
+                	
+                }
+            },0,100);
         }
+
+        public void mouseReleased(MouseEvent e)
+        {
+            if(t != null)
+            {
+                t.cancel();
+                t = null;
+    	       	syncTimeline=false;
+            }
+        }
+    	
+   
     });
     
-    forward.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent arg0) {
-        //    forward();
-        }
+    
+
+    forward.addMouseListener(new MouseAdapter() {
+
+
+
+        	
+        	private java.util.Timer t;
+        	private int secondes;
+            public void mousePressed(MouseEvent e)
+            {
+            	syncTimeline=true;
+                if(t == null)
+                {
+                    t = new java.util.Timer();
+                    secondes = 0;
+                    
+                }
+                t.scheduleAtFixedRate(new TimerTask()
+                {
+                    public void run()
+                    {
+                    	secondes++;                	
+                    	if ((timeline.getValue()/10000*86400+100*secondes)<=86400){
+                   	   _controleur.updateInstant((float)timeline.getValue()/10000*86400+100*(float)secondes);
+                    	}
+                    	else{
+                    		_controleur.updateInstant((float)86390);                
+                    }
+                    	timeline.setValue((Math.round((float)_controleur.getInstantCourant()+(float)0.1)*10000/86400));	
+                    	
+                    }
+                },0,100);
+            }
+
+            public void mouseReleased(MouseEvent e)
+            {
+                if(t != null)
+                {
+                    t.cancel();
+                    t = null;
+        	       	syncTimeline=false;
+                }
+            }
+        	
+       
+		
     });
+    
 	 }
 	
+ 
+
+ 
+
+	public void propertyChange(PropertyChangeEvent evt) {
+
+		
+		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
+
+		case CHARGEMENT_TRAFIC_FICHIER_DONE:
+			setEnabled(true);
+	        setVisible(true);
+			break;
+			
+		case UPDATE_INSTANT:
+			if (!syncTimeline) {
+			timeline.setValue(Math.round((float)_controleur.getInstantCourant()*10000/86400));}
+			break;
+		
+		case UPDATE_IS_TRAFIC_RUNNING:
+			updateBoutonPlayPause();
+			break;
+
+			
+		case UPDATE_DUREE_INTERVALLE:
+			break;
+
+		default:
+			break;
+	}
+	}
+
 }

@@ -6,7 +6,7 @@ import java.awt.geom.PathIterator;
 
 import org.junit.Test;
 
-import fr.iessa.dao.infra.InfrastructureDAO.Lookup;
+import fr.iessa.dao.infra.PlateformeDAO.Lookup;
 import fr.iessa.metier.infra.Ligne;
 import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.Direction;

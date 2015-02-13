@@ -3,6 +3,7 @@
  */
 package fr.iessa.metier.trafic;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,6 +59,31 @@ public class Trafic implements Observer {
 	private TreeMap<Instant, Set<Vol>> _volsARajouterParInstant; 
 	private TreeMap<Instant, Set<Vol>> _volsASupprParInstant; 
 	
+	public void computeCollision()
+	{
+		ConcurrentHashMap<Instant, Map<Point,List<Vol> > > collisions
+		 = new ConcurrentHashMap<Instant, Map<Point,List<Vol>> >();
+		_volsParInstant.keySet().parallelStream().forEach( i -> collisions.put(i, new HashMap<Point,List<Vol>>()));
+		_volsParInstant.entrySet().parallelStream()
+								  .forEach( e -> collisions.put(e.getKey(),
+										  						e.getValue().stream()
+										  									.collect(Collectors.groupingBy(v -> v.getCoord(e.getKey())))) 
+										  );
+		
+		collisions.entrySet().parallelStream().forEach(e ->
+		{
+			e.getValue().entrySet().stream().filter( z -> z.getValue().size() > 1 )
+			.forEach(z -> 
+			{
+				System.out.println( "Collision: " + e.getKey().getSeconds() + " " + z.getKey() + " " + z.getValue());
+				z.getValue().forEach(v -> v.setADesCollisions(true));
+			}
+			);
+		}
+		 );
+	}
+	
+	
 	private void computeDelta()
 	{
 		
@@ -110,14 +136,13 @@ public class Trafic implements Observer {
 				_volsARajouterParInstant.put(instant, getVols(instant));
 			}
 			previousInstant = instant;			
-		}*/
-		
-		
+		}*/	
 	}
 
 	public void setVols(Set<Vol> vols) {
 		_vols = vols;
 		computeDelta();
+		computeCollision();
 	}
 
 	@Override
@@ -130,13 +155,23 @@ public class Trafic implements Observer {
 							  .forEach( v -> v.updateCoordCourantes(null) );
 	}
 
+	/**
+	 * @return L'ensemble des vols qui composent le trafic
+	 */
 	public Set<Vol> getVols() {
 		return _vols;	
 	}
 
+	/**
+	 * @return L'ensemble des vols qui composent le trafic a l'instant @param instant.
+	 */
 	public Set<Vol> getVols(Instant instant) {
 		return _volsParInstant.get(instant);
-		
+	}
+
+	public Set<Vol> getVols(Predicate<Vol> filtre) {
+		// TODO Auto-generated method stub
+		return _vols.stream().filter(filtre).collect(Collectors.toSet());
 	}
 	
 	

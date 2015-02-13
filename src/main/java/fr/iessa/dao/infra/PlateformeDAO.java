@@ -18,7 +18,7 @@ import fr.iessa.metier.infra.Aeroport;
  * @author hodiqual
  *
  */
-public class InfrastructureDAO {
+public class PlateformeDAO {
 	
 	/** Singleton des instances des chargeurs. */ 
 	public enum Lookup

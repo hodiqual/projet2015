@@ -22,8 +22,9 @@ public class Vol {
 	private TypeVol _typeVol;
 	private String _id;
 	private Categorie _categorie;
-	private Map<Instant, Point> _instantVersCoord = new HashMap(10);
+	private Map<Instant, Point> _instantVersCoord = new HashMap<Instant, Point>(10);
 	private Instant _premierInstant;
+	private boolean aDesCollisions = false;
 	
 	private Point _coordCourante;
 	private Point _coordSuivante;
@@ -107,6 +108,20 @@ public class Vol {
 	
 	public String toString()  {
 		return getId();
+	}
+
+	/**
+	 * @return the aDesCollisions
+	 */
+	public boolean aDesCollisions() {
+		return aDesCollisions;
+	}
+
+	/**
+	 * @param aDesCollisions the aDesCollisions to set
+	 */
+	public void setADesCollisions(boolean aDesCollisions) {
+		this.aDesCollisions = aDesCollisions;
 	}
 	
 }

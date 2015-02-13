@@ -31,6 +31,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     private JMenuItem _menuChargerTrafic;
     private JMenuItem _menuQuitter;
     
+    private JMenu _menuOption;
+    
     private Controleur _controleur;
     
 	/** Constructeur */
@@ -58,9 +60,23 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	
     	_barreMenu.add(_menu);
     	
+    	_menuOption = new JMenu("Options");
+    	_menuOption.setEnabled(false);
+    	JMenuItem menuAjoutVue = new JMenuItem("Ajout vue");
+    	menuAjoutVue.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FrameSecondaire(_controleur);
+			}
+		});
+    	JMenuItem menuCollision = new JMenuItem("Collisions");
+    	_menuOption.add(menuAjoutVue);
+    	_menuOption.add(menuCollision);
+    	_barreMenu.add(_menuOption);
+    	
     	// Création et configuration du controleur MVC
     	_controleur = new Controleur(); 
-	    this.getContentPane().add(new PanelPrincipalMultiCouches(_controleur));
+	    this.getContentPane().add(new PanelPrincipalMultiCouches(_controleur,true));
 	    _controleur.ajoutVue(this);
 	    
 	    //Create and set up the content pane.
@@ -121,7 +137,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 				break;
 			
 			case CHARGEMENT_TRAFIC_FICHIER_DONE:
-				
+		    	_menuOption.setEnabled(true);
 				break;
 				
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:

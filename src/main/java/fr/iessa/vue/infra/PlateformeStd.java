@@ -9,7 +9,7 @@ import java.awt.Color;
  * @author hodiqual
  *
  */
-public enum InfraStd {
+public enum PlateformeStd {
 	TAXIWAY(Color.GRAY, 30f)
 ,   TAXIWAY_MARQUE_SOL(new Color(244,196,48), 0.5f)
 ,   TAXIWAY_MARQUE_SOL_BORDURE(Color.BLACK, 1f)
@@ -28,8 +28,7 @@ public enum InfraStd {
 ,	DEICING(Color.GRAY, 8.0f);
 
 
-	
-	private InfraStd(Color couleur, float largeur){
+	private PlateformeStd(Color couleur, float largeur){
 		_largeur = largeur;
 		_couleur = couleur;
 	}

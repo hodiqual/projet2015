@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.yattasolutions.uml.diagrams.classifier:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.yattasolutions.diagrams="http://ns.yatta-solutions.com/umllab/diagrams/1.1.0" xmlns:com.yattasolutions.uml.diagrams.classifier="http://ns.yatta-solutions.com/umllab/diagrams/classifier/1.1.0" xmi:id="_NQhpkK3kEeS64PhZ7ksZkQ">
+  <modelElement href="projet2015.uml#_LjKv4K3kEeS64PhZ7ksZkQ"/>
+  <edges xsi:type="com.yattasolutions.diagrams:ConnectionVisual" xmi:id="_SeProa3kEeS64PhZ7ksZkQ" targetItem="_SeQ5wK3kEeS64PhZ7ksZkQ" sourceItem="_SeProK3kEeS64PhZ7ksZkQ"/>
+  <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_SeProK3kEeS64PhZ7ksZkQ" sourceConnectionVisual="_SeProa3kEeS64PhZ7ksZkQ" text="@author hodiqual&#xA; *" item="_SeQ5wK3kEeS64PhZ7ksZkQ">
+    <modelElement href="projet2015.uml#_MbI5s63kEeS64PhZ7ksZkQ"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:InterfaceVisual" xmi:id="_SeQ5wK3kEeS64PhZ7ksZkQ" comments="_SeProK3kEeS64PhZ7ksZkQ" targetConnectionVisual="_SeProa3kEeS64PhZ7ksZkQ" name="DAO">
+    <modelElement href="projet2015.uml#_Lpc-EK3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_SeQ5wa3kEeS64PhZ7ksZkQ" position="50.0,50.0" size="-1.0,-1.0"/>
+    <stereotypes xmi:id="_SeQ5wq3kEeS64PhZ7ksZkQ" name="Generics">
+      <modelElement href="projet2015.uml#_LpgBYK3kEeS64PhZ7ksZkQ"/>
+    </stereotypes>
+    <visibility xmi:id="_SeQ5w63kEeS64PhZ7ksZkQ" label="+"/>
+    <operations xmi:id="_SeQ5xK3kEeS64PhZ7ksZkQ" name="charger">
+      <modelElement href="projet2015.uml#_LphPgK3kEeS64PhZ7ksZkQ"/>
+      <visibility xmi:id="_SeQ5xa3kEeS64PhZ7ksZkQ" label="+"/>
+      <outParameters xmi:id="_SeQ5xq3kEeS64PhZ7ksZkQ">
+        <modelElement href="projet2015.uml#_MU688a3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_SeQ5x63kEeS64PhZ7ksZkQ" name="T">
+          <modelElement href="projet2015.uml#_MU5u0K3kEeS64PhZ7ksZkQ"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_SeQ5yK3kEeS64PhZ7ksZkQ" name="ligneAtraiter">
+        <modelElement href="projet2015.uml#_LphPga3kEeS64PhZ7ksZkQ"/>
+        <type xmi:id="_SeQ5ya3kEeS64PhZ7ksZkQ" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </parameters>
+    </operations>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_SeTWAK3kEeS64PhZ7ksZkQ" name="T">
+    <modelElement href="projet2015.uml#_MU5u0K3kEeS64PhZ7ksZkQ"/>
+    <visualProperties xmi:id="_SeTWAa3kEeS64PhZ7ksZkQ" position="344.0,92.0" size="-1.0,-1.0"/>
+    <stereotypes xmi:id="_SeTWAq3kEeS64PhZ7ksZkQ" name="Reference">
+      <modelElement href="projet2015.uml#_MU688K3kEeS64PhZ7ksZkQ"/>
+    </stereotypes>
+    <visibility xmi:id="_SeTWA63kEeS64PhZ7ksZkQ" label="+"/>
+  </nodes>
+</com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import org.junit.Test;
 
 import fr.iessa.dao.infra.AeroportDAO;
-import fr.iessa.dao.infra.InfrastructureDAO;
+import fr.iessa.dao.infra.PlateformeDAO;
 import fr.iessa.metier.infra.Aeroport;
 
 public class EchelleTest {
