@@ -4,21 +4,21 @@ import fr.iessa.metier.type.TypeQFU;
 
 
 /**
- * Classe mère décrivant les QFU.
+ * Classe mere decrivant les QFU.
  * @author duvernal
  * @see <a href="http://fr.wikipedia.org/wiki/QFU">http://fr.wikipedia.org/wiki/QFU</a>
  */
 public class QFU {
 	
-	/** Le degré de la piste */
+	/** Le degre de la piste */
 	String _degre;
 	
 	/** Le type de QFU (L ou R) */
 	TypeQFU _type;
 
-	/** D�finit un QFU
+	/** Definit un QFU
 	* @param degre
-	* Le degré de la piste
+	* Le degre de la piste
 	* @param type 
 	* Le type de QFU (L ou R)
 	*/	
