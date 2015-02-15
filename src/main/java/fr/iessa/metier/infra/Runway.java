@@ -17,7 +17,7 @@ import fr.iessa.metier.type.TypeQFU;
 
 
 /**
- * Classe mère décrivant les pistes de la plateforme.
+ * Classe mere decrivant les pistes de la plateforme.
  * @author duvernal
  *
  */
@@ -38,12 +38,12 @@ public class Runway {
 	/** La liste des points qui composent la piste */
 	private String[] _listepoints;
 	
-	/** La piste construite à partir des points */
+	/** La piste construite a partir des points */
 	private GeneralPath _runwayPointAPoint;
 	
 	
 	/** 
-	 * Charge les runways en tant qu'objets m�tiers
+	 * Charge les runways en tant que objets metiers
 	 */
 	
 	public Runway(String nom, String qfu1, String qfu2,

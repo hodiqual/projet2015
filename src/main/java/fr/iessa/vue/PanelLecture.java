@@ -141,7 +141,7 @@ private  void updateBoutonPlayPause()
 }
 
 /** 
- * Les différents listeners du player
+ * Les differents listeners du player
  * action sur la barre de lecture et sur les boutons (play/pause, back, forward)
 */
  private void addListeners() {
@@ -279,7 +279,7 @@ private  void updateBoutonPlayPause()
  
 
  /** 
-  * Ecoute les modifications du contrôleur
+  * Ecoute les modifications du controleur
   * et applique les modifications sur la vue
  */
 	public void propertyChange(PropertyChangeEvent evt) {

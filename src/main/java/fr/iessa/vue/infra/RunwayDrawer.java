@@ -14,7 +14,7 @@ import fr.iessa.metier.infra.Aeroport;
 import fr.iessa.metier.infra.Runway;
 
 /**
- * Classe qui dessine les pistes de l'aeroport avec marquages au sol et numéros des pistes.
+ * Classe qui dessine les pistes de l aeroport avec marquages au sol et numeros des pistes.
  * @author duvernal
  *
  */
@@ -23,7 +23,7 @@ public class RunwayDrawer {
 	
 	/** 
 	 * Dessine les runways de l'aeroport
-	 * pistes + marquages au sol + numéros des pistes
+	 * pistes + marquages au sol + numeros des pistes
 	 */
 	public void dessine(Aeroport aeroport, Graphics2D g2 )
 	{
@@ -34,7 +34,7 @@ public class RunwayDrawer {
         	// Variables locales
             /** L'angle de la piste */
         	int anglepiste =(int)Math.round(runway.getAngle(-Math.PI/2));
-            /** La largeur de la piste selon une constante définie.
+            /** La largeur de la piste selon une constante definie.
              * * @see fr.iessa.vue.infra.PlateformeStd */
         	int largeurpiste=(int)(PlateformeStd.RUNWAY.largeur());
             /** La coordonée X de la piste 0 */
