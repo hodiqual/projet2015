@@ -1,13 +1,10 @@
 
 package fr.iessa.vue;
 
-import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.metier.type.TypeVol;
 
