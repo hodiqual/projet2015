@@ -45,7 +45,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		plateformePanel.setAlignmentX(0.0f);
 		plateformePanel.setAlignmentY(0.0f);
 		JLayer<JPanel> plateformLayered = new JLayer<JPanel>(plateformePanel, layerUI);
-		_gestionPlans.add(plateformLayered, new Integer(1));
+		_gestionPlans.add(plateformLayered, JLayeredPane.FRAME_CONTENT_LAYER);
 		
 		//Gestion du trafic
 		PanelTrafic traficPanel = new  PanelTrafic(controleur, echelle);
@@ -54,14 +54,14 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		JLayer<JPanel> traficLayered = new JLayer<JPanel>(traficPanel, layerUI2);
 		traficLayered.setAlignmentX(0.0f);
 		traficLayered.setAlignmentY(0.0f);
-		_gestionPlans.add(traficLayered,new Integer(2));
+		_gestionPlans.add(traficLayered,JLayeredPane.DEFAULT_LAYER);
 		
 		if(avecControle) {
 			//Gestion des controles Lecteur et Tableau de Bord
 			PanelDesControles controles = new PanelDesControles(controleur);
 			controles.setAlignmentX(0.0f);
 			controles.setAlignmentY(0.0f);
-			_gestionPlans.add(controles,new Integer(3));
+			_gestionPlans.add(controles,JLayeredPane.PALETTE_LAYER);
 		}else{
 			//Affichage horloge seule
 			JPanel panelHorloge = new JPanel();
@@ -70,7 +70,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 			panelHorloge.add(new LabelHorloge(controleur));
 			panelHorloge.setAlignmentX(0.0f);
 			panelHorloge.setAlignmentY(0.0f);
-			_gestionPlans.add(panelHorloge,new Integer(3));
+			_gestionPlans.add(panelHorloge,JLayeredPane.PALETTE_LAYER);
 		}
 		
 		//Rajout du composant de gestion des plans a ce JPanel

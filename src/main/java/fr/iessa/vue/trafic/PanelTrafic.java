@@ -126,7 +126,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 	}  
 	
 	private void update(Instant instant) {
-		_volsADessiner.values().forEach(cv -> cv.update(this) );
+		_volsADessiner.values().forEach( cv -> cv.update(this) );
 		revalidate();
 		repaint();
 	}

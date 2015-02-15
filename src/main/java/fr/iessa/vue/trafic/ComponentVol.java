@@ -79,9 +79,9 @@ public class ComponentVol extends JComponent {
 		coordOrdonne.values().forEach( p ->_cheminParcouru.lineTo(p.x, p.y));
 		
 		addMouseListener(new MouseAdapter() {
-
+			
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				System.out.println("Avion clique: " + v.getId());
 				System.out.println("isDisplayable: " + isDisplayable());
 				System.out.println("Showing: " + isShowing());
