@@ -48,6 +48,7 @@ public class PanelTableauDeBord extends JPanel implements PropertyChangeListener
 		
 		// Ajout des différents éléments du Tableau de bord
 		_panelTableauDeBord.add(_titre);
+		_panelTableauDeBord.add(new PanelFiltres(controleur));
 		_panelTableauDeBord.add(_affichageVol);
 		_panelTableauDeBord.add(_affichageVol1);
 		
