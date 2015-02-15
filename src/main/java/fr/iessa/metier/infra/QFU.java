@@ -13,10 +13,15 @@ public class QFU {
 	/** Le degré de la piste */
 	String _degre;
 	
-	/** Le type de QFU (gauche ou droite) */
+	/** Le type de QFU (L ou R) */
 	TypeQFU _type;
 
-	
+	/** D�finit un QFU
+	* @param degre
+	* Le degré de la piste
+	* @param type 
+	* Le type de QFU (L ou R)
+	*/	
 // Constructor
 public QFU(String degre, TypeQFU type) {
 	_degre = degre;
