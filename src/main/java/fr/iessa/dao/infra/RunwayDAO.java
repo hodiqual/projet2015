@@ -15,6 +15,8 @@ import fr.iessa.metier.infra.Runway;
 
 
 /**
+ * Classe qui scanne les elements des pistes du fichier texte de l infrastructure de l aeroport
+ * et les charge en objets metiers.
  * @author duvernal
  *
  */

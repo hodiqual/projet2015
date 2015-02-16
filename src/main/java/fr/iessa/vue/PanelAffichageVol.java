@@ -1,10 +1,10 @@
 
 package fr.iessa.vue;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.metier.type.TypeVol;
 
@@ -15,15 +15,18 @@ import fr.iessa.metier.type.TypeVol;
 
 public class PanelAffichageVol extends JPanel {
 	/** Attributs */
-    private JLabel _parDefaut = new JLabel("Aucun vol selectionne");
+	private final JLabel _titre = new JLabel("PARAMATRES D'UN VOL :");
+	private final JLabel _parDefaut = new JLabel("Aucun vol selectionne");
     private JLabel _jlIdVol, _jlCategorieVol, _jlTypeHeureVol;
     
     /** Constructeur */
     public PanelAffichageVol() {
 		
     	super();
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(new JLabel("Paramètres d'un vol"));
+    	setBorder(BorderFactory.createTitledBorder("PARAMATRES D'UN VOL :"));
+    	setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    	//_titre.setFont(new Font("Sans", Font.BOLD, 10));
+    	//add(_titre);
 		add(_parDefaut);
 		
 	}

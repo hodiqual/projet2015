@@ -17,7 +17,7 @@ import fr.iessa.metier.type.TypeQFU;
 
 
 /**
- * Classe mère décrivant les pistes de la plateforme.
+ * Classe mere decrivant les pistes de la plateforme.
  * @author duvernal
  *
  */
@@ -38,11 +38,13 @@ public class Runway {
 	/** La liste des points qui composent la piste */
 	private String[] _listepoints;
 	
-	/** La piste construite à partir des points */
+	/** La piste construite a partir des points */
 	private GeneralPath _runwayPointAPoint;
 	
 	
-
+	/** 
+	 * Charge les runways en tant que objets metiers
+	 */
 	
 	public Runway(String nom, String qfu1, String qfu2,
 			java.awt.Point[] extremite, ArrayList<String> pointsList) {
@@ -124,7 +126,9 @@ public class Runway {
 		return _listepoints[i];
 	}
 
-
+	/**
+	 * initialise les runways
+	 */
 	public void initialisePath(Map<String, fr.iessa.metier.infra.Point> mapPoints) {
 		_runwayPointAPoint = new GeneralPath(Path2D.WIND_NON_ZERO,_listepoints.length);
 
@@ -138,6 +142,8 @@ public class Runway {
 	}
 	/**
 	 * @return the angle of the runway in radians
+	 * @param i
+	 * Angle +Pi/2 ou -Pi/2 par rapport � l'orientation de la piste
 	 */
 	public double getAngle(double i) {
 	    double angle = -Math.atan2(_extremite[1].getY() - _extremite[0].getY(), _extremite[1].getX() - _extremite[0].getX());

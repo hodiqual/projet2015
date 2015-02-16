@@ -20,25 +20,31 @@ import javax.swing.*;
 
 
 /**
+ * Panel lecture affichant une barre de lecture et des boutons permettant le rejeu du trafic.
  * @author duvernal
  *
  */
 public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	
-
-	// ***************** A SURPPRIMER **************************
-	private static final Color FG_COLOR = new Color(0xFFFFFF);
+	/** Lac ouleur de l'arrière-plan */
 	private static final Color BG_COLOR = new Color(0x3B5998);
-	private static final Color BORDER_COLOR = new Color(0x000000);
+	/** Les bouton du player */
 	private JButton play, forward, back;
+	/** La barre de lecture */
 	private JSlider timeline;
+	/** Le boolean lecture en cours pour synchronisation barre de lecture */
     private boolean syncTimeline=false;
+    /** L'image du bouton "retour" */
     private static final ImageIcon BACK = new ImageIcon("back.png");
+    /** L'image du bouton "lecture" */
     private static final ImageIcon PLAY = new ImageIcon("play.png");
+    /** L'image du bouton "pause" */
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
+    /** L'image du bouton "avance" */
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
+    /** Le contrôleur du MVC */
     private Controleur _controleur;
-	// ***************** FIN A SURPPRIMER **************************
+
 	
     
 
@@ -54,6 +60,9 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.UPDATE_IS_TRAFIC_RUNNING, ModeleEvent.UPDATE_INSTANT, ModeleEvent.UPDATE_DUREE_INTERVALLE};
 		_controleur.ajoutVue(this, evts);
 		
+		//////////////////////////////////////////////////////
+		// Modifie l'aspect graphique de la barre de lecture
+		//////////////////////////////////////////////////////
 	    UIDefaults sliderDefaults = new UIDefaults();
 
 	    sliderDefaults.put("Slider.thumbWidth", 20);
@@ -78,6 +87,9 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
                         g.drawRoundRect(0, 6, w-1, 8, 8, 8);
                     }
                 });
+	                    
+	    ///////////////////////////////////////////////////////////
+	                   
 		setOpaque(true);
 		timeline = new JSlider(0,10000,0);		
 		play= new JButton();
@@ -88,7 +100,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	    forward.setIcon(FORWARD);
 
 
-
+	    // GridBagLayout pour les elements du player
 	    setLayout(new GridBagLayout());
 		setBackground(BG_COLOR);
 		GridBagConstraints c = new GridBagConstraints();
@@ -116,7 +128,10 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
         setVisible(false);
 	}
 
-	
+	/** 
+	 * Update du bouton play/pause
+	 * affiche l'image pause si trafic en lecture et play si trafic en pause
+	*/
 private  void updateBoutonPlayPause()
 {
 	if(_controleur.isTraficRunning()) 		
@@ -125,7 +140,10 @@ private  void updateBoutonPlayPause()
 		play.setIcon(PLAY);
 }
 
-	
+/** 
+ * Les differents listeners du player
+ * action sur la barre de lecture et sur les boutons (play/pause, back, forward)
+*/
  private void addListeners() {
 	 
 	      timeline.addMouseListener(new MouseAdapter() {
@@ -133,7 +151,10 @@ private  void updateBoutonPlayPause()
 	            		syncTimeline=true;
 	            }
 	            public void mouseReleased(MouseEvent e) {
-	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400);
+	            	if((timeline.getValue())==0){
+	            	_controleur.setInstant((int)0); }
+	            	else{
+	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
 	            		syncTimeline=false;
 	            }
 	  
@@ -257,8 +278,10 @@ private  void updateBoutonPlayPause()
 	
  
 
- 
-
+ /** 
+  * Ecoute les modifications du controleur
+  * et applique les modifications sur la vue
+ */
 	public void propertyChange(PropertyChangeEvent evt) {
 
 		
