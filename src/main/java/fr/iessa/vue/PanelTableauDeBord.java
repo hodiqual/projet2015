@@ -34,7 +34,6 @@ public class PanelTableauDeBord extends JPanel {
 	public PanelTableauDeBord(Controleur controleur) {
 		super();
 		
-		
 		// Configuration du Layout
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setFont(new Font("Sans", Font.BOLD, 8));
