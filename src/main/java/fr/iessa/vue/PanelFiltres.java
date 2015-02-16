@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 	private Controleur _controleur;
 
 	@SuppressWarnings({ "unchecked", "serial" })
-	public PanelFiltres(Controleur controleur){
+	public PanelFiltres(Controleur controleur, ItemListener itemListener){
 		_controleur = controleur;
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -48,7 +49,8 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		add(new FiltreCategorie());
 		add(new FiltreCollision());
 		add(new FiltrePremierInstant());
-		add(new Combo());
+
+		add(new Combo(itemListener));
 		
 		setEnabled(false);
 
@@ -63,6 +65,10 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		for (Component child : getComponents()) {
 			child.setEnabled(enabled);
 		}
+	}
+	
+	public void setActionList(){
+		
 	}
 	
 
@@ -320,8 +326,14 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 	}
 	
 	private class Combo extends JComboBox<Vol> implements PropertyChangeListener {
+		
+		private ItemListener _actionListener;
+
 		@SuppressWarnings({ "serial", "unchecked" })
-		public Combo() {
+		public Combo(ItemListener actionListener) {
+			_actionListener = actionListener;
+			this.addItemListener(_actionListener);
+			
 			setRenderer(new BasicComboBoxRenderer() {
 	        	@SuppressWarnings("rawtypes")
 				@Override
@@ -344,6 +356,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 	        				return cmp;
 	                    }
 	        });
+			
 			final ModeleEvent[] evts = { ModeleEvent.UPDATE_FILTRE_VOL };
 			_controleur.ajoutVue(this, evts) ;	
 		}
@@ -360,9 +373,11 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 				}
 			});
 			
+			this.removeItemListener(_actionListener);
 			for (Vol vol : listOrdonnee) {
 				addItem(vol);
 			}
+			this.addItemListener(_actionListener);
 		}
 	}
 
