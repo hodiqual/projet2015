@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import fr.iessa.controleur.Controleur;
@@ -29,6 +30,8 @@ public class PanelTableauDeBord extends JPanel implements PropertyChangeListener
 	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
 	private PanelAffichageVol _affichageVol = new PanelAffichageVol();
 	
+	private JPanel _panelVols;
+	
 	public PanelTableauDeBord(Controleur controleur) {
 		super();
 		setOpaque(true);
@@ -43,6 +46,14 @@ public class PanelTableauDeBord extends JPanel implements PropertyChangeListener
 		add(_titre);
 		add(new PanelFiltres(controleur));
 		add(_affichageVol);
+		
+		
+		_panelVols = new JPanel();
+		_panelVols.setLayout(new BoxLayout(_panelVols, BoxLayout.Y_AXIS));
+		//_panelVols.add(_affichageVol);
+		
+		JScrollPane _scroll = new JScrollPane(_panelVols);
+		add(_scroll);
 		
 	}
 	

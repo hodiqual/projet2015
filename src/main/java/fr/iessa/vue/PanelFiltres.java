@@ -337,7 +337,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 			    	         else if (value instanceof Vol)
 			    	         {
 			    	        	 Vol vol = (Vol)value;
-			    	        	 setText((value == null) ? "" : vol.getId() + "\t" + vol.getTypeVol() + "\t" + vol.getPremierInstant());		
+			    	        	 setText((value == null) ? "" : vol.getId() + "\t " + vol.getTypeVol() + "\t " + vol.getPremierInstant());		
 			    	         }
 			    	         else
 			    	             setText((value == null) ? "" : value.toString());			
