@@ -53,7 +53,7 @@ public class PanelTableauDeBord extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED)  {
-					PanelAffichageVol affVol = new PanelAffichageVol((Vol)e.getItem());
+					PanelAffichageVol affVol = new PanelAffichageVol((Vol)e.getItem(), controleur);
 					_panelVols.add(affVol);
 					_panelVols.revalidate();
 					_panelVols.repaint();
