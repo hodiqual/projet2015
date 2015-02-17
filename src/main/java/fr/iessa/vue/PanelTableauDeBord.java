@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,7 +29,6 @@ import fr.iessa.metier.trafic.Vol;
 public class PanelTableauDeBord extends JPanel {
 	/** Attributs */
 	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
-	
 	private JPanel _panelVols = new JPanel();
 	
 	public PanelTableauDeBord(Controleur controleur) {
@@ -44,7 +44,8 @@ public class PanelTableauDeBord extends JPanel {
 		
 		// Configuration du titre
 		_titre.setForeground(Color.BLUE);
-		_titre.setFont(new Font("Sans", Font.BOLD, 8));
+		_titre.setFont(new Font("Sans", Font.BOLD, 12));
+		_titre.setAlignmentX(CENTER_ALIGNMENT);
 		
 		// Ajout des différents éléments du Tableau de bord
 		this.add(_titre);
@@ -52,8 +53,7 @@ public class PanelTableauDeBord extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED)  {
-					PanelAffichageVol affVol = new PanelAffichageVol();
-					affVol.SetVol((Vol)e.getItem());
+					PanelAffichageVol affVol = new PanelAffichageVol((Vol)e.getItem(), controleur);
 					_panelVols.add(affVol);
 					_panelVols.revalidate();
 					_panelVols.repaint();
