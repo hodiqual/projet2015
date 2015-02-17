@@ -1,5 +1,6 @@
 package fr.iessa.vue.trafic;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -73,6 +74,7 @@ public class ComponentVol extends JComponent {
 		if(_vol.aDesCollisions())
 			_collisionHighlight = new Rectangle(new Dimension(width, height));
 		
+		
 		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
 		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
 		_cheminParcouru.moveTo(premierPoint.x, premierPoint.y);
@@ -130,6 +132,13 @@ public class ComponentVol extends JComponent {
 			g2.fill(_collisionHighlight);
 			g2.setColor(colorToRestore);
 		}
+		
+		Color colorToRestore = g2.getColor();
+		g2.setColor(Color.MAGENTA);
+		g2.setStroke(new BasicStroke(4));
+		g2.draw(new Rectangle(new Dimension(width, height)));
+		g2.setColor(colorToRestore);
+		
 		g2.drawImage(_imageCourante, 0, 0, null);
 	}
 	
