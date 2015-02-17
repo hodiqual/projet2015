@@ -129,7 +129,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	}
 
 	/** 
-	 * Update du bouton play/pause
+	 * Update du bouton play-pause
 	 * affiche l'image pause si trafic en lecture et play si trafic en pause
 	*/
 private  void updateBoutonPlayPause()
@@ -142,7 +142,7 @@ private  void updateBoutonPlayPause()
 
 /** 
  * Les differents listeners du player
- * action sur la barre de lecture et sur les boutons (play/pause, back, forward)
+ * action sur la barre de lecture et sur les boutons (play-pause, back, forward)
 */
  private void addListeners() {
 	 

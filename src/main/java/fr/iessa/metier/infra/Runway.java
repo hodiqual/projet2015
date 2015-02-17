@@ -143,7 +143,7 @@ public class Runway {
 	/**
 	 * @return the angle of the runway in radians
 	 * @param i
-	 * Angle +Pi/2 ou -Pi/2 par rapport ˆ l'orientation de la piste
+	 * Angle +Pi/2 ou -Pi/2 par rapport a l orientation de la piste
 	 */
 	public double getAngle(double i) {
 	    double angle = -Math.atan2(_extremite[1].getY() - _extremite[0].getY(), _extremite[1].getX() - _extremite[0].getX());
