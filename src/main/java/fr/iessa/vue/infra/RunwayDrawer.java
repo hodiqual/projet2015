@@ -27,7 +27,7 @@ public class RunwayDrawer {
 	 */
 	public void dessine(Aeroport aeroport, Graphics2D g2 )
 	{
-		// Stocke l'ancien style en mémoire
+		// Stocke l'ancien style en memoire
 		Stroke oldStyle = g2.getStroke();
       
         for (Runway runway : aeroport.get_runways()) {
@@ -124,7 +124,7 @@ public class RunwayDrawer {
 				    g2.drawGlyphVector(vectRlettre, (float)X_extremite0+20, (float)Y_extremite0+10+anglepiste);
 		      }
 		      
-		    // Régénère l'ancien style
+		    // Regenere l'ancien style
 		    g2.setStroke(oldStyle);		
 
 

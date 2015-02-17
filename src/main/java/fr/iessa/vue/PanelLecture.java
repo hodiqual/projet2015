@@ -26,9 +26,9 @@ import javax.swing.*;
  */
 public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	
-	/** Lac ouleur de l'arrière-plan */
+	/** Lac ouleur de l arriere-plan */
 	private static final Color BG_COLOR = new Color(0x3B5998);
-	/** Les bouton du player */
+	/** Les boutons du player */
 	private JButton play, forward, back;
 	/** La barre de lecture */
 	private JSlider timeline;
@@ -42,7 +42,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
     /** L'image du bouton "avance" */
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
-    /** Le contrôleur du MVC */
+    /** Le controleur du MVC */
     private Controleur _controleur;
 
 	
