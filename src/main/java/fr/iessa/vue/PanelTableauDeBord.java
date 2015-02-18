@@ -8,6 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,6 +21,7 @@ import javax.swing.SwingConstants;
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.trafic.Vol;
+import fr.iessa.vue.trafic.ComponentVol;
 
 /** Classe Tableau de Bord.
  * @author THOMAS Raimana
@@ -31,7 +33,7 @@ public class PanelTableauDeBord extends JPanel {
 	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
 	private JPanel _panelVols = new JPanel();
 	
-	public PanelTableauDeBord(Controleur controleur) {
+	public PanelTableauDeBord(Controleur controleur, Map<Vol, ComponentVol> volsADessiner) {
 		super();
 		
 		// Configuration du Layout
@@ -53,7 +55,8 @@ public class PanelTableauDeBord extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED)  {
-					PanelAffichageVol affVol = new PanelAffichageVol((Vol)e.getItem(), controleur);
+					Vol volSelectionne = (Vol)e.getItem();
+					PanelAffichageVol affVol = new PanelAffichageVol(volsADessiner.get(volSelectionne), controleur);
 					_panelVols.add(affVol);
 					_panelVols.revalidate();
 					_panelVols.repaint();

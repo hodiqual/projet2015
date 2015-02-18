@@ -33,7 +33,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
     
 	private Trafic _trafic;
 	
-	private Map<Vol,ComponentVol> _volsADessiner;
+	private Map<Vol,ComponentVol> _volsADessiner = new HashMap<Vol,ComponentVol>();
 
 	private ChargeEnCoursLayerUI layerUI;
 
@@ -70,7 +70,8 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		@Override
 		protected Void doInBackground() throws Exception {
 			
-			_volsADessiner = _trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle)));
+			_volsADessiner.clear();
+			_volsADessiner.putAll(_trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle))));
 
 			final ModeleEvent[] evts = { ModeleEvent.UPDATE_INSTANT };
 			_controleur.ajoutVue(PanelTrafic.this,  evts) ;
@@ -133,6 +134,10 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 
 	public void setChargeEnCoursLayerUI(ChargeEnCoursLayerUI layerUI) {
 		this.layerUI = layerUI;	
+	}
+
+	public Map<Vol, ComponentVol> getVolsADessiner() {
+		return _volsADessiner;
 	}  
 
 }
