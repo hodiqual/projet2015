@@ -22,28 +22,28 @@ public class RunwayDrawer {
 
 	
 	/** 
-	 * Dessine les runways de l'aeroport
+	 * Dessine les runways de l aeroport
 	 * pistes + marquages au sol + numeros des pistes
 	 */
 	public void dessine(Aeroport aeroport, Graphics2D g2 )
 	{
-		// Stocke l'ancien style en mémoire
+		// Stocke l'ancien style en memoire
 		Stroke oldStyle = g2.getStroke();
       
         for (Runway runway : aeroport.get_runways()) {
         	// Variables locales
-            /** L'angle de la piste */
+            /** L angle de la piste */
         	int anglepiste =(int)Math.round(runway.getAngle(-Math.PI/2));
             /** La largeur de la piste selon une constante definie.
              * * @see fr.iessa.vue.infra.PlateformeStd */
         	int largeurpiste=(int)(PlateformeStd.RUNWAY.largeur());
-            /** La coordonée X de la piste 0 */
+            /** La coordonnee X de la piste 0 */
         	int X_extremite0 = (int)runway.get_extremite_x(0);
-            /** La coordonée X de la piste 1 */
+            /** La coordonnee X de la piste 1 */
         	int X_extremite1 = (int)runway.get_extremite_x(1);
-            /** La coordonée Y de la piste 0 */
+            /** La coordonnee Y de la piste 0 */
         	int Y_extremite0 = (int)runway.get_extremite_y(0);
-            /** La coordonée Y de la piste 1 */
+            /** La coordonnee Y de la piste 1 */
         	int Y_extremite1 = (int)runway.get_extremite_y(1);
         	
         	
@@ -124,7 +124,7 @@ public class RunwayDrawer {
 				    g2.drawGlyphVector(vectRlettre, (float)X_extremite0+20, (float)Y_extremite0+10+anglepiste);
 		      }
 		      
-		    // Régénère l'ancien style
+		    // Regenere l'ancien style
 		    g2.setStroke(oldStyle);		
 
 

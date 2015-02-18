@@ -23,6 +23,7 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.metier.type.TypeVol;
+import fr.iessa.vue.trafic.ComponentVol;
 
 /** Classe PanelAffichageVol qui affiche les paramètres d'un vol sélectionné sur la carte ou dans la liste
  * @author THOMAS Raimana
@@ -37,25 +38,27 @@ public class PanelAffichageVol extends JPanel {
     private final JButton _boutonRemove = new JButton("Remove");
     private final Controleur _controleur;
     private final Vol _vol;
+    private final ComponentVol _componentVol;
     
     /** Constructeur */
-    public PanelAffichageVol(Vol v, Controleur c) {
+    public PanelAffichageVol(ComponentVol componentVol, Controleur c) {
 		
     	super();
     	_controleur = c;
-    	_vol = v;
+    	_componentVol = componentVol;
+    	_vol = componentVol.getVol();
     	
     	setBorder(BorderFactory.createTitledBorder(" "));
     	setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     	add(Box.createHorizontalGlue()); //Pour que les éléments prennent toute la largeur du panel
 		
-		_jlIdVol = new JLabel("Identifiant : " + v.getId());
+		_jlIdVol = new JLabel("Identifiant : " + _vol.getId());
 		_jlIdVol.setFont( new Font(getFont().getName(), Font.BOLD, getFont().getSize()) ); //Mise en gras
-    	_jlCategorieVol = new JLabel("Catégorie : " + (v.getCategorie()).getAbreviation() );
-    	if (v.getTypeVol() == TypeVol.ARR) {
-    		_jlTypeHeureVol = new JLabel("Heure d'arrivée : " + v.getPremierInstant());
+    	_jlCategorieVol = new JLabel("Catégorie : " + (_vol.getCategorie()).getAbreviation() );
+    	if (_vol.getTypeVol() == TypeVol.ARR) {
+    		_jlTypeHeureVol = new JLabel("Heure d'arrivée : " + _vol.getPremierInstant());
 	    } else {
-	    	_jlTypeHeureVol = new JLabel("Heure de départ : " + v.getPremierInstant());
+	    	_jlTypeHeureVol = new JLabel("Heure de départ : " + _vol.getPremierInstant());
 	    }
     	
     	_highLight.addActionListener(new ActionHighLight());

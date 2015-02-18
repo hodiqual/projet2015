@@ -1,5 +1,6 @@
 package fr.iessa.vue.trafic;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,12 +24,13 @@ import fr.iessa.vue.Echelle;
 
 public class ComponentVol extends JComponent {
 
-	private int width = 32;
-	private int height = 32;
+	private int _largeur = 32;
+	private int _hauteur = 32;
 	
 	private BufferedImage _imageCourante;
 	private ShapeAvionFactory _imageFactory;
 	private Rectangle2D _collisionHighlight;
+	private Color _highlightColor;
 	private Echelle _echelle;
 	private Vol _vol;
 	private Point2D.Double _coordCouranteDouble = new Point2D.Double();
@@ -63,15 +65,16 @@ public class ComponentVol extends JComponent {
 		
 		_imageCourante = _imageFactory.get(0);
 		
-		width = _imageCourante.getWidth();
-		height = _imageCourante.getHeight(); 
+		_largeur = _imageCourante.getWidth();
+		_hauteur = _imageCourante.getHeight(); 
 		
-		setMinimumSize(new Dimension(width,height));
-		setMaximumSize(new Dimension(width,height));
-		setPreferredSize(new Dimension(width,height));
+		setMinimumSize(new Dimension(_largeur,_hauteur));
+		setMaximumSize(new Dimension(_largeur,_hauteur));
+		setPreferredSize(new Dimension(_largeur,_hauteur));
 		
 		if(_vol.aDesCollisions())
-			_collisionHighlight = new Rectangle(new Dimension(width, height));
+			_collisionHighlight = new Rectangle(new Dimension(_largeur, _hauteur));	
+		
 		
 		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
 		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
@@ -113,11 +116,15 @@ public class ComponentVol extends JComponent {
 	}
 
 	public int getWidth(){
-		return width;
+		return _largeur;
 	} 
 
 	public int getHeight(){
-		return height;
+		return _hauteur;
+	}
+	
+	public Vol getVol() {
+		return _vol;
 	}
 
 	public void paintComponent(Graphics g){
@@ -130,6 +137,16 @@ public class ComponentVol extends JComponent {
 			g2.fill(_collisionHighlight);
 			g2.setColor(colorToRestore);
 		}
+		
+		if(_highlightColor != null)
+		{
+			Color colorToRestore = g2.getColor();
+			g2.setColor(_highlightColor);
+			g2.setStroke(new BasicStroke(4));
+			g2.draw(new Rectangle(new Dimension(_largeur, _hauteur)));
+			g2.setColor(colorToRestore);
+		}
+		
 		g2.drawImage(_imageCourante, 0, 0, null);
 	}
 	
@@ -164,8 +181,16 @@ public class ComponentVol extends JComponent {
 				_imageCourante = _imageFactory.get(angle(_coordCouranteDouble, _coordSuivanteDouble));
 			}		
 	
-			setX(_coordCourante.x-width/2);
-			setY(_coordCourante.y-height/2);
+			setX(_coordCourante.x-_largeur/2);
+			setY(_coordCourante.y-_hauteur/2);
 		}
+	}
+
+	/**
+	 * @param _highlightColor the _highlightColor to set
+	 */
+	public void setHighlightColor(Color highlightColor) {
+		this._highlightColor = highlightColor;
+		repaint();
 	}
 }
