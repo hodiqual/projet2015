@@ -1,12 +1,16 @@
 package fr.iessa.vue.trafic;
 
+
+
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
@@ -37,6 +41,7 @@ public class ComponentVol extends JComponent {
 	private Point2D.Double _coordSuivanteDouble = new Point2D.Double();
 	private Point _coordCourante = new Point();
 	private GeneralPath _cheminParcouru = new GeneralPath();
+	private Shape _cheminParcouruShape;
 	
 	public ComponentVol(Vol v, Echelle echelle) { 
 		
@@ -142,7 +147,7 @@ public class ComponentVol extends JComponent {
 		{
 			Color colorToRestore = g2.getColor();
 			g2.setColor(_highlightColor);
-			g2.setStroke(new BasicStroke(4));
+			g2.setStroke(new BasicStroke(8));
 			g2.draw(new Rectangle(new Dimension(_largeur, _hauteur)));
 			g2.setColor(colorToRestore);
 		}
@@ -172,7 +177,8 @@ public class ComponentVol extends JComponent {
 			_echelle.getAffineTransform().transform(_vol.getCoordCourante(), _coordCouranteDouble);
 			_coordCourante.setLocation(_coordCouranteDouble);
 			
-			//_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
+			if(_highlightColor != null)
+				_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
 			
 			
 			//Determine le sprite a dessiner selon l'angle entre le point courant et le point suivant
@@ -191,6 +197,29 @@ public class ComponentVol extends JComponent {
 	 */
 	public void setHighlightColor(Color highlightColor) {
 		this._highlightColor = highlightColor;
+		
+		if(_highlightColor != null && _cheminParcouruShape == null)
+			_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
+		
 		repaint();
+		Container parent = getParent();
+		if(parent!=null)
+			getParent().repaint();
+	}
+
+	public boolean isHighlighted() {
+		return _highlightColor != null;
+	}
+
+	public void drawChemin(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		Color colorToRestore = g2.getColor();
+		g2.setColor(_highlightColor);
+		g2.setStroke(new BasicStroke(5));
+		if(_cheminParcouruShape != null)
+		{
+			g2.draw(_cheminParcouruShape);
+		}
+		g2.setColor(colorToRestore);
 	}
 }
