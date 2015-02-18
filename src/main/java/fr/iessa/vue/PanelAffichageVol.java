@@ -4,6 +4,7 @@ package fr.iessa.vue;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -28,7 +29,7 @@ import fr.iessa.metier.type.TypeVol;
  * @version 1.0 
  */
 
-public class PanelAffichageVol extends JPanel implements PropertyChangeListener {
+public class PanelAffichageVol extends JPanel {
 	/** Attributs */
     private final JLabel _jlIdVol, _jlCategorieVol, _jlTypeHeureVol;
     private final JCheckBox _highLight = new JCheckBox("Highlight");
@@ -49,6 +50,7 @@ public class PanelAffichageVol extends JPanel implements PropertyChangeListener 
     	add(Box.createHorizontalGlue()); //Pour que les éléments prennent toute la largeur du panel
 		
 		_jlIdVol = new JLabel("Identifiant : " + v.getId());
+		_jlIdVol.setFont( new Font(getFont().getName(), Font.BOLD, getFont().getSize()) ); //Mise en gras
     	_jlCategorieVol = new JLabel("Catégorie : " + (v.getCategorie()).getAbreviation() );
     	if (v.getTypeVol() == TypeVol.ARR) {
     		_jlTypeHeureVol = new JLabel("Heure d'arrivée : " + v.getPremierInstant());
@@ -69,13 +71,20 @@ public class PanelAffichageVol extends JPanel implements PropertyChangeListener 
 		
 	}
 	
-    /** Listeners */
+    /** Met en évidence le vol */
     class ActionHighLight implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
+    		
+    		if ( _highLight.isSelected() ){
+    			System.out.println(_vol.getId() + " : Je suis sélectionné !");
+    		} else {
+    			System.out.println(_vol.getId() + " : Je ne suis pas sélectionné.");
+    		}
     		
     	}
     }
     
+    /** Réaffiche le trafic au momment où le vol apparait */
     class ActionShow implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
     		_controleur.stopTrafic();
@@ -83,6 +92,7 @@ public class PanelAffichageVol extends JPanel implements PropertyChangeListener 
     	}
     }
     
+    /** Supprime l'affichage des paramètres du vol */
     class ActionRemove implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
@@ -94,17 +104,5 @@ public class PanelAffichageVol extends JPanel implements PropertyChangeListener 
     	}
     }
     
-    /** Actions à realiser après une demande de mise à jour par le contrôleur */
-    public void propertyChange(PropertyChangeEvent evt) {
-    	
-		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
-			case UPDATE_INSTANT:
-				break;
-
-			default:
-				break;
-		}
-		
-	}
 
 }

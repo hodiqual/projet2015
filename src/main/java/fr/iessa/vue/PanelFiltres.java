@@ -95,7 +95,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		};
 		
 		public FiltreTypeVol(){
-			setBorder(BorderFactory.createTitledBorder("Type de vol:"));
+			setBorder(BorderFactory.createTitledBorder("Type de vol :"));
 			ButtonGroup buttonGroup = new ButtonGroup();
 			buttonGroup.add(_tous);
 			buttonGroup.add(_dep);
@@ -163,7 +163,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		};
 		
 		public FiltreCategorie(){
-			setBorder(BorderFactory.createTitledBorder("Categorie de l'aeronef:"));
+			setBorder(BorderFactory.createTitledBorder("Categorie de l'aeronef :"));
 			ButtonGroup buttonGroup = new ButtonGroup();
 			buttonGroup.add(_all);
 			buttonGroup.add(_h);
@@ -235,7 +235,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		};
 		
 		public FiltreCollision(){
-			setBorder(BorderFactory.createTitledBorder("Vol avec collision detectee:"));
+			setBorder(BorderFactory.createTitledBorder("Vol avec collision detectee :"));
 			ButtonGroup buttonGroup = new ButtonGroup();
 			buttonGroup.add(_tous);
 			buttonGroup.add(_avec);
@@ -287,7 +287,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		};
 		
 		public FiltrePremierInstant(){
-			setBorder(BorderFactory.createTitledBorder("Vol apres: "));
+			setBorder(BorderFactory.createTitledBorder("Vol apres : "));
 			_slider.setMinimum(InstantFabrique.getMinimumInstant().getSeconds());
 			_slider.setMaximum(InstantFabrique.getMaximumInstant().getSeconds());
 			final int nbSecondsEnSixHeures = 3600*6;
