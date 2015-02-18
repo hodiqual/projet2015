@@ -17,6 +17,8 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -115,8 +117,8 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	    c.gridx = 2;
         add(forward,c);
 	    c.gridx = 3;
-	    c.ipadx = 400;
-		c.gridwidth = 40;
+	    c.ipadx = 500;
+		c.gridwidth = 500;
         add(timeline,c);
 
         
@@ -146,20 +148,47 @@ private  void updateBoutonPlayPause()
 */
  private void addListeners() {
 	 
+	 
+   
 	      timeline.addMouseListener(new MouseAdapter() {
-	            public void mousePressed(MouseEvent e) {
-	            		syncTimeline=true;
+	      	private java.util.Timer t;
+	    	private int secondes;
+	    	  
+	    	  public void mousePressed(MouseEvent e) {
+	          	syncTimeline=true;
+	            if(t == null)
+	            {
+	                t = new java.util.Timer();
+	                secondes = 0;
+	                
 	            }
+	            t.scheduleAtFixedRate(new TimerTask()
+	            {
+	                public void run()
+	                {
+		            	if((timeline.getValue())==0){
+			            	_controleur.setInstant((int)0); }
+			            	else{
+			                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
+	                }
+	            },0,100);
+	            }
+            
 	            public void mouseReleased(MouseEvent e) {
-	            	if((timeline.getValue())==0){
-	            	_controleur.setInstant((int)0); }
-	            	else{
-	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
-	            		syncTimeline=false;
-	            }
-	  
+
+
+	            	
+	                if(t != null)
+	                {
+	                    t.cancel();
+	                    t = null;
+	        	       	syncTimeline=false;
+	                }
+	            }	  
 	 
 	       }
+	      
+	      
 	      
 	    		  
 	 );
