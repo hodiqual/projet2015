@@ -31,9 +31,11 @@ import fr.iessa.vue.trafic.ComponentVol;
  */
 
 public class PanelAffichageVol extends JPanel {
+
 	/** Attributs */
     private final JLabel _jlIdVol, _jlCategorieVol, _jlTypeHeureVol;
     private final JCheckBox _highLight = new JCheckBox("Highlight");
+    private final static Color[] _couleursHighlights = new Color[] {Color.BLUE, Color.MAGENTA, Color.CYAN, Color.GREEN, Color.ORANGE, Color.YELLOW, Color.PINK};
     private final JButton _boutonShow = new JButton("Show");
     private final JButton _boutonRemove = new JButton("Remove");
     private final Controleur _controleur;
@@ -79,9 +81,9 @@ public class PanelAffichageVol extends JPanel {
     	public void actionPerformed(ActionEvent arg0) {
     		
     		if ( _highLight.isSelected() ){
-    			System.out.println(_vol.getId() + " : Je suis sélectionné !");
+    			_componentVol.setHighlightColor(_couleursHighlights[0]);
     		} else {
-    			System.out.println(_vol.getId() + " : Je ne suis pas sélectionné.");
+    			_componentVol.setHighlightColor(null);
     		}
     		
     	}
@@ -98,7 +100,8 @@ public class PanelAffichageVol extends JPanel {
     /** Supprime l'affichage des paramètres du vol */
     class ActionRemove implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
-    		
+
+			_componentVol.setHighlightColor(null);
     		Container parent = PanelAffichageVol.this.getParent();
     		parent.remove(PanelAffichageVol.this);
     		parent.revalidate();
