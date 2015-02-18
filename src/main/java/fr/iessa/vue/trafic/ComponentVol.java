@@ -1,6 +1,6 @@
 package fr.iessa.vue.trafic;
 
-import static org.junit.Assert.assertEquals;
+
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -14,7 +14,6 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
