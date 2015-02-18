@@ -1,6 +1,7 @@
 package fr.iessa.vue.trafic;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
@@ -116,6 +118,14 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		default:
 			break;
 		}
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g); 
+
+		_volsADessiner.values().stream()
+						.filter(cv -> cv.isHighlighted() && cv.isShowing())
+						.forEach(cv -> cv.drawChemin(g) );
 	}
 
 	@Override
