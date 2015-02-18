@@ -77,7 +77,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	// Création et configuration du controleur MVC
     	_controleur = new Controleur(); 
 	    this.getContentPane().add(new PanelPrincipalMultiCouches(_controleur,true));
-	    _controleur.ajoutVue(this);
+	    final ModeleEvent[] evts = {ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE, ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE, ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR, ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_ERREUR};
+		_controleur.ajoutVue(this, evts) ;
 	    
 	    //Create and set up the content pane.
 	    this.validate();

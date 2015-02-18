@@ -170,9 +170,11 @@ public class Trafic implements Observer {
 	}
 
 	public Set<Vol> getVols(Predicate<Vol> filtre) {
-		// TODO Auto-generated method stub
 		return _vols.stream().filter(filtre).collect(Collectors.toSet());
 	}
 	
+	public TreeMap<Instant, Set<Vol>> getVolsParInstant() {
+		return _volsParInstant;
+	}
 	
 }
