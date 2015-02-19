@@ -5,22 +5,18 @@ package fr.iessa.metier.trafic;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import fr.iessa.metier.Instant;
@@ -56,31 +52,38 @@ public class Trafic implements Observer {
 	
 
 	private TreeMap<Instant, Set<Vol>> _volsParInstant;
-	private TreeMap<Instant, Set<Vol>> _volsARajouterParInstant; 
-	private TreeMap<Instant, Set<Vol>> _volsASupprParInstant; 
+	private List<Collision> _collisions;
 	
 	public void computeCollision()
 	{
-		ConcurrentHashMap<Instant, Map<Point,List<Vol> > > collisions
+		
+		ConcurrentHashMap<Instant, Map<Point,List<Vol> > > volsParCoordParInstant
 		 = new ConcurrentHashMap<Instant, Map<Point,List<Vol>> >();
-		_volsParInstant.keySet().parallelStream().forEach( i -> collisions.put(i, new HashMap<Point,List<Vol>>()));
+		_volsParInstant.keySet().parallelStream().forEach( i -> volsParCoordParInstant.put(i, new HashMap<Point,List<Vol>>()));
 		_volsParInstant.entrySet().parallelStream()
-								  .forEach( e -> collisions.put(e.getKey(),
+								  .forEach( e -> volsParCoordParInstant.put(e.getKey(),
 										  						e.getValue().stream()
 										  									.collect(Collectors.groupingBy(v -> v.getCoord(e.getKey())))) 
 										  );
 		
-		collisions.entrySet().parallelStream().forEach(e ->
+		_collisions = new ArrayList<Collision>();
+		
+		volsParCoordParInstant.entrySet().parallelStream().forEach(e ->
 		{
 			e.getValue().entrySet().stream().filter( z -> z.getValue().size() > 1 )
 			.forEach(z -> 
 			{
 				System.out.println( "Collision: " + e.getKey().getSeconds() + " " + z.getKey() + " " + z.getValue());
 				z.getValue().forEach(v -> v.setADesCollisions(true));
+				Collision collision = new Collision(e.getKey(), z.getKey(), z.getValue());
+				_collisions.add(collision);
+				System.err.println(collision);
 			}
 			);
 		}
 		 );
+		
+		
 	}
 	
 	
