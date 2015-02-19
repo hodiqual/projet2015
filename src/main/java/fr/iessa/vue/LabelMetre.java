@@ -55,6 +55,66 @@ public class LabelMetre extends JLabel implements PropertyChangeListener, Observ
 	public void update(Observable o, Object arg) {
 			AffineTransform transformationCourante = (AffineTransform) arg;
 			double factor = transformationCourante.getScaleX();
-	}
+			double  longueur = 96/factor; 
+	        double resteop = longueur%100;            
+	            
+				if (longueur>=1000)
+				{
+					int longueurkm=(int)longueur/1000;
+					setText(longueurkm+ " km");
+				}
+				else if (longueur<=1000 && longueur>=500)
+				{
+		            if (resteop<50)
+	            	{
+	            	longueur = longueur-resteop;
+	            	int longueuradapt = (int)longueur;
+					setText(""+longueuradapt+" m");
+	            	}
+		            else
+	            	{
+	            	longueur = longueur-resteop+100;
+	              	int longueuradapt = (int)longueur;
+	            	setText(""+longueuradapt+" m");
+	            	}
+				}
+				else if (longueur<=500 && longueur>=200)
+				{
+		            if (resteop<25)
+	            	{
+	            	longueur = longueur-resteop;
+	              	int longueuradapt = (int)longueur;
+					setText(""+longueuradapt+" m");
+	            	}
+					else if (resteop>=25 && resteop<=75)
+					{
+		            longueur = longueur-resteop+50;
+		          	int longueuradapt = (int)longueur;
+					setText(""+longueuradapt+" m");
+					}
+		            else if (resteop>75)
+	            	{
+	            	longueur = longueur-resteop+100;
+	              	int longueuradapt = (int)longueur;
+	            	setText(""+longueuradapt+" m");
+	            	}	
+				}
+				else if (longueur<200 && longueur>=100)
+				{
+		         
+	            	int longueuradapt = Math.round(((int)longueur/10))*10;
+					setText(""+longueuradapt+" m");
+	           
+				}
+				
+				else if (longueur<100)
+				{
+		         
+	            	int longueuradapt = (int)longueur;
+					setText(""+longueuradapt+" m");
+	           
+				}
+				}
+				
 
 }
