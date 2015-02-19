@@ -1,3 +1,5 @@
+-------------------------------
+Demander les arretees TAC
 --------------------------
 --------------------------
 BIEN DEFILER LES IMAGES EN PENSE BETES DE SAVOIR QUOI PARLER
@@ -9,12 +11,12 @@ Specifier qu'au niveau allocation des taches:
    A confronter dans le ScrumBoard -> Je consomme plus de point car je prends les
    UC les plus dur mais un meme temps de travail 
    
-   Sauf au dŽbut pour la mise en place du projet: Serveur de gestion de version, 
+   Sauf au dï¿½but pour la mise en place du projet: Serveur de gestion de version, 
    Arboresence Maven, Junit, Code Coverage, CI server.
    
-   Ancienne entreprise, une personne dŽdiŽe ˆ cela, lˆ j'ai aprris sur Maven, CI server
+   Ancienne entreprise, une personne dï¿½diï¿½e ï¿½ cela, lï¿½ j'ai aprris sur Maven, CI server
    
-   A amŽliorer: environnement de travail via ZFS, Nommage des versions, 
+   A amï¿½liorer: environnement de travail via ZFS, Nommage des versions, 
    Repo de gestion de version d'executable.
    
    Plus travaille d'initiation aux scrum, CI, JUnit, Thread
