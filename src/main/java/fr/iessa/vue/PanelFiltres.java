@@ -56,7 +56,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 
 		final ModeleEvent[] evts = { ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE };
 		_controleur.ajoutVue(this, evts) ;	
-		//setMaximumSize(new Dimension(300,400));
+		setMaximumSize(new Dimension(300,400));
 	}
 	
 	@Override
