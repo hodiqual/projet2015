@@ -17,7 +17,7 @@ import fr.iessa.metier.type.TypeQFU;
 
 
 /**
- * Classe m√®re d√©crivant les pistes de la plateforme.
+ * Classe mere decrivant les pistes de la plateforme.
  * @author duvernal
  *
  */
@@ -38,12 +38,12 @@ public class Runway {
 	/** La liste des points qui composent la piste */
 	private String[] _listepoints;
 	
-	/** La piste construite √† partir des points */
+	/** La piste construite a partir des points */
 	private GeneralPath _runwayPointAPoint;
 	
 	
 	/** 
-	 * Charge les runways en tant qu'objets métiers
+	 * Charge les runways en tant que objets metiers
 	 */
 	
 	public Runway(String nom, String qfu1, String qfu2,
@@ -143,7 +143,7 @@ public class Runway {
 	/**
 	 * @return the angle of the runway in radians
 	 * @param i
-	 * Angle +Pi/2 ou -Pi/2 par rapport à l'orientation de la piste
+	 * Angle +Pi/2 ou -Pi/2 par rapport a l orientation de la piste
 	 */
 	public double getAngle(double i) {
 	    double angle = -Math.atan2(_extremite[1].getY() - _extremite[0].getY(), _extremite[1].getX() - _extremite[0].getX());

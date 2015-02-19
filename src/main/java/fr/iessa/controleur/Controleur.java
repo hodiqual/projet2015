@@ -12,6 +12,7 @@ import javax.swing.SwingWorker;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import fr.iessa.dao.infra.PlateformeDAO;
+import fr.iessa.dao.trafic.CollisionDao;
 import fr.iessa.dao.trafic.TraficDao;
 import fr.iessa.metier.Horloge;
 import fr.iessa.metier.HorsLimiteHorloge;
@@ -195,6 +196,53 @@ public class Controleur {
 		sw.execute();
 	}
 	
+	
+
+	public void sauvegarderCollision(String ficname) {
+		//Controle de ficname
+		if(ficname == null || ficname.equals(""))
+		{
+			ModeleEvent evtfin = ModeleEvent.SAUVEGARDE_COLLISION_ERREUR;	
+			_swingObservable.firePropertyChange(evtfin.toString(), null, "Le nom du fichier n'est pas renseigne");	
+			return;
+		}		
+
+		//Tache possiblement longue donc a faire dans un thread different de l'EDT 
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>(){
+			protected Void doInBackground() throws Exception {
+				
+				CollisionDao dao = new CollisionDao();
+				dao.sauvegardeTrafic(ficname, _trafic.getCollisions());
+			    
+				return null;
+			}
+
+			//process & publish pour la gestion des resultats intermediaires, PROGRESS fire le TRAVAIL EN COURS 
+			// pour que la vue affiche une animation en rond travail en cours avec un tool tips
+
+			public void done(){
+				try {
+					get(); //Check if an error occurs
+					
+					//notifier la fin du chargement
+					ModeleEvent evt = ModeleEvent.SAUVEGARDE_COLLISION_DONE;	
+					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, ficname));
+
+				} catch (ExecutionException | InterruptedException e) {
+					//Cas ou le doInBackground a lancé une exception ou a ete interrompu
+					e.printStackTrace();
+					
+					ModeleEvent evt = ModeleEvent.SAUVEGARDE_COLLISION_ERREUR;	
+					_swingObservable.firePropertyChange(evt.toString(), null, e.getCause().getMessage());
+				}
+			}         
+		};
+		
+		//On lance le SwingWorker
+		sw.execute();
+	}
+	
+	
 	/**
 	 * Etat de la simulation s'il est en cours ou non. L'attribut est volatile
 	 * car il peut etre lu ou ecrit par different thread (EDT ou Thread de HorlogePrincipale)
@@ -202,6 +250,7 @@ public class Controleur {
 	private volatile boolean _isTraficRunning = false;
 	
 	private void updateInstant(Instant instant){
+		
 		Instant oldInstant = _horloge.getInstantCourant();
 
 		try {
@@ -238,7 +287,7 @@ public class Controleur {
 	return PositionSeconde;	
 	}
 	
-	private int _dureeIntervalle = 40; //  40 milliseconds 25 update par seconde
+	private int _dureeIntervalle = 60; //  40 milliseconds 25 update par seconde
 	
 	public void setDureeInterval( int milliseconds ){
 		int oldUpdateInterval = _dureeIntervalle;
@@ -381,9 +430,5 @@ public class Controleur {
 		
 		sw.execute();
 	}
-	
-	
-	
-	
 
 }

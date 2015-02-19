@@ -3,6 +3,7 @@
  */
 package fr.iessa.vue;
 
+import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -20,11 +21,15 @@ public class LabelHorloge extends JLabel implements PropertyChangeListener {
 	public LabelHorloge(Controleur controleur)
 	{
 		super("00:00:00");
+		
+		Font fontParDefaut = getFont();
+		setFont(new Font(fontParDefaut.getName(), Font.BOLD, fontParDefaut.getSize()));
+		
 		final ModeleEvent[] evts = {ModeleEvent.UPDATE_INSTANT};
 		controleur.ajoutVue(this,  evts) ;
 	}
 
-	/* (non-Javadoc)
+	/** 
 	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
 	 */
 	@Override

@@ -14,6 +14,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -66,7 +67,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 	 */
 	private final int tempsAffichageLecteur = 100;
 	
-	public  PanelVisualisationEtLecture(Controleur controleur){
+	public  PanelVisualisationEtLecture(Controleur controleur, Echelle echelle){
 		super();
 		
 		setOpaque(false);
@@ -115,8 +116,13 @@ public class PanelVisualisationEtLecture extends SLPanel {
 					boutonTabDeBord.setText("<<");
 			}
 		});
+		
+	    _visualisation.add(new LabelMetre(controleur, echelle));
+	    _visualisation.add(new LabelEchelle(controleur));
+	    _visualisation.add(new JLabel("          "));
 		_visualisation.add(new LabelHorloge(controleur));
 		_visualisation.add(boutonTabDeBord);
+		
 		
 		_zoneDetection = new JPanel();
 		_zoneDetection.setOpaque(false);

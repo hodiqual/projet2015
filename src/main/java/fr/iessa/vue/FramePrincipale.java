@@ -70,14 +70,24 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 			}
 		});
     	JMenuItem menuCollision = new JMenuItem("Collisions");
+    	JMenuItem menuSauvCollision = new JMenuItem("Sauvegarde collisions");
+    	menuSauvCollision.addActionListener(new ActionSauverCollisions());
     	_menuOption.add(menuAjoutVue);
     	_menuOption.add(menuCollision);
+    	_menuOption.add(menuSauvCollision);
     	_barreMenu.add(_menuOption);
     	
     	// Création et configuration du controleur MVC
     	_controleur = new Controleur(); 
 	    this.getContentPane().add(new PanelPrincipalMultiCouches(_controleur,true));
-	    _controleur.ajoutVue(this);
+	    final ModeleEvent[] evts = {ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE, 
+	    							ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE,
+	    							ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR,
+	    							ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_ERREUR,
+	    							ModeleEvent.SAUVEGARDE_COLLISION_DONE,
+	    							ModeleEvent.SAUVEGARDE_COLLISION_ERREUR};
+	    
+		_controleur.ajoutVue(this, evts) ;
 	    
 	    //Create and set up the content pane.
 	    this.validate();
@@ -98,9 +108,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierPlateForme = dialogue.getSelectedFile();
             		nomFichierPlateForme = fichierPlateForme.getName();
+                    _controleur.chargerCarte(nomFichierPlateForme);
         	}
-            
-            _controleur.chargerCarte(nomFichierPlateForme);
     		
     	}
     }
@@ -115,9 +124,26 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierTrafic = dialogue.getSelectedFile();
             		nomFichierTrafic = fichierTrafic.getName();
+                    _controleur.chargerTrafic(nomFichierTrafic);
         	}
-            
-            _controleur.chargerTrafic(nomFichierTrafic);
+            	
+    	}
+    }
+    
+
+    
+    class ActionSauverCollisions implements ActionListener {
+    	public void actionPerformed(ActionEvent arg0) {
+    		
+    		File fichierCollision = null;
+            String nomFichierCollision = "";
+            JFileChooser dialogue = new JFileChooser(new File("."));
+           
+            if (dialogue.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            	fichierCollision = dialogue.getSelectedFile();
+            	nomFichierCollision = fichierCollision.getName();
+                _controleur.sauvegarderCollision(dialogue.getCurrentDirectory()+"/"+nomFichierCollision + ".txt");
+        	}
             	
     	}
     }
@@ -146,6 +172,14 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 				
 			case CHARGEMENT_TRAFIC_FICHIER_ERREUR:
 				JOptionPane.showMessageDialog(null, "Chargement echoue : " + evt.getNewValue(), "" , JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case SAUVEGARDE_COLLISION_DONE:
+				JOptionPane.showMessageDialog(null, "Sauvegarde des collisions effectuées dans " + evt.getNewValue(), "" , JOptionPane.INFORMATION_MESSAGE);
+				break;
+				
+			case SAUVEGARDE_COLLISION_ERREUR:
+				JOptionPane.showMessageDialog(null, "Savegarde des collisions echouée : " + evt.getNewValue(), "" , JOptionPane.ERROR_MESSAGE);
 				break;
 
 			default:

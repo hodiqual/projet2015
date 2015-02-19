@@ -1,11 +1,16 @@
 package fr.iessa.vue.trafic;
 
+
+
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
@@ -23,18 +28,20 @@ import fr.iessa.vue.Echelle;
 
 public class ComponentVol extends JComponent {
 
-	private int width = 32;
-	private int height = 32;
+	private int _largeur = 32;
+	private int _hauteur = 32;
 	
 	private BufferedImage _imageCourante;
 	private ShapeAvionFactory _imageFactory;
 	private Rectangle2D _collisionHighlight;
+	private Color _highlightColor;
 	private Echelle _echelle;
 	private Vol _vol;
 	private Point2D.Double _coordCouranteDouble = new Point2D.Double();
 	private Point2D.Double _coordSuivanteDouble = new Point2D.Double();
 	private Point _coordCourante = new Point();
 	private GeneralPath _cheminParcouru = new GeneralPath();
+	private Shape _cheminParcouruShape;
 	
 	public ComponentVol(Vol v, Echelle echelle) { 
 		
@@ -63,15 +70,16 @@ public class ComponentVol extends JComponent {
 		
 		_imageCourante = _imageFactory.get(0);
 		
-		width = _imageCourante.getWidth();
-		height = _imageCourante.getHeight(); 
+		_largeur = _imageCourante.getWidth();
+		_hauteur = _imageCourante.getHeight(); 
 		
-		setMinimumSize(new Dimension(width,height));
-		setMaximumSize(new Dimension(width,height));
-		setPreferredSize(new Dimension(width,height));
+		setMinimumSize(new Dimension(_largeur,_hauteur));
+		setMaximumSize(new Dimension(_largeur,_hauteur));
+		setPreferredSize(new Dimension(_largeur,_hauteur));
 		
 		if(_vol.aDesCollisions())
-			_collisionHighlight = new Rectangle(new Dimension(width, height));
+			_collisionHighlight = new Rectangle(new Dimension(_largeur, _hauteur));	
+		
 		
 		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
 		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
@@ -113,11 +121,15 @@ public class ComponentVol extends JComponent {
 	}
 
 	public int getWidth(){
-		return width;
+		return _largeur;
 	} 
 
 	public int getHeight(){
-		return height;
+		return _hauteur;
+	}
+	
+	public Vol getVol() {
+		return _vol;
 	}
 
 	public void paintComponent(Graphics g){
@@ -130,6 +142,16 @@ public class ComponentVol extends JComponent {
 			g2.fill(_collisionHighlight);
 			g2.setColor(colorToRestore);
 		}
+		
+		if(_highlightColor != null)
+		{
+			Color colorToRestore = g2.getColor();
+			g2.setColor(_highlightColor);
+			g2.setStroke(new BasicStroke(8));
+			g2.draw(new Rectangle(new Dimension(_largeur, _hauteur)));
+			g2.setColor(colorToRestore);
+		}
+		
 		g2.drawImage(_imageCourante, 0, 0, null);
 	}
 	
@@ -155,7 +177,8 @@ public class ComponentVol extends JComponent {
 			_echelle.getAffineTransform().transform(_vol.getCoordCourante(), _coordCouranteDouble);
 			_coordCourante.setLocation(_coordCouranteDouble);
 			
-			//_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
+			if(_highlightColor != null)
+				_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
 			
 			
 			//Determine le sprite a dessiner selon l'angle entre le point courant et le point suivant
@@ -164,8 +187,39 @@ public class ComponentVol extends JComponent {
 				_imageCourante = _imageFactory.get(angle(_coordCouranteDouble, _coordSuivanteDouble));
 			}		
 	
-			setX(_coordCourante.x-width/2);
-			setY(_coordCourante.y-height/2);
+			setX(_coordCourante.x-_largeur/2);
+			setY(_coordCourante.y-_hauteur/2);
 		}
+	}
+
+	/**
+	 * @param _highlightColor the _highlightColor to set
+	 */
+	public void setHighlightColor(Color highlightColor) {
+		this._highlightColor = highlightColor;
+		
+		if(_highlightColor != null && _cheminParcouruShape == null)
+			_cheminParcouruShape = _cheminParcouru.createTransformedShape(_echelle.getAffineTransform());
+		
+		repaint();
+		Container parent = getParent();
+		if(parent!=null)
+			getParent().repaint();
+	}
+
+	public boolean isHighlighted() {
+		return _highlightColor != null;
+	}
+
+	public void drawChemin(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		Color colorToRestore = g2.getColor();
+		g2.setColor(_highlightColor);
+		g2.setStroke(new BasicStroke(5));
+		if(_cheminParcouruShape != null)
+		{
+			g2.draw(_cheminParcouruShape);
+		}
+		g2.setColor(colorToRestore);
 	}
 }

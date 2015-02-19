@@ -1,8 +1,8 @@
 package fr.iessa.metier.type;
 
 /**
- * le QFU désigne l'orientation magnétique de la piste en degré 
- * par rapport au nord magnétique en tournant dans le sens horaire
+ * le QFU designe l orientation magnetique de la piste en degre 
+ * par rapport au nord magnetique en tournant dans le sens horaire
  * @author hodiqual
  */
 public enum TypeQFU {

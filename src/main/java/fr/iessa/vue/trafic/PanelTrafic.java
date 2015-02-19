@@ -1,6 +1,7 @@
 package fr.iessa.vue.trafic;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
@@ -33,7 +35,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
     
 	private Trafic _trafic;
 	
-	private Map<Vol,ComponentVol> _volsADessiner;
+	private Map<Vol,ComponentVol> _volsADessiner = new HashMap<Vol,ComponentVol>();
 
 	private ChargeEnCoursLayerUI layerUI;
 
@@ -70,7 +72,8 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		@Override
 		protected Void doInBackground() throws Exception {
 			
-			_volsADessiner = _trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle)));
+			_volsADessiner.clear();
+			_volsADessiner.putAll(_trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle))));
 
 			final ModeleEvent[] evts = { ModeleEvent.UPDATE_INSTANT };
 			_controleur.ajoutVue(PanelTrafic.this,  evts) ;
@@ -117,6 +120,14 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 			break;
 		}
 	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g); 
+
+		_volsADessiner.values().stream()
+						.filter(cv -> cv.isHighlighted() && cv.isShowing())
+						.forEach(cv -> cv.drawChemin(g) );
+	}
 
 	@Override
 	//Update a une observation de changement de _echelle
@@ -134,6 +145,10 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 
 	public void setChargeEnCoursLayerUI(ChargeEnCoursLayerUI layerUI) {
 		this.layerUI = layerUI;	
+	}
+
+	public Map<Vol, ComponentVol> getVolsADessiner() {
+		return _volsADessiner;
 	}  
 
 }

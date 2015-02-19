@@ -17,6 +17,8 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -26,9 +28,9 @@ import javax.swing.*;
  */
 public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	
-	/** Lac ouleur de l'arrière-plan */
+	/** Lac ouleur de l arriere-plan */
 	private static final Color BG_COLOR = new Color(0x3B5998);
-	/** Les bouton du player */
+	/** Les boutons du player */
 	private JButton play, forward, back;
 	/** La barre de lecture */
 	private JSlider timeline;
@@ -42,7 +44,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
     private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
     /** L'image du bouton "avance" */
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
-    /** Le contrôleur du MVC */
+    /** Le controleur du MVC */
     private Controleur _controleur;
 
 	
@@ -115,8 +117,8 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	    c.gridx = 2;
         add(forward,c);
 	    c.gridx = 3;
-	    c.ipadx = 400;
-		c.gridwidth = 40;
+	    c.ipadx = 500;
+		c.gridwidth = 500;
         add(timeline,c);
 
         
@@ -129,7 +131,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	}
 
 	/** 
-	 * Update du bouton play/pause
+	 * Update du bouton play-pause
 	 * affiche l'image pause si trafic en lecture et play si trafic en pause
 	*/
 private  void updateBoutonPlayPause()
@@ -141,25 +143,52 @@ private  void updateBoutonPlayPause()
 }
 
 /** 
- * Les différents listeners du player
- * action sur la barre de lecture et sur les boutons (play/pause, back, forward)
+ * Les differents listeners du player
+ * action sur la barre de lecture et sur les boutons (play-pause, back, forward)
 */
  private void addListeners() {
 	 
+	 
+   
 	      timeline.addMouseListener(new MouseAdapter() {
-	            public void mousePressed(MouseEvent e) {
-	            		syncTimeline=true;
+	      	private java.util.Timer t;
+	    	private int secondes;
+	    	  
+	    	  public void mousePressed(MouseEvent e) {
+	          	syncTimeline=true;
+	            if(t == null)
+	            {
+	                t = new java.util.Timer();
+	                secondes = 0;
+	                
 	            }
+	            t.scheduleAtFixedRate(new TimerTask()
+	            {
+	                public void run()
+	                {
+		            	if((timeline.getValue())==0){
+			            	_controleur.setInstant((int)0); }
+			            	else{
+			                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
+	                }
+	            },0,100);
+	            }
+            
 	            public void mouseReleased(MouseEvent e) {
-	            	if((timeline.getValue())==0){
-	            	_controleur.setInstant((int)0); }
-	            	else{
-	                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
-	            		syncTimeline=false;
-	            }
-	  
+
+
+	            	
+	                if(t != null)
+	                {
+	                    t.cancel();
+	                    t = null;
+	        	       	syncTimeline=false;
+	                }
+	            }	  
 	 
 	       }
+	      
+	      
 	      
 	    		  
 	 );
@@ -279,7 +308,7 @@ private  void updateBoutonPlayPause()
  
 
  /** 
-  * Ecoute les modifications du contrôleur
+  * Ecoute les modifications du controleur
   * et applique les modifications sur la vue
  */
 	public void propertyChange(PropertyChangeEvent evt) {

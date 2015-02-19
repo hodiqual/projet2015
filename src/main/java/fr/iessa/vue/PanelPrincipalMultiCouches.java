@@ -5,6 +5,7 @@ package fr.iessa.vue;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.Map;
 
 import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
@@ -12,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
 import fr.iessa.controleur.Controleur;
+import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.infra.PanelPlateforme;
+import fr.iessa.vue.trafic.ComponentVol;
 import fr.iessa.vue.trafic.PanelTrafic;
 
 /**
@@ -58,7 +61,7 @@ public class PanelPrincipalMultiCouches extends JPanel {
 		
 		if(avecControle) {
 			//Gestion des controles Lecteur et Tableau de Bord
-			PanelDesControles controles = new PanelDesControles(controleur);
+			PanelDesControles controles = new PanelDesControles(controleur, traficPanel.getVolsADessiner(), echelle);
 			controles.setAlignmentX(0.0f);
 			controles.setAlignmentY(0.0f);
 			_gestionPlans.add(controles,JLayeredPane.PALETTE_LAYER);
