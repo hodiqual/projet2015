@@ -43,4 +43,22 @@ Process de l'environnement de travail:
                                      
     Assez Pull - Merge - Junit Test - Push - CI  
 ----------------------------
+Politique pour les canvas:
+Surcharge de Jcomponent, Jpanel ... Garder l'esprit des Jswings
+Objet légers: dans le paintComponent minimiser les choses, appeler dans l'EDT et pleins de fois
+              pré traitement des shapes, des images hors paintComponent
+              et si traitement trop long faire hors EDT.
+
+------------------------------
+Difficultés:
+	pas assez d'heures programmées et surtout pas de créneau de libre dans les horaires bureaux.
+	A travailler dans un contexte d'examen (compter le nombre d'examen)
+	Et equipe dispersee: moi tous les week ends a paris, et Alexis hors ENAC.
+	  --> Github et Integration Continue
+	
+	Pas de connaissance sur le swing avancé, la programmation concurente et la gestion des threads avec java
+
+-------
+
+RAF: changement vitesse de défilement du rejeu. 
 

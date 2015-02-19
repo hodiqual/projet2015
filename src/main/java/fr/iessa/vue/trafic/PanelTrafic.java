@@ -108,6 +108,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		case CHARGEMENT_TRAFIC_FICHIER_ERREUR:
 			if(layerUI!=null)
 				layerUI.stop();
+			break;
 		case UPDATE_INSTANT:
 			update((Instant)evt.getNewValue());
 			break;

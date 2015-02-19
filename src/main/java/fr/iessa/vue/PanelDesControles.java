@@ -50,7 +50,7 @@ public class PanelDesControles extends SLPanel {
 		
 		//Affiche la visualisation, le rejeu (resizable) et le tableau de bord (fixe 250 px)
 		_avecTableauCfg =  new SLConfig(this)
-								.row(1f).col(1f).col(250)
+								.row(1f).col(1f).col(300)
 								.place(0, 0, _visualisationEtLecture)
 								.place(0, 1, _tableauDeBord);
 		
