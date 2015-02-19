@@ -2,24 +2,17 @@
 package fr.iessa.vue;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 
 import fr.iessa.controleur.Controleur;
-import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.trafic.ComponentVol;
 
@@ -29,10 +22,7 @@ import fr.iessa.vue.trafic.ComponentVol;
  */
 
 public class PanelTableauDeBord extends JPanel {
-	/** Attributs */
-	private final JLabel _titre = new JLabel("TABLEAU DE BORD");
-	private JPanel _panelVols = new JPanel();
-	
+
 	public PanelTableauDeBord(Controleur controleur, Map<Vol, ComponentVol> volsADessiner) {
 		super();
 		
@@ -45,12 +35,15 @@ public class PanelTableauDeBord extends JPanel {
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// Configuration du titre
+		final JLabel _titre = new JLabel("TABLEAU DE BORD");
 		_titre.setForeground(Color.BLUE);
 		_titre.setFont(new Font("Sans", Font.BOLD, 12));
 		_titre.setAlignmentX(CENTER_ALIGNMENT);
 		
 		// Ajout des différents éléments du Tableau de bord
 		this.add(_titre);
+		this.add(new PanelDensiteTrafic(controleur));
+		JPanel _panelVols = new JPanel();
 		this.add(new PanelFiltres(controleur, new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
