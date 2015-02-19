@@ -39,11 +39,11 @@ public class PanelDesControles extends SLPanel {
 	 */	
 	private final SLConfig _avecTableauCfg;
 	
-	public PanelDesControles(Controleur controleur, Map<Vol,ComponentVol> volsADessiner) {
+	public PanelDesControles(Controleur controleur, Map<Vol,ComponentVol> volsADessiner, Echelle echelle) {
 		super();
 		setOpaque(false);
 		_tableauDeBord = new PanelTableauDeBord(controleur, volsADessiner);
-		_visualisationEtLecture = new PanelVisualisationEtLecture(controleur);
+		_visualisationEtLecture = new PanelVisualisationEtLecture(controleur, echelle);
 		_visualisationEtLecture.setOpaque(false);
 		_visualisationEtLecture.set_actionBoutonTabDeBord(afficheTableauDeBord);
 		
