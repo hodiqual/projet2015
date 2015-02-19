@@ -84,10 +84,6 @@ public class CollisionTest {
 		assertEquals(3, collisions.get(0).getVolsImpliques().size(),0);
 		assertEquals(1450, collisions.get(0).getInstant().getSeconds(),0);
 		assertEquals(new Point2D.Double(-938,-1128), collisions.get(0).getPointImpact());
-
-		assertEquals("SRR6316", collisions.get(0).getVolsImpliques().get(0).getId());
-		assertEquals("BCS1748", collisions.get(0).getVolsImpliques().get(1).getId());
-		assertEquals("FDX5182", collisions.get(0).getVolsImpliques().get(2).getId());
 	}
 	
 	
