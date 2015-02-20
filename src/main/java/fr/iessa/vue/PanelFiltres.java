@@ -163,7 +163,7 @@ public class PanelFiltres extends JPanel implements PropertyChangeListener {
 		};
 		
 		public FiltreCategorie(){
-			setBorder(BorderFactory.createTitledBorder("Categorie de l'aeronef :"));
+			setBorder(BorderFactory.createTitledBorder("Catégorie de l'aeronef :"));
 			ButtonGroup buttonGroup = new ButtonGroup();
 			buttonGroup.add(_all);
 			buttonGroup.add(_h);
