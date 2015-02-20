@@ -47,6 +47,8 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
     /** Le controleur du MVC */
     private Controleur _controleur;
+    /** La valeur par defaut de l intervalle */
+    final int INTERVALORIGINE = 60;
 
 	
     
@@ -99,7 +101,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	                    
 		setOpaque(true);
 		timeline = new JSlider(0,10000,0);		
-		speed = new JSlider(-200,200,0);     
+		speed = new JSlider(-50,50,0);     
         speed.setOrientation(Adjustable.VERTICAL);
 		play= new JButton();
 		updateBoutonPlayPause();
@@ -320,6 +322,36 @@ private  void updateBoutonPlayPause()
        
 		
     });
+    
+    
+    speed.addChangeListener(new ChangeListener() {
+        
+        public void stateChanged(ChangeEvent arg0) {
+
+            if(!speed.getValueIsAdjusting())
+            {               
+                if((speed.getValue())==0)
+                {
+                	//Reinitialise la duree par defaut
+                    _controleur.setDureeInterval(INTERVALORIGINE);
+                }    
+	            else if((speed.getValue())>0)
+	            {
+	  
+	                int faster = INTERVALORIGINE - speed.getValue();
+	                _controleur.setDureeInterval(faster);
+	            }
+	            else if((speed.getValue())<0)
+	            {
+
+	                int slower = INTERVALORIGINE - speed.getValue();
+	                _controleur.setDureeInterval(slower);
+	            }
+            }
+            
+        }
+    });
+    
     
 	 }
 	
