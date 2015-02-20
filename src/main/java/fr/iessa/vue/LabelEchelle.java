@@ -24,7 +24,8 @@ import fr.iessa.controleur.ModeleEvent;
 public class LabelEchelle extends JComponent implements PropertyChangeListener, Observer {
 	
 	final int LARGEURORGINE = 96;
-
+	final int MARGIN = 50;
+	
 	int width = LARGEURORGINE;
 	int height = 10;
     int strip = width/8;
@@ -38,12 +39,12 @@ public class LabelEchelle extends JComponent implements PropertyChangeListener, 
 
 		//setMinimumSize(new Dimension(width,height));
 		//setMaximumSize(new Dimension(width,height));
-		setPreferredSize(new Dimension(width,height));
+		setPreferredSize(new Dimension(width+MARGIN,height));
 		//setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		
 		
-		BufferedImage bufferedImage = new BufferedImage(width+100, height+10, BufferedImage.TYPE_INT_RGB);
+		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = bufferedImage.createGraphics();
   
 			
