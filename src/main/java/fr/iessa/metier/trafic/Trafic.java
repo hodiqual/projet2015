@@ -31,9 +31,11 @@ public class Trafic implements Observer {
 	private TreeMap<Instant, Set<Vol>> _volsParInstant = null;
 	private List<Collision> _collisions = null;
 	
+	
+	
+	
 	public void computeCollision()
-	{
-		
+	{		
 		ConcurrentHashMap<Instant, Map<Point,List<Vol> > > volsParCoordParInstant
 		 = new ConcurrentHashMap<Instant, Map<Point,List<Vol>> >();
 		_volsParInstant.keySet().parallelStream().forEach( i -> volsParCoordParInstant.put(i, new HashMap<Point,List<Vol>>()));

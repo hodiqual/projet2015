@@ -12,7 +12,7 @@ import fr.iessa.metier.Instant;
  * @author hodiqual
  *
  */
-public class Collision {
+public class Collision implements Comparable<Collision>{
 	
 	/**
 	 * Instant ou la collision se passe.
@@ -60,5 +60,10 @@ public class Collision {
 	 */
 	public List<Vol> getVolsImpliques() {
 		return _volsImpliques;
+	}
+
+	@Override
+	public int compareTo(Collision o) {
+		return _instant.compareTo(o.getInstant());
 	}
 }
