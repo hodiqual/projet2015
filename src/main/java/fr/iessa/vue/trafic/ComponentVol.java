@@ -22,6 +22,7 @@ import java.util.TreeMap;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import sun.security.action.GetLongAction;
 import fr.iessa.metier.Instant;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.Echelle;
@@ -89,13 +90,30 @@ public class ComponentVol extends JComponent {
 		addMouseListener(new MouseAdapter() {
 			
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseEntered(MouseEvent e) {
+				System.out.println("OVEROVER");
+				System.out.println("");
 				System.out.println("Avion clique: " + v.getId());
-				System.out.println("isDisplayable: " + isDisplayable());
-				System.out.println("Showing: " + isShowing());
-				System.out.println("Hauteur: " + getHeight());
-				System.out.println("Largeur: " + getWidth());
-				System.out.println("Visible " + isVisible());
+				System.out.println("Coord: " + _coordCourante);
+				System.out.println("Coord souris: " + e.getPoint());
+				System.out.println("Coord Component: " + ComponentVol.this.getLocation());
+				System.out.println("Class e.source " + ((JComponent) e.getSource()).getLocation() + "Adresse " + e.getSource().hashCode());
+				System.out.println("Class Componen " + ComponentVol.this.getLocation() + "Adresse " + ComponentVol.this.hashCode());
+				
+				System.out.println("Premier Insrtant" + _vol.getPremierInstant());
+				setToolTipText("PROUT");
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("");
+				System.out.println("Avion clique: " + v.getId());
+				System.out.println("Coord: " + _coordCourante);
+				System.out.println("Coord souris: " + e.getPoint());
+				System.out.println("Coord Component: " + ComponentVol.this.getLocation());
+				
+				
+				System.out.println("Premier Insrtant" + _vol.getPremierInstant());
 				setToolTipText("PROUT");
 			}
 
@@ -104,7 +122,12 @@ public class ComponentVol extends JComponent {
 	
 	public void setX(int xPos){ 
 		_coordCourante.x = xPos;
-		setLocation(_coordCourante);
+		//setLocation(_coordCourante);
+		System.out.println("");
+		System.out.println("#######   " + _vol.getId() + "#######");
+		System.out.println("SET X _coord: " + _coordCourante);
+		System.out.println("SET X _location: " + getLocation());
+		System.out.println("#######   " + _vol.getId() + "#######");
 	}
 
 	public int getX(){
@@ -113,12 +136,24 @@ public class ComponentVol extends JComponent {
 
 	public void setY(int yPos){
 		_coordCourante.y = yPos;
-		setLocation(_coordCourante);
+		//setLocation(_coordCourante);
+		System.out.println("");
+		System.out.println("#######   " + _vol.getId() + "#######");
+		System.out.println("SET Y _coord: " + _coordCourante);
+		System.out.println("SET Y _location: " + getLocation());
+		System.out.println("#######   " + _vol.getId() + "#######");
 	}
+	
 
 	public int getY(){
 	    return _coordCourante.y;
 	}
+	
+	public Point getLocation(){
+		return _coordCourante;
+	}
+	
+	
 
 	public int getWidth(){
 		return _largeur;
@@ -188,8 +223,11 @@ public class ComponentVol extends JComponent {
 			}		
 	
 			setX(_coordCourante.x-_largeur/2);
-			setY(_coordCourante.y-_hauteur/2);
+			setY(_coordCourante.y-_hauteur/2);	
 		}
+		
+		revalidate();
+		repaint();
 	}
 
 	/**
