@@ -118,7 +118,7 @@ public class PanelVisualisationEtLecture extends SLPanel {
 		});
 		
 	    _visualisation.add(new LabelMetre(controleur, echelle));
-	    _visualisation.add(new LabelEchelle(controleur));
+	    _visualisation.add(new LabelEchelle(controleur, echelle));
 	    _visualisation.add(new JLabel("          "));
 		_visualisation.add(new LabelHorloge(controleur));
 		_visualisation.add(boutonTabDeBord);
