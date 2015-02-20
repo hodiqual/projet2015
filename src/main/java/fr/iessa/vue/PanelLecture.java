@@ -3,8 +3,6 @@
  */
 package fr.iessa.vue;
 
-import java.util.Hashtable;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,8 +51,12 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	
     
 
-
-    
+    /**
+     * Constructeur PanelLecture.
+     * 
+     * @param controleur
+     *            Le controleur
+     */
 	public PanelLecture(Controleur controleur)
 	{
 		
@@ -121,7 +123,6 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	    c.gridx = 0;
 	    c.ipadx=10;
 	    c.ipady=50;
-//		c.gridwidth = 100;
         add(speed,c);	
 	    c.ipadx=5;
 	    c.ipady=5;
@@ -186,10 +187,10 @@ private  void updateBoutonPlayPause()
 	            {
 	                public void run()
 	                {
-		            	if((timeline.getValue())==0){
-			            	_controleur.setInstant((int)0); }
-			            	else{
-			                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
+		            	if((timeline.getValue())==0)
+			            _controleur.setInstant((int)0);
+			            else
+			            _controleur.updateInstant((float)timeline.getValue()/10000*86400);
 	                }
 	            },0,100);
 	            }
@@ -254,7 +255,7 @@ private  void updateBoutonPlayPause()
                 	}
                 	else{
                 		_controleur.updateInstant((float)0);                
-                }
+                	}
                 	timeline.setValue((Math.round((float)_controleur.getInstantCourant()-(float)0.1)*10000/86400));	
                 	
                 }
@@ -302,7 +303,7 @@ private  void updateBoutonPlayPause()
                     	}
                     	else{
                     		_controleur.updateInstant((float)86390);                
-                    }
+                    	}
                     	timeline.setValue((Math.round((float)_controleur.getInstantCourant()+(float)0.1)*10000/86400));	
                     	
                     }
@@ -332,18 +333,18 @@ private  void updateBoutonPlayPause()
             {               
                 if((speed.getValue())==0)
                 {
-                	//Reinitialise la duree par defaut
+                	//Reinitialise la duree par defaut de l intervalle
                     _controleur.setDureeInterval(INTERVALORIGINE);
                 }    
 	            else if((speed.getValue())>0)
 	            {
-	  
+                	//Diminue la duree d intervalle -> traffic plus rapide
 	                int faster = INTERVALORIGINE - speed.getValue();
 	                _controleur.setDureeInterval(faster);
 	            }
 	            else if((speed.getValue())<0)
 	            {
-
+	              	//Augmente la duree d intervalle -> traffic plus lent
 	                int slower = INTERVALORIGINE - speed.getValue();
 	                _controleur.setDureeInterval(slower);
 	            }

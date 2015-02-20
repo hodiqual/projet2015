@@ -16,22 +16,26 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 /**
+ * Classe affichant une valeur arrondie de l echelle de la visualisation courante.
  * @author duvernal
  *
  */
 public class LabelMetre extends JLabel implements PropertyChangeListener, Observer {
 
-	
+    /**
+     * Constructeur LabelMetre.
+     * 
+     * @param echelle
+     *            L'echelle de la vue
+     * @param controleur
+     *            Le controleur
+     */
 	public LabelMetre(Controleur controleur, Echelle echelle)
 	{
 	
 		super("1 km");
 		setVisible(false);
 
-		Font fontParDefaut = getFont();
-		setFont(new Font(fontParDefaut.getName(), Font.PLAIN, fontParDefaut.getSize()));
-		
-		
 		final ModeleEvent[] evts = {ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE};
 		controleur.ajoutVue(this,  evts) ;
 		
@@ -114,7 +118,7 @@ public class LabelMetre extends JLabel implements PropertyChangeListener, Observ
 					setText(""+longueuradapt+" m");
 	           
 				}
-				}
+	}
 				
 
 }
