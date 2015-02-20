@@ -39,7 +39,7 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 	private TreeMap<Instant, Set<Vol>> _volsParInstant;
 	private GeneralPath _courbe = new GeneralPath();
 	private Line2D _curseur;
-	private final int _largeurPanel = 250, _hauteurPanel = 150;
+	private final int _largeurPanel = 300, _hauteurPanel = 150;
   
     /** Constructeur */
     public PanelDensiteTrafic(Controleur c) {
