@@ -14,7 +14,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -39,7 +38,7 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 	private TreeMap<Instant, Set<Vol>> _volsParInstant;
 	private GeneralPath _courbe = new GeneralPath();
 	private Line2D _curseur;
-	private final int _largeurPanel = 250, _hauteurPanel = 150;
+	private final int _largeurPanel = 300, _hauteurPanel = 150;
   
     /** Constructeur */
     public PanelDensiteTrafic(Controleur c) {
@@ -63,11 +62,11 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
     private void placeCurseur(Instant instantCourant) {
     	double y1 = 20;
     	double y2 = _hauteurPanel - 10;
-    	double W = _largeurPanel -10;
+    	double W = _largeurPanel -18;
     	// Transpose les deux points du curseur dans le repère de l'écran
     	double maxX = InstantFabrique.getMaximumInstant().getSeconds() - 10;
 		double minX = InstantFabrique.getMinimumInstant().getSeconds() + 10;
-		double x = ((W * instantCourant.getSeconds()) / (maxX - minX)) + 10;
+		double x = ((W * instantCourant.getSeconds()) / (maxX - minX)) + 8;
 		
     	// Créé le curseur
     	_curseur.setLine(x, y1, x, y2);
@@ -132,16 +131,16 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 				// Transpose la courbe dans le repère de l'écran
 				double minX = _courbe.getBounds().getMinX() - 10;
 				double maxX = _courbe.getBounds().getMaxX() + 10;
-				double minY = _courbe.getBounds().getMinY() - 5;
-				double maxY = _courbe.getBounds().getMaxY() + 5;
-				int W = _largeurPanel - 10;
+				double minY = _courbe.getBounds().getMinY() - 3;
+				double maxY = _courbe.getBounds().getMaxY() + 4;
+				int W = _largeurPanel - 18;
 				int H = _hauteurPanel;
 				
 				double xS = W / (maxX-minX);
 		        double yS = H / (maxY-minY);
 		       
 		        AffineTransform transformationAffine = new AffineTransform();
-		        transformationAffine.translate(-xS*(minX), yS*(maxY));
+		        transformationAffine.translate((-xS*(minX))+8, yS*(maxY));
 		        transformationAffine.scale(xS, -yS);
 		        _courbe.transform(transformationAffine);
 		        

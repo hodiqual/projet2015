@@ -18,41 +18,45 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 /**
+ * Classe affichant une barre adapte de l echelle.
  * @author duvernal
  *
  */
 public class LabelEchelle extends JComponent implements PropertyChangeListener, Observer {
 	
+	/** La constante pour la largeur d'origine */
 	final int LARGEURORGINE = 96;
-
+	/** La constante pour marge de la barre d'echelle */
+	final int MARGIN = 50;
+	/** La largeur a afficher de la barre d'echelle */
 	int width = LARGEURORGINE;
+	/** La hauteur de la barre d'echelle */
 	int height = 10;
+	/** Les bandes noires de la barre d'echelle */
     int strip = width/8;
+	/** L'image creee a afficher */
 	private BufferedImage bufferedImage;
    
+	
+    /**
+     * Constructeur LabelMetre.
+     * 
+     * @param echelle
+     *            L'echelle de la vue
+     * @param controleur
+     *            Le controleur
+     */
 	public LabelEchelle(Controleur controleur, Echelle echelle)
 	{
-		
-
 		setOpaque(true);
 
-		//setMinimumSize(new Dimension(width,height));
-		//setMaximumSize(new Dimension(width,height));
-		setPreferredSize(new Dimension(width,height));
-		//setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		setPreferredSize(new Dimension(width+MARGIN,height));		
 		
-		
-		
-		BufferedImage bufferedImage = new BufferedImage(width+100, height+10, BufferedImage.TYPE_INT_RGB);
+		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = bufferedImage.createGraphics();
-  
-			
-		
 		
 		final ModeleEvent[] evts = {ModeleEvent.UPDATE_INSTANT};
 		controleur.ajoutVue(this,  evts) ;
-		
-		
 		echelle.addObserver(this);
 	}
 
@@ -60,23 +64,15 @@ public class LabelEchelle extends JComponent implements PropertyChangeListener, 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);  
 		Graphics2D g2 = (Graphics2D) g.create();
-		
-        // fill it with the translucent green
-        g2.setColor(Color.BLACK);
-        
+
+        g2.setColor(Color.BLACK);     
         g2.drawRect(0, 0, width-1, height-1);
         float dash[] = { strip};
-        g2.setStroke(new BasicStroke(10f, BasicStroke.CAP_BUTT,
-		        BasicStroke.JOIN_MITER, strip, dash, 0.0f));
+        g2.setStroke(new BasicStroke(10f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, strip, dash, 0.0f));
         g2.drawLine(strip, 0, width, 0);
-        
-        g2.drawLine(0, 10, width, 10);
-
-    
-         g2.drawImage(bufferedImage, 0, 0, null);
+        g2.drawLine(0, 10, width, 10);  
+        g2.drawImage(bufferedImage, 0, 0, null);
     }
-
-
 
 	
 	/**
@@ -116,13 +112,12 @@ public class LabelEchelle extends JComponent implements PropertyChangeListener, 
 				}
 
 
-
-
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
+	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
 	}
+
 				
 	
 

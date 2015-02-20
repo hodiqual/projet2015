@@ -3,7 +3,6 @@
  */
 package fr.iessa.vue;
 
-import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,7 +32,7 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	/** Les boutons du player */
 	private JButton play, forward, back;
 	/** La barre de lecture */
-	private JSlider timeline;
+	private JSlider timeline, speed;
 	/** Le boolean lecture en cours pour synchronisation barre de lecture */
     private boolean syncTimeline=false;
     /** L'image du bouton "retour" */
@@ -46,12 +45,18 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
     private static final ImageIcon FORWARD = new ImageIcon("forward.png");
     /** Le controleur du MVC */
     private Controleur _controleur;
+    /** La valeur par defaut de l intervalle */
+    final int INTERVALORIGINE = 60;
 
 	
     
 
-
-    
+    /**
+     * Constructeur PanelLecture.
+     * 
+     * @param controleur
+     *            Le controleur
+     */
 	public PanelLecture(Controleur controleur)
 	{
 		
@@ -91,9 +96,15 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
                 });
 	                    
 	    ///////////////////////////////////////////////////////////
-	                   
+
+	                    
+	                    
+	                    
+	                    
 		setOpaque(true);
 		timeline = new JSlider(0,10000,0);		
+		speed = new JSlider(-50,50,0);     
+        speed.setOrientation(Adjustable.VERTICAL);
 		play= new JButton();
 		updateBoutonPlayPause();
 		back= new JButton();
@@ -109,21 +120,31 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 
 	    c.fill = GridBagConstraints.HORIZONTAL;
 	    c.gridy = 0;
-	    
 	    c.gridx = 0;
-        add(back,c);
+	    c.ipadx=10;
+	    c.ipady=50;
+        add(speed,c);	
+	    c.ipadx=5;
+	    c.ipady=5;
 	    c.gridx = 1;
-        add(play,c);
+        add(back,c);
 	    c.gridx = 2;
-        add(forward,c);
+        add(play,c);
 	    c.gridx = 3;
+        add(forward,c);
+	    c.gridx = 4;
 	    c.ipadx = 500;
 		c.gridwidth = 500;
         add(timeline,c);
 
+
+        
+
         
         timeline.putClientProperty("Nimbus.Overrides",sliderDefaults);
         timeline.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
+        speed.putClientProperty("Nimbus.Overrides",sliderDefaults);
+        speed.putClientProperty("Nimbus.Overrides.InheritDefaults",false);
         addListeners();
         
         setEnabled(false);
@@ -166,10 +187,10 @@ private  void updateBoutonPlayPause()
 	            {
 	                public void run()
 	                {
-		            	if((timeline.getValue())==0){
-			            	_controleur.setInstant((int)0); }
-			            	else{
-			                    _controleur.updateInstant((float)timeline.getValue()/10000*86400); }
+		            	if((timeline.getValue())==0)
+			            _controleur.setInstant((int)0);
+			            else
+			            _controleur.updateInstant((float)timeline.getValue()/10000*86400);
 	                }
 	            },0,100);
 	            }
@@ -234,7 +255,7 @@ private  void updateBoutonPlayPause()
                 	}
                 	else{
                 		_controleur.updateInstant((float)0);                
-                }
+                	}
                 	timeline.setValue((Math.round((float)_controleur.getInstantCourant()-(float)0.1)*10000/86400));	
                 	
                 }
@@ -282,7 +303,7 @@ private  void updateBoutonPlayPause()
                     	}
                     	else{
                     		_controleur.updateInstant((float)86390);                
-                    }
+                    	}
                     	timeline.setValue((Math.round((float)_controleur.getInstantCourant()+(float)0.1)*10000/86400));	
                     	
                     }
@@ -302,6 +323,36 @@ private  void updateBoutonPlayPause()
        
 		
     });
+    
+    
+    speed.addChangeListener(new ChangeListener() {
+        
+        public void stateChanged(ChangeEvent arg0) {
+
+            if(!speed.getValueIsAdjusting())
+            {               
+                if((speed.getValue())==0)
+                {
+                	//Reinitialise la duree par defaut de l intervalle
+                    _controleur.setDureeInterval(INTERVALORIGINE);
+                }    
+	            else if((speed.getValue())>0)
+	            {
+                	//Diminue la duree d intervalle -> traffic plus rapide
+	                int faster = INTERVALORIGINE - speed.getValue();
+	                _controleur.setDureeInterval(faster);
+	            }
+	            else if((speed.getValue())<0)
+	            {
+	              	//Augmente la duree d intervalle -> traffic plus lent
+	                int slower = INTERVALORIGINE - speed.getValue();
+	                _controleur.setDureeInterval(slower);
+	            }
+            }
+            
+        }
+    });
+    
     
 	 }
 	
