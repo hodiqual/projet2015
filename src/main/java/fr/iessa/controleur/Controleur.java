@@ -287,6 +287,18 @@ public class Controleur {
 	return PositionSeconde;	
 	}
 	
+	public int getInstantPrecedant(){
+	Instant InstantCourant = _horloge.getInstantCourant();
+	int PositionSeconde = InstantCourant.getSeconds()-5;
+	return PositionSeconde;	
+	}
+	
+	public int getInstantSuivant(){
+	Instant InstantCourant = _horloge.getInstantCourant();
+	int PositionSeconde = InstantCourant.getSeconds()+5;
+	return PositionSeconde;	
+	}
+	
 	private int _dureeIntervalle = 60; //  40 milliseconds 25 update par seconde
 	
 	public void setDureeInterval( int milliseconds ){
