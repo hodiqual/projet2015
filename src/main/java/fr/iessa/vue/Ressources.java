@@ -33,6 +33,9 @@ public final class Ressources {
 	  public static final String AVION_MEDIUM_VERT   = "avion_m_v.png";
 	  public static final String AVION_LIGHT_VERT    = "avion_l_v.png";
 	  
+
+	  public static final String PUNAISE_COLLISION   = "icone_punaise.png";
+	  
 	  private static final String PREFIX = "fr/iessa/vue/";
 	  
 	  public static URL get(String name) {

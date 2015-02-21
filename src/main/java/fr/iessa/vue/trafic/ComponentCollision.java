@@ -11,8 +11,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -20,12 +25,26 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.metier.trafic.Collision;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.Echelle;
+import fr.iessa.vue.Ressources;
+
+import javax.imageio.ImageIO;
 
 public class ComponentCollision extends JComponent {
 	
-	private final int _largeur = 10;
-	private final int _hauteur = 10;
-	private final Rectangle2D _shape;
+	private static BufferedImage _icon;
+	static  {
+		try {
+			_icon = ImageIO.read(Ressources.get(Ressources.PUNAISE_COLLISION));
+		} catch (IOException e) {
+			_icon = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g2 = _icon.createGraphics();
+			g2.setColor(Color.RED);
+			g2.fillRect(0, 0, 10, 10);
+			e.printStackTrace();
+		}
+	}
+	private final int _largeur = _icon.getWidth();
+	private final int _hauteur = _icon.getHeight();
 	
 	private final Collision _collision;
 	private final Echelle _echelle;
@@ -42,8 +61,6 @@ public class ComponentCollision extends JComponent {
 		setMinimumSize(new Dimension(_largeur,_hauteur));
 		setMaximumSize(new Dimension(_largeur,_hauteur));
 		setPreferredSize(new Dimension(_largeur,_hauteur));
-		
-		_shape = new Rectangle(new Dimension(_largeur, _hauteur));
 		
 		addMouseListener( new MouseAdapter() {
 
@@ -70,19 +87,16 @@ public class ComponentCollision extends JComponent {
 			final Point2D.Double _coordCouranteDouble = new Point2D.Double();
 			_echelle.getAffineTransform().transform(_collision.getPointImpact(), _coordCouranteDouble);
 			_coord.setLocation(_coordCouranteDouble);
-			_coord.x -= _largeur/2;
-			_coord.y -= _hauteur/2;
+			_coord.x -= _largeur;
+			_coord.y -= _hauteur;
 			setLocation(_coord);
 		}
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);  
 		
-		Graphics2D g2 = (Graphics2D) g.create();
-			Color colorToRestore = g2.getColor();
-			g2.setColor(Color.red);
-			g2.fill(_shape);
-			g2.setColor(colorToRestore);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawImage(_icon,0,0,null);
 	}
 	
 	public void setX(int xPos){ 
