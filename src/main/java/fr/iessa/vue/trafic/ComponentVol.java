@@ -80,7 +80,6 @@ public class ComponentVol extends JComponent {
 		if(_vol.aDesCollisions())
 			_collisionHighlight = new Rectangle(new Dimension(_largeur, _hauteur));	
 		
-		
 		TreeMap<Instant,Point> coordOrdonne = new TreeMap<Instant,Point>(_vol.getInstantVersCoord());
 		Point premierPoint = coordOrdonne.pollFirstEntry().getValue();
 		_cheminParcouru.moveTo(premierPoint.x, premierPoint.y);

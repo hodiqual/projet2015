@@ -69,8 +69,10 @@ public class CollisionTest {
 		assertEquals(2, collisions.get(0).getVolsImpliques().size(),0);
 		assertEquals(1450, collisions.get(0).getInstant().getSeconds(),0);
 
-		assertEquals("SRR6316", collisions.get(0).getVolsImpliques().get(0).getId());
-		assertEquals("BCS1748", collisions.get(0).getVolsImpliques().get(1).getId());
+		assertTrue("Les vols impliques sont: " + collisions.get(0).getVolsImpliques()
+				, collisions.get(0).getVolsImpliques().stream().map(Vol::getId).anyMatch(s -> s.equals("SRR6316")));
+		assertTrue("Les vols impliques sont: " + collisions.get(0).getVolsImpliques()
+				, collisions.get(0).getVolsImpliques().stream().map(Vol::getId).anyMatch(s -> s.equals("BCS1748")));
 	}
 	
 	@Test
@@ -84,6 +86,12 @@ public class CollisionTest {
 		assertEquals(3, collisions.get(0).getVolsImpliques().size(),0);
 		assertEquals(1450, collisions.get(0).getInstant().getSeconds(),0);
 		assertEquals(new Point2D.Double(-938,-1128), collisions.get(0).getPointImpact());
+		assertTrue("Les vols impliques sont: " + collisions.get(0).getVolsImpliques()
+				, collisions.get(0).getVolsImpliques().stream().map(Vol::getId).anyMatch(s -> s.equals("SRR6316")));
+		assertTrue("Les vols impliques sont: " + collisions.get(0).getVolsImpliques()
+				, collisions.get(0).getVolsImpliques().stream().map(Vol::getId).anyMatch(s -> s.equals("BCS1748")));
+		assertTrue("Les vols impliques sont: " + collisions.get(0).getVolsImpliques()
+					, collisions.get(0).getVolsImpliques().stream().map(Vol::getId).anyMatch(s -> s.equals("FDX5182")));
 	}
 	
 	
