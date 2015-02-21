@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -69,7 +70,16 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 				new FrameSecondaire(_controleur);
 			}
 		});
-    	JMenuItem menuCollision = new JMenuItem("Collisions");
+    	JCheckBoxMenuItem menuCollision = new JCheckBoxMenuItem("Collisions");
+    	menuCollision.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(menuCollision.isSelected())
+					_controleur.showCollision(true);
+				else
+					_controleur.showCollision(false);
+			}
+		});
     	JMenuItem menuSauvCollision = new JMenuItem("Sauvegarde collisions");
     	menuSauvCollision.addActionListener(new ActionSauverCollisions());
     	_menuOption.add(menuAjoutVue);
@@ -130,7 +140,11 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	}
     }
     
-
+    class ActionCollisions implements ActionListener {
+    	public void actionPerformed(ActionEvent arg0) {  		
+    		_controleur.showCollision(true);        	
+    	}
+    }
     
     class ActionSauverCollisions implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
@@ -143,8 +157,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             	fichierCollision = dialogue.getSelectedFile();
             	nomFichierCollision = fichierCollision.getName();
                 _controleur.sauvegarderCollision(dialogue.getCurrentDirectory()+"/"+nomFichierCollision + ".txt");
-        	}
-            	
+        	}	
     	}
     }
     

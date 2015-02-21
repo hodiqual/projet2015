@@ -22,6 +22,7 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.Instant;
+import fr.iessa.metier.trafic.Collision;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.ChargeEnCoursLayerUI;
@@ -36,6 +37,8 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 	private Trafic _trafic;
 	
 	private Map<Vol,ComponentVol> _volsADessiner = new HashMap<Vol,ComponentVol>();
+	
+	private Map<Collision,ComponentCollision> _collisionsADessiner = new HashMap<Collision,ComponentCollision>();
 
 	private ChargeEnCoursLayerUI layerUI;
 
@@ -75,7 +78,12 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 			_volsADessiner.clear();
 			_volsADessiner.putAll(_trafic.getVols().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentVol(v,_echelle))));
 
-			final ModeleEvent[] evts = { ModeleEvent.UPDATE_INSTANT };
+			_collisionsADessiner.clear();
+			_collisionsADessiner.putAll(_trafic.getCollisions().stream().collect(Collectors.toMap(Function.identity(), v -> new ComponentCollision(v,_controleur,_echelle,_volsADessiner))));
+			_collisionsADessiner.values().forEach(cc -> PanelTrafic.this.add(cc));
+			_collisionsADessiner.values().forEach(cc -> cc.update());
+			
+			final ModeleEvent[] evts = { ModeleEvent.UPDATE_INSTANT, ModeleEvent.SHOW_COLLISION, ModeleEvent.HIDE_COLLISION };
 			_controleur.ajoutVue(PanelTrafic.this,  evts) ;
 			
 			_echelle.addObserver(PanelTrafic.this);
@@ -116,7 +124,12 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 		case UPDATE_INSTANT:
 			update((Instant)evt.getNewValue());
 			break;
-			
+		case SHOW_COLLISION:
+			_collisionsADessiner.values().forEach(cc -> cc.setVisible(true));
+			break;
+		case HIDE_COLLISION:
+			_collisionsADessiner.values().forEach(cc -> cc.setVisible(false));
+			break;
 		default:
 			break;
 		}
@@ -134,6 +147,7 @@ public class PanelTrafic extends JPanel implements PropertyChangeListener, Obser
 	//Update a une observation de changement de _echelle
 	public void update(Observable o, Object arg) {
 			_volsADessiner.values().forEach(cv -> cv.update(this) );
+			_collisionsADessiner.values().forEach(cc -> cc.update() );
 			revalidate();
 			repaint();
 	}  

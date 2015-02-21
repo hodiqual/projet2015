@@ -70,6 +70,11 @@ public class PanelTableauDeBord extends JPanel implements Observer {
 		
 	}
 
+	
+	/** 
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		Map<Vol, ComponentVol> volsADessiner = (Map<Vol, ComponentVol>)arg;

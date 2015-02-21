@@ -430,5 +430,15 @@ public class Controleur {
 		
 		sw.execute();
 	}
+	
+	public void showCollision(boolean hasToShow)  {
+		ModeleEvent evt;
+		if(hasToShow)
+			evt = ModeleEvent.SHOW_COLLISION;
+		else
+			evt = ModeleEvent.HIDE_COLLISION;
+		
+		_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, null));		
+	}
 
 }
