@@ -2,6 +2,8 @@ package fr.iessa.vue.trafic;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.Instant;
+import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.trafic.Collision;
 import fr.iessa.metier.trafic.Trafic;
 import fr.iessa.metier.trafic.Vol;
