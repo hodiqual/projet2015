@@ -2,8 +2,11 @@
 package fr.iessa.vue;
 
 import java.awt.Dimension;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -18,6 +21,7 @@ import javax.swing.JOptionPane;
 
 import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
+import fr.iessa.metier.Instant.InstantFabrique;
 
 /** Classe FramePrincipale
  * @author THOMAS Raimana
@@ -63,6 +67,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	
     	_menuOption = new JMenu("Options");
     	_menuOption.setEnabled(false);
+    	
+    	//hodiqual
     	JMenuItem menuAjoutVue = new JMenuItem("Ajout vue");
     	menuAjoutVue.addActionListener(new ActionListener() {
 			@Override
@@ -70,6 +76,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 				new FrameSecondaire(_controleur);
 			}
 		});
+    	
+    	//hodiqual
     	JCheckBoxMenuItem menuCollision = new JCheckBoxMenuItem("Collisions");
     	menuCollision.addActionListener(new ActionListener() {	
 			@Override
@@ -80,6 +88,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 					_controleur.showCollision(false);
 			}
 		});
+    	
+    	//hodiqual
     	JMenuItem menuSauvCollision = new JMenuItem("Sauvegarde collisions");
     	menuSauvCollision.addActionListener(new ActionSauverCollisions());
     	_menuOption.add(menuAjoutVue);
@@ -140,12 +150,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	}
     }
     
-    class ActionCollisions implements ActionListener {
-    	public void actionPerformed(ActionEvent arg0) {  		
-    		_controleur.showCollision(true);        	
-    	}
-    }
-    
+    //hodiqual
     class ActionSauverCollisions implements ActionListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
@@ -177,6 +182,9 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 			
 			case CHARGEMENT_TRAFIC_FICHIER_DONE:
 		    	_menuOption.setEnabled(true);
+		    	//hodiqual
+		        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		        manager.addKeyEventDispatcher(new KeyDispatcher());
 				break;
 				
 			case CHARGEMENT_CARTE_FICHIER_ERREUR:
@@ -187,10 +195,12 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 				JOptionPane.showMessageDialog(null, "Chargement echoue : " + evt.getNewValue(), "" , JOptionPane.ERROR_MESSAGE);
 				break;
 				
+			//hodiqual	
 			case SAUVEGARDE_COLLISION_DONE:
 				JOptionPane.showMessageDialog(null, "Sauvegarde des collisions effectuées dans " + evt.getNewValue(), "" , JOptionPane.INFORMATION_MESSAGE);
 				break;
-				
+			
+			//hodiqual
 			case SAUVEGARDE_COLLISION_ERREUR:
 				JOptionPane.showMessageDialog(null, "Savegarde des collisions echouée : " + evt.getNewValue(), "" , JOptionPane.ERROR_MESSAGE);
 				break;
@@ -200,6 +210,26 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 		}
 		
 	}
+    
+    //hodiqual
+    private class KeyDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED ) {
+            	if(e.getKeyCode() == KeyEvent.VK_RIGHT) {	
+            		_controleur.setInstant(_controleur.getInstantCourant()+InstantFabrique._pasEntreInstant);
+            		return true;
+            	}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            		_controleur.setInstant(_controleur.getInstantCourant()-InstantFabrique._pasEntreInstant);
+                    return true;
+                }  
+            	
+            	return false;
+            }
+            else
+            	return false;
+        }
+    }
 	
     
 }
