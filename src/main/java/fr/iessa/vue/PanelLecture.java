@@ -251,7 +251,10 @@ private  void updateBoutonPlayPause()
                 {
                 	secondes++;                	
                 	if ((timeline.getValue()/10000*86400+100*secondes)>=0){
+                		if(secondes>2)
                	   _controleur.updateInstant((float)timeline.getValue()/10000*86400-100*(float)secondes);
+                		else if(secondes<=2 && _controleur.isTraficRunning()==false)
+                	_controleur.updateInstant(_controleur.getInstantPrecedant());
                 	}
                 	else{
                 		_controleur.updateInstant((float)0);                
@@ -299,7 +302,10 @@ private  void updateBoutonPlayPause()
                     {
                     	secondes++;                	
                     	if ((timeline.getValue()/10000*86400+100*secondes)<=86400){
-                   	   _controleur.updateInstant((float)timeline.getValue()/10000*86400+100*(float)secondes);
+                    		if(secondes>2)
+                    			_controleur.updateInstant((float)timeline.getValue()/10000*86400+100*(float)secondes);
+                    		else if(secondes<=2 && _controleur.isTraficRunning()==false)
+                    			_controleur.updateInstant(_controleur.getInstantSuivant());
                     	}
                     	else{
                     		_controleur.updateInstant((float)86390);                
