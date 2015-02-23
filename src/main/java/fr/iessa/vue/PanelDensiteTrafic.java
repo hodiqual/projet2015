@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.iessa.controleur.Controleur;
@@ -38,6 +39,7 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 	private TreeMap<Instant, Set<Vol>> _volsParInstant;
 	private GeneralPath _courbe = new GeneralPath();
 	private Line2D _curseur;
+	//private JLabel _nbrVolscourant;
 	private final int _largeurPanel = 300, _hauteurPanel = 150;
   
     /** Constructeur */
@@ -153,6 +155,10 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 			case UPDATE_INSTANT:
 				Instant instantCourant = (Instant)evt.getNewValue();
 				placeCurseur(instantCourant);
+				
+				break;
+			
+			case UPDATE_IS_TRAFIC_RUNNING:
 				
 				break;
 
