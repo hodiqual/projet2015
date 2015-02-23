@@ -222,6 +222,13 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             	}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             		_controleur.setInstant(_controleur.getInstantCourant()-InstantFabrique._pasEntreInstant);
                     return true;
+                }else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                	if(_controleur.isTraficRunning())
+                		_controleur.stopTrafic();
+                	else
+                		_controleur.runTrafic();
+                	
+                	return true;
                 }  
             	
             	return false;

@@ -62,5 +62,9 @@ Difficultés:
 
 -------
 
-RAF: changement vitesse de défilement du rejeu. 
+RAF:
+
+Amelioration:
+     
+     
 
