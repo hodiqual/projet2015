@@ -4,7 +4,7 @@
 package fr.iessa.dao.core;
 
 /**
- * Interface ˆ implementer pour le chargement d'un composant de la plateforme.
+ * Interface a implementer pour le chargement d'un composant de la plateforme.
  * @author hodiqual
  */
 public interface DAO < T > {
