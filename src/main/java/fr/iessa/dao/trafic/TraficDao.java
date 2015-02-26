@@ -28,15 +28,19 @@ import fr.iessa.metier.type.TypeVol;
  */
 public class TraficDao {
 	
+	
+	/**
+	 * @param ficname contient la description de l'ensemble des vols du trafic sur 24h.
+	 * @return instance de la classe Trafic contenant les vols decrits dans le fichier.
+	 */
 	public Trafic charger(String ficname) {
 		
 		Trafic _trafic = new Trafic();
 		
 		Set<Vol> vols = null;
-		TraficDao traficDao = new TraficDao();
 		try (Stream<String> lignes = Files.lines(Paths.get(ficname));) {
 			vols = lignes.parallel()
-					.map(traficDao::chargerVol)
+					.map(this::chargerVol)
 					.collect(Collectors.toSet());
 		} catch (IOException e) {
 			e.printStackTrace();

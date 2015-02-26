@@ -26,7 +26,14 @@ import fr.iessa.metier.type.TypeVol;
 import fr.iessa.vue.Echelle;
 
 /**
+ * Implemente le controleur du pattern MVC.
+ * Controle les entrees utilisateurs et notifies les observeurs des changements 
+ * des objets metiers
  * @author hodiqual
+ *
+ */
+/**
+ * @author sb00by
  *
  */
 public class Controleur {
@@ -55,27 +62,36 @@ public class Controleur {
 	/** Horloge de la simulation. */
 	private Horloge _horloge;
 	
-	/** Permet de notifier la vue en garantissant que cela soit dans l'Event Dispatch Thread. */
+	/** Permet de notifier les vues en garantissant que cela soit dans l'Event Dispatch Thread. */
 	private SwingPropertyChangeSupport _swingObservable;
 	
-	/**Filtre*/
+	/** Filtre des vols */
 	private FiltreVol _filtreVol;
 	
+	/** Constructeur */
 	public Controleur() {
 		// Les observers seront notifies seulement dans l'Event Dispatch Thread
 		_swingObservable = new SwingPropertyChangeSupport(this, true);
 	}
 	
+	/**
+	 * Enregistrement des listeners qui oberservent les changements des objets metiers.
+	 * Les listeners seront notifies dans l'EDT.
+	 * @param vue sera notifie par les changements des objets metiers.
+	 * @param events la liste des ModeleEvent auxquels la vue desire etre notifiee.
+	 */
 	public void ajoutVue(PropertyChangeListener vue, ModeleEvent[] events) {
 		for (ModeleEvent modeleEvent : events) {
 			_swingObservable.addPropertyChangeListener(modeleEvent.toString(), vue);
 		}
 	}
 	
-	public void ajoutVue(PropertyChangeListener vue) {
-		_swingObservable.addPropertyChangeListener(vue);
-	}
-	
+	/**
+	 * Charge en asynchrone un fichier decrivant une plateforme.
+	 * Le controleur peut publier ModeleEvent.CHARGEMENT_CARTE_FICHIER_ERREUR, 
+	 * ModeleEvent.CHARGEMENT_CARTE_FICHIER_EN_COURS, CHARGEMENT_CARTE_FICHIER_DONE.
+	 * @param ficname le chemin complet du fichier a charge.
+	 */
 	public void chargerCarte(String ficname) {
 		//Controle de ficname
 		if(ficname == null || ficname.equals("") )
@@ -107,6 +123,7 @@ public class Controleur {
 				try {
 				    _aeroport = get();
 				    
+				    System.out.println("CHARGEMENT_CARTE_FICHIER_DONE");
 					LibereMemoire.controleMemoire();
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_CARTE_FICHIER_DONE;	
@@ -126,6 +143,13 @@ public class Controleur {
 	}
 	
 	
+	/**
+	 * Charge en asynchrone un fichier decrivant le trafic.
+	 * Le controleur peut publier ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_ERREUR, 
+	 * ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_EN_COURS, CHARGEMENT_TRAFIC_FICHIER_DONE,
+	 * ModeleEvent.UPDATE_FILTRE_VOL
+	 * @param ficname le chemin complet du fichier decrivant le trafic a charge.
+	 */
 	public void chargerTrafic(String ficname) {
 		//Controle de ficname
 		if(ficname == null || ficname.equals(""))
@@ -169,6 +193,9 @@ public class Controleur {
 				try {
 					Trafic trafic = get();
 					
+					System.out.println("CHARGEMENT_TRAFIC_FICHIER_DONE");
+					LibereMemoire.controleMemoire();
+					
 					//notifier la fin du chargement
 					ModeleEvent evt = ModeleEvent.CHARGEMENT_TRAFIC_FICHIER_DONE;	
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, trafic));
@@ -178,10 +205,6 @@ public class Controleur {
 					evt = ModeleEvent.UPDATE_FILTRE_VOL;
 					_swingObservable.firePropertyChange(new PropertyChangeEvent(this, evt.toString(), null, _filtreVol));
 					
-					
-					//TODO Lancer en arriere plan la detection des collisions. pour faire un ReadyToUse.
-					//Attribut qui ecoute le modele chargement trafic fichier done pour lancer la detection 
-					//des collisions dans un swingworker
 				} catch (ExecutionException | InterruptedException e) {
 					//Cas ou le doInBackground a lancé une exception ou a ete interrompu
 					e.printStackTrace();
@@ -197,7 +220,12 @@ public class Controleur {
 	}
 	
 	
-
+	/**
+	 * Sauvegarde en asynchrone le rapport de collisions.
+	 * Le controleur peut publier ModeleEvent.SAUVEGARDE_COLLISION_ERREUR, 
+	 * ModeleEvent.SAUVEGARDE_COLLISION_DONE.
+	 * @param ficname le chemin complet du fichier qui contiendra le rapport de collision.
+	 */
 	public void sauvegarderCollision(String ficname) {
 		//Controle de ficname
 		if(ficname == null || ficname.equals(""))
@@ -245,10 +273,17 @@ public class Controleur {
 	
 	/**
 	 * Etat de la simulation s'il est en cours ou non. L'attribut est volatile
-	 * car il peut etre lu ou ecrit par different thread (EDT ou Thread de HorlogePrincipale)
+	 * car il peut etre lu ou ecrit par different thread (EDT ou Simulation Thread)
 	 */
 	private volatile boolean _isTraficRunning = false;
 	
+	/**
+	 * Met a jour l'instant courant.
+	 * Le controleur publie des ModeleEvent.UPDATE_INSTANT.
+	 * Si le nouvel instant courant est hors limite de la simulation, la simulation s'arretera.
+	 * @param instant qui deviendra le nouvel instant courant. Si instant == null 
+	 * alors l'horloge se decalera d'un pas.
+	 */
 	private void updateInstant(Instant instant){
 		
 		Instant oldInstant = _horloge.getInstantCourant();
@@ -265,6 +300,13 @@ public class Controleur {
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
 	}
     
+	/**
+	 * Met a jour l'instant courant.
+	 * Le controleur publie des ModeleEvent.UPDATE_INSTANT.
+	 * Si le nouvel instant courant est hors limite de la simulation, la simulation s'arretera.
+	 * @param secondes deviendra le nouvel instant courant. Si secondes == 0 
+	 * alors l'horloge se decalera d'un pas.
+	 */
 	public void updateInstant(float secondes){
 		Instant oldInstant = _horloge.getInstantCourant();
 		if(secondes == 0){
@@ -281,32 +323,55 @@ public class Controleur {
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_INSTANT.toString(), oldInstant, _horloge.getInstantCourant());
 	}
     
+	
+	/**
+	 * @return le nombre de secondes correspondant a l'instant courant.
+	 */
 	public int getInstantCourant(){
 	Instant InstantCourant = _horloge.getInstantCourant();
 	int PositionSeconde = InstantCourant.getSeconds();
 	return PositionSeconde;	
 	}
 	
+	/**
+	 * @return le nombre de secondes correspondant a l'instant precedant.
+	 */
 	public int getInstantPrecedant(){
 	Instant InstantCourant = _horloge.getInstantCourant();
-	int PositionSeconde = InstantCourant.getSeconds()-5;
+	int PositionSeconde = InstantCourant.getSeconds()-InstantFabrique._pasEntreInstant;
 	return PositionSeconde;	
 	}
 	
+	
+	/**
+	 * @return le nombre de secondes correspondant a l'instant suivant.
+	 */
 	public int getInstantSuivant(){
 	Instant InstantCourant = _horloge.getInstantCourant();
-	int PositionSeconde = InstantCourant.getSeconds()+5;
+	int PositionSeconde = InstantCourant.getSeconds()+InstantFabrique._pasEntreInstant;
 	return PositionSeconde;	
 	}
 	
+	/** 
+	 * La resolution du temps de la simulation-rejeu, 
+	 * correspond au nombre de secondes qui s'ecoule entre chaque instant.
+	 */
 	private int _dureeIntervalle = 60; //  40 milliseconds 25 update par seconde
 	
+	/**
+	 * @param milliseconds sera le nouvelle resolution du temps, 
+	 * le nombre de millisecondes entre l'affichage de 2 instants.
+	 */
 	public void setDureeInterval( int milliseconds ){
 		int oldUpdateInterval = _dureeIntervalle;
 		_dureeIntervalle = milliseconds;
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_DUREE_INTERVALLE.toString(), oldUpdateInterval, _dureeIntervalle);	
 	}
 	
+	/**
+	 * Thread en charge de mettre a jour l'instant courant et les coordonnees des vols
+	 * toutes les _dureeIntervalle si _isTraficRunning == true.
+	 */
 	public final Thread _horlogeManager = new Thread("Simulation Thread") {
         @Override
         public void run() {
@@ -322,10 +387,17 @@ public class Controleur {
         }
      };
      
+     
+ 	/**
+ 	 * @return l'etat de la simulation: running or not.
+ 	 */
  	public boolean isTraficRunning() {
  		return _isTraficRunning;
  	}
 	
+ 	/**
+ 	 * Active le rejeu du trafic.
+ 	 */
 	public void runTrafic(){
 		_isTraficRunning = true;
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_IS_TRAFIC_RUNNING.toString(), !_isTraficRunning, _isTraficRunning);
@@ -334,6 +406,11 @@ public class Controleur {
 			_horlogeManager.start();
 	}
 	
+
+	
+ 	/**
+ 	 * Stop le rejeu du trafic.
+ 	 */
 	public void stopTrafic(){
 		_isTraficRunning = false;
 		_swingObservable.firePropertyChange(ModeleEvent.UPDATE_IS_TRAFIC_RUNNING.toString(), !_isTraficRunning, _isTraficRunning);

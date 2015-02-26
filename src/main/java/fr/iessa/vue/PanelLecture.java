@@ -36,18 +36,17 @@ public class PanelLecture extends JPanel implements PropertyChangeListener  {
 	/** Le boolean lecture en cours pour synchronisation barre de lecture */
     private boolean syncTimeline=false;
     /** L'image du bouton "retour" */
-    private static final ImageIcon BACK = new ImageIcon("back.png");
+    private static final ImageIcon BACK = new ImageIcon(Ressources.get(Ressources.LECTEUR_BACK));
     /** L'image du bouton "lecture" */
-    private static final ImageIcon PLAY = new ImageIcon("play.png");
+    private static final ImageIcon PLAY = new ImageIcon(Ressources.get(Ressources.LECTEUR_PLAY));
     /** L'image du bouton "pause" */
-    private static final ImageIcon PAUSE = new ImageIcon("pause.png");    
+    private static final ImageIcon PAUSE = new ImageIcon(Ressources.get(Ressources.LECTEUR_PAUSE));    
     /** L'image du bouton "avance" */
-    private static final ImageIcon FORWARD = new ImageIcon("forward.png");
+    private static final ImageIcon FORWARD = new ImageIcon(Ressources.get(Ressources.LECTEUR_FORWARD));
     /** Le controleur du MVC */
     private Controleur _controleur;
     /** La valeur par defaut de l intervalle */
     final int INTERVALORIGINE = 60;
-
 	
     
 

@@ -11,6 +11,7 @@ import fr.iessa.metier.Instant.InstantFabrique;
 
 
 /**
+ * Modelise le tick de temps qui defile
  * @author hodiqual
  *
  */

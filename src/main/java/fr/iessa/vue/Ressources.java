@@ -36,6 +36,11 @@ public final class Ressources {
 
 	  public static final String PUNAISE_COLLISION   = "icone_punaise.png";
 	  
+	  public static final String LECTEUR_BACK   	 = "back.png";
+	  public static final String LECTEUR_FORWARD   	 = "forward.png";
+	  public static final String LECTEUR_PAUSE   	 = "pause.png";
+	  public static final String LECTEUR_PLAY   	 = "play.png";
+	  
 	  private static final String PREFIX = "fr/iessa/vue/";
 	  
 	  public static URL get(String name) {

@@ -7,6 +7,11 @@ import javax.swing.UIManager.*;
 import aurelienribon.slidinglayout.SLAnimator;
 import fr.iessa.vue.FramePrincipale;
 
+/**
+ * Main de l'application.
+ * @author hodiqual
+ *
+ */
 public class Application {
 
 	public static void main(String[] args) {

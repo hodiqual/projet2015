@@ -20,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.Instant.InstantFabrique;
 
@@ -128,7 +129,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierPlateForme = dialogue.getSelectedFile();
             		nomFichierPlateForme = fichierPlateForme.getName();
-                    _controleur.chargerCarte(nomFichierPlateForme);
+                    _controleur.chargerCarte(fichierPlateForme.getPath());
         	}
     		
     	}
@@ -144,7 +145,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierTrafic = dialogue.getSelectedFile();
             		nomFichierTrafic = fichierTrafic.getName();
-                    _controleur.chargerTrafic(nomFichierTrafic);
+            		
+                    _controleur.chargerTrafic(fichierTrafic.getPath());
         	}
             	
     	}
@@ -229,8 +231,11 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
                 		_controleur.runTrafic();
                 	
                 	return true;
-                }  
-            	
+                }else if (e.getKeyCode() == KeyEvent.VK_M) { 
+                	JOptionPane.showMessageDialog(null, "Tips memoire :" + LibereMemoire.controleMemoire() + " Mo", "" , JOptionPane.INFORMATION_MESSAGE);
+                	return true;
+                }
+        	
             	return false;
             }
             else
