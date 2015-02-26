@@ -51,8 +51,8 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	    // Construction de la barre de menu
 	    _barreMenu = new JMenuBar();
 	    _menu = new JMenu("Fichier");
-	    _menuChargerPlateForme = new JMenuItem("Charger Plate-Forme");
-	    _menuChargerTrafic = new JMenuItem("Charger Trafic");
+	    _menuChargerPlateForme = new JMenuItem("Charger plateforme");
+	    _menuChargerTrafic = new JMenuItem("Charger trafic");
 	    _menuChargerTrafic.setEnabled(false);;
 	    _menuQuitter = new JMenuItem("Quitter");
 	    
