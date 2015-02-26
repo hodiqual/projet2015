@@ -8,7 +8,7 @@ import fr.iessa.controleur.Controleur;
 
 public class FrameSecondaire extends JFrame {
 	public FrameSecondaire(Controleur controleur) {
-		super("Teahupoo");
+		super("Ground Trafic Control");
     	this.setPreferredSize((new Dimension(800, 600)));
     	
 	    this.getContentPane().add(new PanelPrincipalMultiCouches(controleur,false));

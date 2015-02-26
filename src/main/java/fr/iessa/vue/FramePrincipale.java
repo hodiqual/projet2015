@@ -44,7 +44,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	/** Constructeur */
 	public FramePrincipale() {
 		// Construction de la fenêtre principale
-    	super("Teahupoo");
+    	super("Ground Trafic Control");
     	this.setPreferredSize((new Dimension(800, 600)));
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
