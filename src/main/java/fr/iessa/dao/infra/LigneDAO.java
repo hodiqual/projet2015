@@ -14,15 +14,15 @@ import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.Direction;
 
 /**
+ * Creer une Ligne a partir d'une description texte.
  * @author hodiqual
- *
  */
 public class LigneDAO implements DAO<Ligne> {
 
 	@Override
 	/**
 	 * Charge en memoire une ligne de texte decrivant une ligne 
-	 * ligneAtraiter: decrit le ligne de la maniere suivante
+	 * @param ligneAtraiter: decrit le ligne de la maniere suivante
 	 * "L _ 8 H D -3873,512;-3863,523;-3856,531;-3850,537;-3845,543;-3840,550;-3834,559;-3827,572"
 	 */
 	public Ligne charger(String ligneAtraiter) 

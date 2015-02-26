@@ -27,13 +27,25 @@ import fr.iessa.metier.Instant.InstantFabrique;
  */
 public class Trafic implements Observer {
 	
+	/**
+	 * L'ensemble des vols
+	 */
 	private Set<Vol> _vols = null;
+	
+	/**
+	 * Les vols par instant
+	 */
 	private TreeMap<Instant, Set<Vol>> _volsParInstant = null;
+	
+	/**
+	 * La liste des collisions recensees.
+	 */
 	private List<Collision> _collisions = null;
 	
 	
-	
-	
+	/**
+	 * Trouve les collisions
+	 */
 	public void computeCollision()
 	{		
 		ConcurrentHashMap<Instant, Map<Point,List<Vol> > > volsParCoordParInstant
@@ -62,7 +74,9 @@ public class Trafic implements Observer {
 		
 	}
 	
-	
+	/**
+	 * Range les vols par instant
+	 */
 	private void computeDelta()
 	{
 		TreeSet<Instant> allOrderedInstants = InstantFabrique.getInstants();
@@ -75,12 +89,18 @@ public class Trafic implements Observer {
 		_volsParInstant = new TreeMap<Instant, Set<Vol>>(volsParInstant);
 	}
 
+	/**
+	 * @param vols  the vols to set.
+	 */
 	public void setVols(Set<Vol> vols) {
 		_vols = vols;
 		computeDelta();
 		computeCollision();
 	}
 
+	/**
+	 * Observe le temps qui defile et met a jour les vols en consequence.
+	 */
 	@Override
 	public void update(Observable o, Object i) {
 		Instant instant = (Instant)i;
@@ -91,10 +111,10 @@ public class Trafic implements Observer {
 							  .forEach( v -> v.updateCoordCourantes(null) );
 	}
 
-
-
-
-
+	/**
+	 * @param filtre criteres de recherche
+	 * @return les vols selon les criteres de recherche
+	 */
 	public Set<Vol> getVols(Predicate<Vol> filtre) {
 		return _vols.stream().filter(filtre).collect(Collectors.toSet());
 	}

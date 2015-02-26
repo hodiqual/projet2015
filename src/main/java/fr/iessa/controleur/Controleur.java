@@ -464,6 +464,7 @@ public class Controleur {
 	}
 
 	/**
+	 * Permet de filtrer les vols selon leur categorie
 	 * @param filtreCategorie the filtreCategorie to set
 	 */
 	public void setFiltreCategorie(Categorie filtreCategorie) {
@@ -484,6 +485,7 @@ public class Controleur {
 	}
 
 	/**
+	 * Permet de filtrer si une collision a ete detecte sur les vols.
 	 * @param filtreCollision the filtreCollision to set
 	 */
 	public void setFiltreCollision(Boolean filtreCollision) {
@@ -502,7 +504,11 @@ public class Controleur {
 		
 		sw.execute();
 	}
-
+	
+	/**
+	 * Permet de filter en fonction du premier instant la liste des vols
+	 * @param filtrePremierInstant instant a partir duquel les vols sont filtres
+	 */
 	public void setFiltrePremierInstant(int filtrePremierInstant) {
 		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
 			@Override
@@ -520,6 +526,11 @@ public class Controleur {
 		sw.execute();
 	}
 	
+	
+	/**
+	 * Affiche ou cache les collisions
+	 * @param hasToShow true si on doit afficher les collisions, false si on doit cacher les collisions.
+	 */
 	public void showCollision(boolean hasToShow)  {
 		ModeleEvent evt;
 		if(hasToShow)

@@ -12,27 +12,60 @@ import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.TypeVol;
 
 /**
+ * Permet de filtrer les vols selon des criteres de recherche.
  * @author hodiqual
  *
  */
 public class FiltreVol {
 	
+	/**
+	 * Le trafic contenant les vols a filtrer.
+	 */
 	private Trafic _trafic;
 	
+	/**
+	 * Filtre sur les typeVol
+	 */
 	private TypeVol filtreTypeVol = null;
+	
+	/**
+	 * Filtre sur les categories
+	 */
 	private Categorie filtreCategorie = null;
+	
+	/**
+	 * Filtre sur les collisions
+	 */
 	private Boolean filtreCollision = null;
+	
+	/**
+	 * Filtre sur les premiers instants
+	 */
 	private Instant filtrePremierInstant = null;
 	
+	/**
+	 * Resultat du filtre.
+	 */
 	private Set<Vol> result = null;
 	
+	/**
+	 * Le predicat dynamique pour filtrer les vols
+	 */
 	private Predicate<Vol> _filtre;
 	
+	/**
+	 * Constructeur
+	 * @param trafic qui contient les vols a filtrer.
+	 */
 	public FiltreVol(Trafic trafic) {
 		_trafic = trafic;
 		computeResult();
 	}
 	
+	/**
+	 * Predicat true en point de terminaison du pattern Decorator
+	 * @author hodiqual
+	 */
 	private class Filtre implements Predicate<Vol>{
 		@Override
 		public boolean test(Vol t) {
@@ -40,6 +73,11 @@ public class FiltreVol {
 		}
 	}
 	
+	/**
+	 * Implementation du pattern decorator
+	 * @author hodiqual
+	 *
+	 */
 	private abstract class IFiltreDecorator implements Predicate<Vol>{
 		protected Predicate<Vol> _autreFiltre;
 		
@@ -49,6 +87,11 @@ public class FiltreVol {
 		
 	}
 	
+	/**
+	 * Permet de filtrer selon le type de vol
+	 * @author hodiqual
+	 *
+	 */
 	private class FiltreTypeVol extends IFiltreDecorator {
 		private TypeVol _typeVol;	
 		public FiltreTypeVol(Predicate<Vol> autreFiltre, TypeVol typeVol) {
@@ -62,6 +105,11 @@ public class FiltreVol {
 		}
 	}
 	
+	/**
+	 * Permet de filtrer selon la categorie
+	 * @author hodiqual
+	 *
+	 */
 	private class FiltreCategorie extends IFiltreDecorator {
 		private Categorie _cat;	
 		public FiltreCategorie(Predicate<Vol> autreFiltre, Categorie cat) {
@@ -75,6 +123,11 @@ public class FiltreVol {
 		}
 	}
 	
+	/**
+	 * Permet de filtrer selon le vol est implique dans une collision
+	 * @author hodiqual
+	 *
+	 */
 	private class FiltreCollision extends IFiltreDecorator {
 		private boolean _aColision;	
 		public FiltreCollision(Predicate<Vol> autreFiltre, boolean aCollision) {
@@ -88,6 +141,11 @@ public class FiltreVol {
 		}
 	}
 	
+	/**
+	 * Permet de filtrer selon le premier instant
+	 * @author hodiqual
+	 *
+	 */
 	private class FiltrePremierInstant extends IFiltreDecorator {
 		private Instant _premierInstant;	
 		public FiltrePremierInstant(Predicate<Vol> autreFiltre, Instant premierInstant) {
@@ -102,7 +160,9 @@ public class FiltreVol {
 	}
 	
 	
-	
+	/**
+	 * Filtre les vols selon les criteres.
+	 */
 	private void computeResult() {
 		_filtre = new Filtre();
 		
@@ -118,6 +178,10 @@ public class FiltreVol {
 		result = _trafic.getVols(_filtre);
 	}
 	
+	/**
+	 * 
+	 * @return les vols filtres.
+	 */
 	public Set<Vol> getResult() {
 		return result;
 	}
@@ -167,10 +231,18 @@ public class FiltreVol {
 		computeResult();
 	}
 	
+	/**
+	 * 
+	 * @return filtrePremierInstant
+	 */
 	public Instant getFiltrePremierInstant(){
 		return filtrePremierInstant;
 	}
 
+	/**
+	 * 
+	 * @param filtrePremierInstant le filtrePremierInstant a set.
+	 */
 	public void setFiltrePremierInstant(Instant filtrePremierInstant) {
 		if(filtrePremierInstant.getSeconds() == InstantFabrique.getMinimumInstant().getSeconds())
 			this.filtrePremierInstant = null;

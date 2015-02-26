@@ -12,45 +12,89 @@ import java.util.Map;
 import java.util.OptionalDouble;
 
 /**
- * @author hodiqual
  * Classe metier qui definit la plateforme aeroportuaire 
+ * @author hodiqual
  */
 public class Aeroport {
 
+	/**
+	 * Nom de l'aeroprot
+	 */
 	private String _nom;
 	
+	/**
+	 * Les points de la plateforme aeroportuaire.
+	 */
 	private Map<String, Point> _points = new Hashtable<String, Point>(100);
 	
+	/**
+	 * Les lignes de la plateforme aeroportuaire.
+	 */
 	private List<Ligne> _lignes = new ArrayList<Ligne>(100);
 	
+	/**
+	 * Les taxiway de la plateforme aeroportuaire.
+	 */
 	private List<Taxiway> _taxiway = new ArrayList<Taxiway>(100);
 	
+	
+	/**
+	 * Les pushback de la plateforme aeroportuaire.
+	 */
 	private List<Pushback> _pushbacks = new ArrayList<Pushback>(100);
 	
+	
+	/**
+	 * Les runway de la plateforme aeroportuaire.
+	 */
 	private List<Runway> _runways = new ArrayList<Runway>();
 	
 	
+	/**
+	 * Constructeur
+	 * @param nom de l'aeroport
+	 */
 	public Aeroport(String nom)
 	{
 		_nom = nom;
 	}
 	
+	/**
+	 * Ajoute un point
+	 * @param p point
+	 */
 	public void add(Point p){
 		_points.put(p.get_nom(), p);
 	}
 	
+	/**
+	 * Ajoute une ligne
+	 * @param l ligne
+	 */
 	public void add(Ligne l){
 		_lignes.add(l);
 	}
 	
+	/**
+	 * Ajoute un taxiway
+	 * @param t
+	 */
 	public void add(Taxiway t){
 		_taxiway.add(t);
 	}
 	
+	/**
+	 * Ajoute un pushback
+	 * @param p
+	 */
 	public void add(Pushback p){
 		_pushbacks.add(p);
 	}
 	
+	/**
+	 * Ajoute un runway
+	 * @param r
+	 */
 	public void add(Runway r){
 		_runways.add(r);
 	}
@@ -104,12 +148,21 @@ public class Aeroport {
 		return _runways;
 	}
 
+	/**
+	 * Initialise les lignes brisees du runway avec les points.
+	 */
 	public void initialiseRunway() {
 		_runways.forEach( r -> r.initialisePath(_points));		
 	}
 
+	/**
+	 * les limites des cooordonnes de l'aeroport
+	 */
 	private int _minX, _maxX, _minY, _maxY;
 	
+	/**
+	 * Initialise les limites de l'aeroport.
+	 */
 	public void initialiseBounds() {
 		
 		_minX = _minY = Integer.MAX_VALUE;
@@ -123,6 +176,10 @@ public class Aeroport {
         trouverLimitesReels(get_points());
 	}
 	
+	/**
+	 * Trouve les limites pour les lignes
+	 * @param lignes
+	 */
 	private void trouverLimitesReels(List<? extends Ligne> lignes) {
        
 		double l_minReelX = lignes.parallelStream()
@@ -148,6 +205,10 @@ public class Aeroport {
 		_maxY = (int) Double.max(_maxY, l_maxReelY);	
 	}
 	
+	/**
+	 * Trouve les limite des points.
+	 * @param _points
+	 */
 	private void trouverLimitesReels(Map<String, Point> _points) {
 		for (Map.Entry<String, Point> entry : _points.entrySet()) {
 			Point point = entry.getValue();
