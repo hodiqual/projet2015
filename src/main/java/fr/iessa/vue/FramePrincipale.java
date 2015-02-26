@@ -123,15 +123,12 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
             File fichierPlateForme = null;
-            String nomFichierPlateForme = "";
             JFileChooser dialogue = new JFileChooser(new File("."));
             
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierPlateForme = dialogue.getSelectedFile();
-            		nomFichierPlateForme = fichierPlateForme.getName();
                     _controleur.chargerCarte(fichierPlateForme.getPath());
         	}
-    		
     	}
     }
     
@@ -139,13 +136,10 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
     		File fichierTrafic = null;
-            String nomFichierTrafic = "";
             JFileChooser dialogue = new JFileChooser(new File("."));
            
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierTrafic = dialogue.getSelectedFile();
-            		nomFichierTrafic = fichierTrafic.getName();
-            		
                     _controleur.chargerTrafic(fichierTrafic.getPath());
         	}
             	
