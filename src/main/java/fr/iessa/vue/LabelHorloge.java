@@ -13,6 +13,7 @@ import fr.iessa.controleur.Controleur;
 import fr.iessa.controleur.ModeleEvent;
 
 /**
+ * Affiche l'horloge courante
  * @author hodiqual
  *
  */
