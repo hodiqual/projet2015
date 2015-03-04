@@ -12,6 +12,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -124,10 +127,12 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 				{
 					if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.OPEN)){
 					try {
-						
-						java.awt.Desktop.getDesktop().open(new File(Ressources.get(Ressources.AIDE).getFile()));
+						Path tmpFilePath = Files.createTempFile(null, ".pdf");
+						Files.copy(Ressources.get(Ressources.AIDE).openStream(), tmpFilePath, StandardCopyOption.REPLACE_EXISTING);
+						java.awt.Desktop.getDesktop().open(tmpFilePath.toFile());
 					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(null, "La fonction n'est pas supportée par votre système d'exploitation", "" , JOptionPane.INFORMATION_MESSAGE);
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Ex: La fonction n'est pas supportée par votre système d'exploitation", "" , JOptionPane.INFORMATION_MESSAGE);
 					}
 					} else {
 						JOptionPane.showMessageDialog(null, "La fonction n'est pas supportée par votre système d'exploitation", "" , JOptionPane.INFORMATION_MESSAGE);
