@@ -27,24 +27,38 @@ import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.Instant.InstantFabrique;
 
-/** Classe FramePrincipale
+/** 
+ * Fenêtre principale du programme
  * @author THOMAS Raimana
  * @version 1.0 
  */
 
 public class FramePrincipale extends JFrame implements PropertyChangeListener {
-	/** La barre de menu */
+	/** Barre de menu contenant un menu "Fichier" et un menu "Options" */
 	private JMenuBar _barreMenu;
-    private JMenu _menu;
+	/** Menu "Fichier" */
+    private JMenu _menuFichier;
+    /** Pour charger le fichier "Plateforme"
+     * @see ActionChargerPlateForme
+     */
     private JMenuItem _menuChargerPlateForme;
+    /** Pour charger le fichier "Trafic"
+     * @see ActionChargerTrafic
+     */
     private JMenuItem _menuChargerTrafic;
+    /** Pour quitter le programme */
     private JMenuItem _menuQuitter;
-    
+    /** Menu "Options" */
     private JMenu _menuOption;
-    
+    /** Controleur de la MVC */
     private Controleur _controleur;
     
-	/** Constructeur */
+	/** Construction de la fenêtre principale et du controleur MVC
+	 * @param _barreMenu
+	 * @param _menuFichier
+	 * @param _menuOption
+	 * @param _controleur
+	 */
 	public FramePrincipale() {
 		// Construction de la fenêtre principale
     	super("Ground Trafic Control");
@@ -53,21 +67,21 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	    
 	    // Construction de la barre de menu
 	    _barreMenu = new JMenuBar();
-	    _menu = new JMenu("Fichier");
+	    _menuFichier = new JMenu("Fichier");
 	    _menuChargerPlateForme = new JMenuItem("Charger plateforme");
 	    _menuChargerTrafic = new JMenuItem("Charger trafic");
-	    _menuChargerTrafic.setEnabled(false);;
+	    _menuChargerTrafic.setEnabled(false);
 	    _menuQuitter = new JMenuItem("Quitter");
 	    
 	    _menuChargerPlateForme.addActionListener(new ActionChargerPlateForme());
 	    _menuChargerTrafic.addActionListener(new ActionChargerTrafic());
     	_menuQuitter.addActionListener(new ActionQuitter());
 	
-    	_menu.add(_menuChargerPlateForme);
-    	_menu.add(_menuChargerTrafic);
-    	_menu.add(_menuQuitter);
+    	_menuFichier.add(_menuChargerPlateForme);
+    	_menuFichier.add(_menuChargerTrafic);
+    	_menuFichier.add(_menuQuitter);
 	
-    	_barreMenu.add(_menu);
+    	_barreMenu.add(_menuFichier);
     	
     	_menuOption = new JMenu("Options");
     	_menuOption.setEnabled(false);
@@ -196,7 +210,11 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	}
     }
     
-    /** Actions à realiser lors d'un evenement du contrôleur */
+    /** Actions realisées lors d'un evenement du contrôleur
+     * _ Test du chargement des fichiers
+     * _ Test de la sauvegarde du fichier "Collisions"
+     * _ Active le menu "Cherger Trafic" et "Options"
+     */
     public void propertyChange(PropertyChangeEvent evt) {
     	
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {

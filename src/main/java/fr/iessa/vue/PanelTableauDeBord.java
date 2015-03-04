@@ -19,15 +19,19 @@ import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.trafic.ClickComponentVolListener;
 import fr.iessa.vue.trafic.ComponentVol;
 
-/** Classe Tableau de Bord.
+/**
+ * La classe Tableau de Bord est un panel qui contient d'autres panels donnant des informations sur le trafic
  * @author THOMAS Raimana
  * @version 1.0 
  */
-
 public class PanelTableauDeBord extends JPanel implements Observer {
-
+	/** Controleur de la MVC */
 	private Controleur _controleur;
+	/**
+	 * Panel qui donne une liste de vols à partir d'une sélection de 4 filtres
+	 */
 	private JPanel _panelVols = new JPanel();
+	
 	public PanelTableauDeBord(Controleur controleur, Map<Vol, ComponentVol> volsADessiner) {
 		super();
 		
@@ -74,7 +78,6 @@ public class PanelTableauDeBord extends JPanel implements Observer {
 
 	
 	/** 
-	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override //hodiqual

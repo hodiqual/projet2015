@@ -27,22 +27,48 @@ import fr.iessa.metier.Instant;
 import fr.iessa.metier.Instant.InstantFabrique;
 import fr.iessa.metier.trafic.Vol;
 
-/** Classe PanelAffichageVol qui affiche les paramètres d'un vol sélectionné dans la liste
+/** 
+ * Classe PanelDensiteTrafic affiche une courbe représentant le nombre d'avions en fonction du temps
  * @author THOMAS Raimana
  * @version 1.0 
  */
-
 public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener {
 
-	/** Attributs */
+	/**
+	 * Controleur de la MVC
+	 */
 	private final Controleur _controleur;
+	
+	/**
+	 * Comme un tableau qui contient pour chaque instant la liste des vols présent à cette instant
+	 * @see propertyChange(PropertyChangeEvent evt)
+	 */
 	private TreeMap<Instant, Set<Vol>> _volsParInstant;
+	
+	/**
+	 * Courbe
+	 * @see propertyChange(PropertyChangeEvent evt)
+	 */
 	private GeneralPath _courbe = new GeneralPath();
+	
+	/**
+	 * Curseur pour repérer sur la courbe l'instant présent
+	 * @see paintComponent(Graphics g)
+	 * @see propertyChange(PropertyChangeEvent evt)
+	 */
 	private Line2D _curseur;
 	//private JLabel _nbrVolscourant;
+	
+	/**
+	 * Largeur et hauteur du panel.
+	 * La largeur est celle du panel Tableau de bord.
+	 */
 	private final int _largeurPanel = 300, _hauteurPanel = 150;
   
-    /** Constructeur */
+    /** 
+     * Construction du panel et mise en observé par le contrôleur
+     * @ param _controleur
+     */
     public PanelDensiteTrafic(Controleur c) {
     	
     	// Construction du panel
@@ -60,7 +86,7 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 		
     }
     
-    /** Pour dessiner le curseur */
+    /** Cré le curseur */
     private void placeCurseur(Instant instantCourant) {
     	double y1 = 20;
     	double y2 = _hauteurPanel - 10;
@@ -76,7 +102,7 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
     	repaint();
 	}
 
-	/** Pour dessiner la courbe et le curseur */
+	/** Dessine la courbe et le curseur */
 	@Override
 	public void paintComponent(Graphics g) {
 
@@ -100,7 +126,12 @@ public class PanelDensiteTrafic extends JPanel implements PropertyChangeListener
 		
 	}
     
-    /** Actions à realiser lors d'une mise à jour par le contrôleur */
+    /** 
+     * Actions realisées lors d'une demande de mise à jour par le contrôleur
+     * _ Ajout de la valeur max de la densité
+     * _ Cré la courbe
+     * _ Réalise le transposition de repères
+     */
     public void propertyChange(PropertyChangeEvent evt) {
     	
 		switch (ModeleEvent.valueOf(evt.getPropertyName())) {
