@@ -33,6 +33,11 @@ import fr.iessa.metier.trafic.Vol;
 import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.TypeVol;
 
+/**
+ * vue des filtres de vol
+ * @author hodiqual
+ *
+ */
 public class PanelFiltres extends JPanel implements PropertyChangeListener {
 
 	private Controleur _controleur;

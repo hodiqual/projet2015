@@ -29,6 +29,11 @@ import fr.iessa.vue.Ressources;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Vue d'une collision.
+ * @author hodiqual
+ *
+ */
 public class ComponentCollision extends JComponent {
 	
 	private static BufferedImage _icon;
@@ -85,7 +90,8 @@ public class ComponentCollision extends JComponent {
 	
 	public void update(){
 			final Point2D.Double _coordCouranteDouble = new Point2D.Double();
-			_echelle.getAffineTransform().transform(_collision.getPointImpact(), _coordCouranteDouble);
+			_echelle.getAffineTransform().transform(_collision.getPointImpact(), 
+														_coordCouranteDouble);
 			_coord.setLocation(_coordCouranteDouble);
 			_coord.x -= _largeur;
 			_coord.y -= _hauteur;

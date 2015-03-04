@@ -10,8 +10,8 @@ import fr.iessa.metier.infra.Ligne;
 import fr.iessa.metier.infra.Taxiway;
 
 /**
+ * Creer un taxiway a partir d'une description texte.
  * @author hodiqual
- *
  */
 public class TaxiwayDAO implements DAO<Taxiway> {
 
@@ -25,7 +25,7 @@ public class TaxiwayDAO implements DAO<Taxiway> {
 	@Override
 	/**
 	 * Charge en memoire une ligne de texte decrivant un taxiway 
-	 * ligneAtraiter: decrit le taxiway de la maniere suivante
+	 * @param ligneAtraiter: decrit le taxiway de la maniere suivante
 	 * "L K4 10 H D -858,1424;-898,1293"
 	 */
 	public Taxiway charger(String ligneAtraiter) {

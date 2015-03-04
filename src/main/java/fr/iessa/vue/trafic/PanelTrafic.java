@@ -31,6 +31,11 @@ import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.ChargeEnCoursLayerUI;
 import fr.iessa.vue.Echelle;
 
+/**
+ * Panel qui affiche le trafic
+ * @author hodiqual
+ *
+ */
 public class PanelTrafic extends JPanel implements PropertyChangeListener, Observer{
 
 	private final Echelle _echelle;

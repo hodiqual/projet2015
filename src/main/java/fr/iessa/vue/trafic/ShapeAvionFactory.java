@@ -10,7 +10,11 @@ import javax.imageio.ImageIO;
 
 import fr.iessa.vue.Ressources;
 
-
+/**
+ * Fabrique qui instancie les uniques dessins des avions.
+ * @author hodiqual
+ *
+ */
 public enum ShapeAvionFactory {
 	HIGH_BLUE(Ressources.AVION_HIGH_BLUE)
 ,   MEDIUM_BLUE(Ressources.AVION_MEDIUM_BLUE)
@@ -79,6 +83,11 @@ public enum ShapeAvionFactory {
 		return images;
 	}
 	
+	/**
+	 * 
+	 * @param angleEnDegre
+	 * @return l'image correspondante du vol selon l'angle.
+	 */
 	public BufferedImage get( double angleEnDegre)  {
 		int index = (int) Math.round((angleEnDegre/_stepAngulaire));
 		return _avionsParAngle[Math.min(index,71)];

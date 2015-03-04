@@ -20,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import fr.iessa.controleur.Controleur;
+import fr.iessa.controleur.LibereMemoire;
 import fr.iessa.controleur.ModeleEvent;
 import fr.iessa.metier.Instant.InstantFabrique;
 
@@ -57,7 +58,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 	 */
 	public FramePrincipale() {
 		// Construction de la fenêtre principale
-    	super("Teahupoo");
+    	super("Ground Trafic Control");
     	this.setPreferredSize((new Dimension(800, 600)));
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -136,15 +137,12 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
             File fichierPlateForme = null;
-            String nomFichierPlateForme = "";
             JFileChooser dialogue = new JFileChooser(new File("."));
             
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierPlateForme = dialogue.getSelectedFile();
-            		nomFichierPlateForme = fichierPlateForme.getName();
-                    _controleur.chargerCarte(nomFichierPlateForme);
+                    _controleur.chargerCarte(fichierPlateForme.getPath());
         	}
-    		
     	}
     }
     
@@ -152,13 +150,11 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	public void actionPerformed(ActionEvent arg0) {
     		
     		File fichierTrafic = null;
-            String nomFichierTrafic = "";
             JFileChooser dialogue = new JFileChooser(new File("."));
            
             if (dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             		fichierTrafic = dialogue.getSelectedFile();
-            		nomFichierTrafic = fichierTrafic.getName();
-                    _controleur.chargerTrafic(nomFichierTrafic);
+                    _controleur.chargerTrafic(fichierTrafic.getPath());
         	}
             	
     	}
@@ -247,8 +243,11 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
                 		_controleur.runTrafic();
                 	
                 	return true;
-                }  
-            	
+                }else if (e.getKeyCode() == KeyEvent.VK_M) { 
+                	JOptionPane.showMessageDialog(null, "Tips memoire :" + LibereMemoire.controleMemoire() + " Mo", "" , JOptionPane.INFORMATION_MESSAGE);
+                	return true;
+                }
+        	
             	return false;
             }
             else

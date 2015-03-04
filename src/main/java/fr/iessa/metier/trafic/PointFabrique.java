@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 /**
- * @author duvernal
+ * @author hodiqual
  *
  */
 public class PointFabrique {

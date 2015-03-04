@@ -18,7 +18,7 @@ import aurelienribon.slidinglayout.SLSide;
  * 
  * @author hodiqual
  * Panel qui gere les annimations d'apparition du panel de tableau de bord
- * et du rejeu.
+ * et du lecteur pour le rejeu.
  */
 public class PanelDesControles extends SLPanel {
 	

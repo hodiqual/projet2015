@@ -10,15 +10,17 @@ import java.util.Observable;
 
 
 /**
+ * Contient le modele de l'echelle a appliquer.
  * @author hodiqual
  *
  */
 public class Echelle extends Observable{
 	
-
+	/***/
 	private static final int _minDestLargeur = 800;	
 	private static int _minDestHauteur;
 	
+	/***/
 	private static int _minReelX, _maxReelX, _minReelY, _maxReelY;
 	/** Permet de faire des marges autour de l'aeroport, exprimee en metre*/
 	private static final int _margeReel = 100;

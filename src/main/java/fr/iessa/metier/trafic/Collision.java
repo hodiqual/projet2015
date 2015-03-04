@@ -9,6 +9,7 @@ import java.util.List;
 import fr.iessa.metier.Instant;
 
 /**
+ * Classe metier decrivant une collision
  * @author hodiqual
  *
  */
@@ -29,12 +30,19 @@ public class Collision implements Comparable<Collision>{
 	 */
 	private final List<Vol> _volsImpliques;
 	
+	/**
+	 * Collision
+	 * @param instant l'instant de l'impact
+	 * @param point la coordonnee de l'impact
+	 * @param vols les vols impliques dans la collision
+	 */
 	public Collision(Instant instant, Point point, List<Vol> vols) {
 		_instant = instant;
 		_pointImpact = point;
 		_volsImpliques = vols;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return "[" + _instant + " - " + _instant.getSeconds() + "s]" + " Collision entre " + _volsImpliques 

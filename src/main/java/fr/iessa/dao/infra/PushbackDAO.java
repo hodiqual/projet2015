@@ -11,8 +11,8 @@ import fr.iessa.metier.infra.Ligne;
 import fr.iessa.metier.infra.Pushback;
 
 /**
+ * Creer un pushback a partir d'une description texte.
  * @author hodiqual
- *
  */
 public class PushbackDAO implements DAO<Pushback> {
 	
@@ -26,7 +26,7 @@ public class PushbackDAO implements DAO<Pushback> {
 	@Override
 	/**
 	 * Charge en memoire une ligne de texte decrivant un pushback 
-	 * ligneAtraiter: decrit le pushback de la maniere suivante
+	 * @param ligneAtraiter: decrit le pushback de la maniere suivante
 	 * "L _ -3 H S -657,642;-677,647;-700,660;-724,678;-745,700;-759,724;-765,747;-758,769"
 	 */
 	public Pushback charger(String ligneAtraiter) {

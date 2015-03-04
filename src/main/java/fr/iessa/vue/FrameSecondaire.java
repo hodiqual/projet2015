@@ -6,9 +6,14 @@ import javax.swing.JFrame;
 
 import fr.iessa.controleur.Controleur;
 
+/**
+ * 
+ * @author hodiqual
+ *
+ */
 public class FrameSecondaire extends JFrame {
 	public FrameSecondaire(Controleur controleur) {
-		super("Teahupoo");
+		super("Ground Trafic Control");
     	this.setPreferredSize((new Dimension(800, 600)));
     	
 	    this.getContentPane().add(new PanelPrincipalMultiCouches(controleur,false));

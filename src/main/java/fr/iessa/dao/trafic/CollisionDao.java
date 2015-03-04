@@ -14,12 +14,18 @@ import java.util.List;
 import fr.iessa.metier.trafic.Collision;
 
 /**
- * 
+ * Permet de sauvegarder les collisions dans un fichier texte
  * @author hodiqual
- *
  */
 public class CollisionDao {
 	
+	/**
+	 * Sauvegarde les collisions
+	 * @param ficname le chemin du fichier dans lequel les collisions doivent etre sauvegardees.
+	 * @param collisions a sauvegardes
+	 * @throws FileNotFoundException si le chemin du fichier est incorrect
+	 * @throws IOException si une erreur d'ecriture du fichier intervient
+	 */
 	public void sauvegardeTrafic(String ficname, List<Collision> collisions) throws FileNotFoundException, IOException
 	{
 		
