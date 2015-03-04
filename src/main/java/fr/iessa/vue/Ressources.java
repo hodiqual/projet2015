@@ -40,6 +40,9 @@ public final class Ressources {
 	  public static final String LECTEUR_FORWARD   	 = "forward.png";
 	  public static final String LECTEUR_PAUSE   	 = "pause.png";
 	  public static final String LECTEUR_PLAY   	 = "play.png";
+
+	  public static final String ICON_HELP  	 	 = "iconHelp.png";
+	  public static final String AIDE  	 	 		 = "Guide.pdf";
 	  
 	  private static final String PREFIX = "fr/iessa/vue/";
 	  

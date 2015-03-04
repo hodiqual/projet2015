@@ -1,6 +1,7 @@
 
 package fr.iessa.vue;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -10,7 +11,9 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -68,7 +71,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	
     	_menuOption = new JMenu("Options");
     	_menuOption.setEnabled(false);
-    	
+    		
     	//hodiqual
     	JMenuItem menuAjoutVue = new JMenuItem("Ajout vue");
     	menuAjoutVue.addActionListener(new ActionListener() {
@@ -97,6 +100,30 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	_menuOption.add(menuCollision);
     	_menuOption.add(menuSauvCollision);
     	_barreMenu.add(_menuOption);
+    	
+    	JMenuItem menuHelp = new JMenuItem("", new ImageIcon(Ressources.get(Ressources.ICON_HELP)));
+    	menuHelp.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(Desktop.isDesktopSupported())
+				{
+					if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.OPEN)){
+					try {
+						
+						java.awt.Desktop.getDesktop().open(new File(Ressources.get(Ressources.AIDE).getFile()));
+					} catch (IOException ex) {
+					    //Traitement de l'exception
+					}
+					} else {
+						//La fonction n'est pas supportée par votre système d'exploitation
+					}
+				}else {
+					//Desktop pas supportée par votre système d'exploitation
+				}
+
+			}
+		});
+    	_barreMenu.add(menuHelp);
     	
     	// Création et configuration du controleur MVC
     	_controleur = new Controleur(); 
