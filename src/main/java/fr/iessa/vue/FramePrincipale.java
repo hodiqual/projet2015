@@ -101,6 +101,7 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
     	_menuOption.add(menuSauvCollision);
     	_barreMenu.add(_menuOption);
     	
+    	//hodiqual
     	JMenuItem menuHelp = new JMenuItem("", new ImageIcon(Ressources.get(Ressources.ICON_HELP)));
     	menuHelp.addActionListener(new ActionListener() {
 			@Override
@@ -112,13 +113,13 @@ public class FramePrincipale extends JFrame implements PropertyChangeListener {
 						
 						java.awt.Desktop.getDesktop().open(new File(Ressources.get(Ressources.AIDE).getFile()));
 					} catch (IOException ex) {
-					    //Traitement de l'exception
+						JOptionPane.showMessageDialog(null, "La fonction n'est pas supportée par votre système d'exploitation", "" , JOptionPane.INFORMATION_MESSAGE);
 					}
 					} else {
-						//La fonction n'est pas supportée par votre système d'exploitation
+						JOptionPane.showMessageDialog(null, "La fonction n'est pas supportée par votre système d'exploitation", "" , JOptionPane.INFORMATION_MESSAGE);
 					}
 				}else {
-					//Desktop pas supportée par votre système d'exploitation
+					JOptionPane.showMessageDialog(null, "La fonction n'est pas supportée par votre système d'exploitation", "" , JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
