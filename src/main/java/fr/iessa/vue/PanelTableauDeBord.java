@@ -48,6 +48,8 @@ public class PanelTableauDeBord extends JPanel implements Observer {
 		// Ajout des différents éléments du Tableau de bord
 		this.add(_titre);
 		this.add(new PanelDensiteTrafic(controleur));
+		
+		//hodiqual
 		this.add(new PanelFiltres(controleur, new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -75,7 +77,7 @@ public class PanelTableauDeBord extends JPanel implements Observer {
 	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
-	@Override
+	@Override //hodiqual
 	public void update(Observable o, Object arg) {
 		Map<Vol, ComponentVol> volsADessiner = (Map<Vol, ComponentVol>)arg;
 		

@@ -7,16 +7,31 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
- * 
- * @author thomasra
+ * Decrit un instant.
+ * @author hodiqual
  *
  */
 public class Instant implements Comparable<Instant>{
 	
+	/**
+	 * Nombre de secondes ecoulees depuis 00:00:00.
+	 */
 	private final int _secondes;
+	
+	/**
+	 * La correspondance du nombre de seconde en format HH:MM:SS
+	 */
 	private final String _affichage;
+	
+	/**
+	 * Format pour l'affichage des secondes
+	 */
 	private static final DecimalFormat f = new DecimalFormat("00");
 	
+	/**
+	 * Constructeur.
+	 * @param secondes Nombre de secondes ecoulees depuis 00:00:00.
+	 */
 	private Instant(int secondes)
 	{
 		_secondes = secondes;
@@ -30,10 +45,15 @@ public class Instant implements Comparable<Instant>{
 		_affichage = buffer.toString();
 	}
 	
+	/**
+	 * 
+	 * @return _secondes
+	 */
 	public int getSeconds() {
 		return _secondes;
 	}
 	
+	@Override
 	public String toString()  {
 		return _affichage;
 	}
@@ -43,19 +63,35 @@ public class Instant implements Comparable<Instant>{
 		return this._secondes - o._secondes;
 	}
 	
+	/**
+	 * Assure une seule instance par Instant
+	 * @author hodiqual
+	 */
 	public static class InstantFabrique {
 		
 		/**
-		 * Accumule les instances uniques des instants.
+		 * Container des uniques instances de chaque Instant.
 		 */
 		private final static TreeMap<Integer, Instant> _instantsSingleton = new TreeMap<>();
+		
+		/**
+		 * Le pas entre chaque instant
+		 */
 		public final static int _pasEntreInstant = 5;
+		
+		/**
+		 * Initialisation de tous les instants en 24h.
+		 */
 		static {
 			for (int i = 0; i < 24*3600; i+=_pasEntreInstant) {
 				get(i);
 			}
 		}
 		
+		/**
+		 * @param secondes nombre de secondes ecoulees depuis 00:00:00.
+		 * @return Instant correspondant a secondes.
+		 */
 		public static Instant get(int secondes) {
 			
 			Instant uniqueInstant = _instantsSingleton.get(secondes);
@@ -69,18 +105,18 @@ public class Instant implements Comparable<Instant>{
 			return uniqueInstant;
 		}
 		
-		public static Instant getPreviousInstant(Instant instant) {
-			return get(instant.getSeconds()-_pasEntreInstant);
-		}
-		
-		public static Set<Entry<Integer, Instant>> getAll() {
-			return _instantsSingleton.entrySet();
-		}
-		
+		/**
+		 * @return tous les instants tries de facon ordonnee dans un set.
+		 */
 		public static TreeSet<Instant> getInstants() {
 			return new TreeSet<Instant>(_instantsSingleton.values());
 		}
 		
+		/**
+		 * Retourne l'instant le plus proche (a _pasEntreInstant pres)
+		 * @param secondes nombre de secondes depuis 00:00:00
+		 * @return
+		 */
 		public static Instant getInstantLePlusProche(int secondes)  {
 			int ecartArrondiParDefaut = Integer.MAX_VALUE;
 			Integer arrondiParDefaut = _instantsSingleton.floorKey(secondes);
@@ -97,10 +133,18 @@ public class Instant implements Comparable<Instant>{
 				return _instantsSingleton.get(arrondiParDefaut);
 		}
 		
+		/**
+		 * @return le premier instant
+		 */
 		public static Instant getMinimumInstant() {
 			return _instantsSingleton.firstEntry().getValue();
 		}
 		
+
+		
+		/**
+		 * @return le dernier instant
+		 */
 		public static Instant getMaximumInstant() {
 			return _instantsSingleton.lastEntry().getValue();
 		}

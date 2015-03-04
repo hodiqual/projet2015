@@ -15,6 +15,7 @@ import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.TypeVol;
 
 /**
+ * Decrit un vol
  * @author hodiqual
  */
 public class Vol {

@@ -28,6 +28,11 @@ import fr.iessa.metier.Instant;
 import fr.iessa.metier.trafic.Vol;
 import fr.iessa.vue.Echelle;
 
+/**
+ * Vue d'un vol
+ * @author hodiqual
+ *
+ */
 public class ComponentVol extends JComponent {
 
 	private int _largeur = 32;

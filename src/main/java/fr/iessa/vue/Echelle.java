@@ -10,6 +10,7 @@ import java.util.Observable;
 
 
 /**
+ * Contient le modele de l'echelle a appliquer.
  * @author hodiqual
  *
  */

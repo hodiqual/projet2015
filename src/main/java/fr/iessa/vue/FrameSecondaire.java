@@ -6,6 +6,11 @@ import javax.swing.JFrame;
 
 import fr.iessa.controleur.Controleur;
 
+/**
+ * 
+ * @author hodiqual
+ *
+ */
 public class FrameSecondaire extends JFrame {
 	public FrameSecondaire(Controleur controleur) {
 		super("Ground Trafic Control");

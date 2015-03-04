@@ -10,7 +10,7 @@ import fr.iessa.metier.type.Categorie;
 import fr.iessa.metier.type.Direction;
 
 /**
- * Classe mère decrivant les lignes brisées
+ * Classe metier decrivant les lignes brisées
  * @author hodiqual
  *
  */

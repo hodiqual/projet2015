@@ -4,6 +4,7 @@
 package fr.iessa.metier;
 
 /**
+ * Exception si on est hors limite de l'horloge
  * @author hodiqual
  *
  */

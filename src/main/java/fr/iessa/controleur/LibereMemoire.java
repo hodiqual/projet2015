@@ -11,6 +11,10 @@ package fr.iessa.controleur;
  *
  */
 public final class LibereMemoire {
+	
+	/**
+	 * Force le garbage collector.
+	 */
 	public static void free() {
 		// Get the Java runtime
 	    Runtime runtime = Runtime.getRuntime();
@@ -24,6 +28,10 @@ public final class LibereMemoire {
 	    return bytes / MEGABYTE;
 	  }
 	  
+	  /**
+	   * Affiche la memoire courante utilisee par l'application
+	   * @return la memoire en Mo
+	   */
 	  public static String controleMemoire(){
 
 		    // Get the Java runtime

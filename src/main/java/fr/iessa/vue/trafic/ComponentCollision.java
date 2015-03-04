@@ -29,6 +29,11 @@ import fr.iessa.vue.Ressources;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Vue d'une collision.
+ * @author hodiqual
+ *
+ */
 public class ComponentCollision extends JComponent {
 	
 	private static BufferedImage _icon;
