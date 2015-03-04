@@ -23,23 +23,38 @@ import fr.iessa.vue.trafic.ComponentVol;
  * @author THOMAS Raimana
  * @version 1.0 
  */
-
 public class PanelAffichageVol extends JPanel {
 	
-	/** Attributs */
+	/** Labels pour l'identifiant, la catégorie et l'heure de départ ou d'arrivée d'un vol
+	 * 
+	 */
     private final JLabel _jlIdVol, _jlCategorieVol, _jlTypeHeureVol;
+    /** Pour repérer un vol sur la plateforme */
     private final JCheckBox _highLight = new JCheckBox("Highlight");
+    /** Pour afficher le trafic à l'instant où le vol apparait */
     private final JButton _boutonShow = new JButton("Show");
+    /** Pour afficher le trafic à l'instant où le vol apparait */
     private final JButton _boutonRemove = new JButton("Remove");
+    /** Controleur de la MVC */
     private final Controleur _controleur;
     private final Vol _vol;
+    /** Une vue du vol 
+     * @see ComponentVol
+     * @see ActionHighLight
+     * @see ActionRemove
+     */
     private final ComponentVol _componentVol;
-    // Couleurs
+    /** Couleurs des Highlight */
     private final static Color[] _couleursHighlights = new Color[] {Color.BLUE, Color.MAGENTA, Color.CYAN, Color.GREEN, Color.ORANGE, Color.YELLOW, Color.PINK};
     private static int _cpteur = 0;
     private final int _couleur;
     
-    /** Constructeur */
+    /** Construction du panel
+     * @param componentVol
+     * 			La "vue" du vol sélectionné
+     * @param c
+     * 			Le contrôleur de la MVC
+     */
     public PanelAffichageVol(ComponentVol componentVol, Controleur c) {
 		
     	super();
