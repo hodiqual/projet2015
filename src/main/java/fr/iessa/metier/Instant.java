@@ -45,6 +45,9 @@ public class Instant implements Comparable<Instant>{
 	
 	public static class InstantFabrique {
 		
+		/**
+		 * Accumule les instances uniques des instants.
+		 */
 		private final static TreeMap<Integer, Instant> _instantsSingleton = new TreeMap<>();
 		public final static int _pasEntreInstant = 5;
 		static {
